@@ -1,4 +1,4 @@
-import { Avatar, Button, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import { png } from "../assets";
 
 interface Props {
@@ -9,27 +9,44 @@ interface Props {
 }
 const SpecialistChip = ({ image, title, price, onClick }: Props) => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
-        width: "10%",
-        height: "100%",
+        minWidth: { xs: "110px", sm: "120px", md: "150px" },
         backgroundColor: "white",
-        borderRadius: 8,
+        borderRadius: 2,
         flexDirection: "column",
         alignItems: "center",
-        marginInline: 5,
+        justifyContent: "center",
+        marginInline: 1,
+        border: ".2px solid grey",
       }}
     >
       <Avatar
         src={image}
-        sx={{ height: "90px", width: "90px", marginBlock: ".8vh" }}
+        sx={{
+          height: { xs: "40px", sm: "65px", md: "90px" },
+          width: { xs: "40px", sm: "65px", md: "90px" },
+          marginBlock: { xs: ".4vh", sm: ".6vh", md: ".8vh" },
+        }}
       />
 
-      <Typography style={{overflow:"clip"}}>{title}</Typography>
-      <Typography style={{marginBlock:".5vh",color:"#5AB2FF"}}>{price}</Typography>
-      <Button variant="outlined" onClick={onClick} > Consult Now </Button>
-    </div>
+      <Typography style={{ overflow: "scroll",paddingInline:"10px",wordBreak:"break-word",textAlign:"center" }}>{title}</Typography>
+      <Typography style={{ marginBlock: ".5vh", color: "#5AB2FF" }}>
+        {price}
+      </Typography>
+      <Button
+        variant="outlined"
+        onClick={onClick}
+        sx={{
+          width: { xs: "100px", sm: "110px", md: "140px" },
+          fontSize: { xs: "8px", sm: "9px", md: "12px" },
+          marginBlock:".5vh"
+        }}
+      >
+        Consult Now
+      </Button>
+    </Box>
   );
 };
 

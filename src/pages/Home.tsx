@@ -37,13 +37,15 @@ const Home = () => {
             overflow: "hidden",
           }}
         >
-          <Box sx={{ width: { sm: "flex", md: "none" } }}>
+          <Box sx={{ width: { sm: "flex", md: "none" },display:{md:"none",lg:"flex"} }}>
             <img
               src={svg.city}
+              // width={"100%"}
               style={{
                 position: "absolute",
                 top: 70,
                 left: "15vw",
+                right: "15vw",
               }}
             />
           </Box>
@@ -77,7 +79,7 @@ const Home = () => {
         </Box>
 
         {/* Top Specialities */}
-        <div
+        <Box
           style={{
             display: "flex",
             flex: 1,
@@ -95,7 +97,7 @@ const Home = () => {
           >
             Top Specialistis
           </Typography>
-          <div style={{ display: "flex", flex: "1" }}>
+          <Box style={{ display: "flex",overflow:"scroll",width:"89vw" }}>
             {specialistImgs.map((e) => (
               <SpecialistChip
                 image={e?.image}
@@ -103,8 +105,8 @@ const Home = () => {
                 price={e?.price}
               />
             ))}
-          </div>
-        </div>
+          </Box>
+        </Box>
       </div>
     </>
   );
