@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const Doctors = () => {
-  return (
-    <div>Doctors</div>
-  )
-}
+const Doctor = () => {
+  return <div style={{height:"300px",backgroundColor:"blue"}}>Doctor</div>;
+};
 
-export default Doctors
+export default Doctor;

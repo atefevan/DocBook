@@ -61,7 +61,7 @@ Props) => {
                       fontSize: "12px",
                     }}
                     onClick={() => {
-                      window.location.href = `/${page}`;
+                      window.location.href = `/${page.toLowerCase()}`;
                     }}
                   >
                     {page}

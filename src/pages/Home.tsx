@@ -22,7 +22,7 @@ const Home = () => {
           overflow: "scroll",
         }}
       >
-        <ButtonAppBar />
+        
         {/* Search */}
         <Box
           sx={{
@@ -41,7 +41,7 @@ const Home = () => {
           <Box sx={{ width: { sm: "flex", md: "none" } }}>
             <img
               src={svg.city}
-              style={{ position: "absolute", top: 42, width: "70%" }}
+              style={{ justifyContent:"center", top: 42, width: "100%" }}
             />
           </Box>
           <Typography
