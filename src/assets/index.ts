@@ -13,6 +13,7 @@ import ambulance_right_side from "../assets/png/ambulance_right_side.webp";
 import child_not_well from "../assets/png/child_not_well.svg";
 import performance_issues from "../assets/png/performance_issues.svg";
 import coughing from "../assets/png/coughing.png";
+import city from "../assets/svg/city.svg";
 import dermatology from "../assets/svg/dermatology.svg";
 import gynaecologist from "../assets/svg/gynaecologist.svg";
 import need_help from "../assets/svg/need_help.svg";
@@ -38,6 +39,8 @@ export const png = {
   ambulance_right_side,
 };
 export const svg = {
+
+  city,
   urology,
   sexology,
   dermatology,

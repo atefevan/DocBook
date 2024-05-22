@@ -1,6 +1,15 @@
+import { Box, Select, Typography } from "@mui/material";
 import ButtonAppBar from "../components/Appbar";
+import { png, svg } from "../assets";
+import React from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import TxtField from "../components/atoms/TxtField";
+import AutoComplete from "../components/atoms/AutoComplete";
+import { areas, specialistImgs, specialities } from "../mock/strings";
+import SpecialistChip from "../components/SpecialistChip";
 
 const Home = () => {
+  const [query, setQuery] = React.useState<string>("");
   return (
     <>
       <div
@@ -10,9 +19,89 @@ const Home = () => {
           top: 0,
           bottom: 0,
           position: "absolute",
+          overflow: "scroll",
         }}
       >
         <ButtonAppBar />
+        {/* Search */}
+        <Box
+          sx={{
+            display: "flex",
+            flex: 1,
+            height: "20vh",
+            backgroundColor: "#397693",
+            marginInline: "5vw",
+            marginTop: "10vh",
+            borderRadius: 10,
+            alignItems: "center",
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
+        >
+          <Box sx={{ width: { sm: "flex", md: "none" } }}>
+            <img
+              src={svg.city}
+              style={{ position: "absolute", top: 42, width: "70%" }}
+            />
+          </Box>
+          <Typography
+            variant="h6"
+            sx={{
+              fontSize: "32px",
+              color: "white",
+              fontWeight: "bold",
+              marginBlock: "2vh",
+            }}
+          >
+            {`Best Doctors in {LOCATION}`}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flex: 1,
+              width: "70%",
+              flexDirection: { xs: "column", md: "row" },
+            }}
+          >
+            <TxtField
+              placeHolder="Search By : Doctors, Services"
+              fieldOnChange={setQuery}
+              prefixIcon={<SearchIcon />}
+              style={{marginBlock:{xs:"1vh",md:"0vh"}}}
+            />
+            <AutoComplete options={areas} label={"Locations"} />
+          </Box>
+        </Box>
+
+        {/* Top Specialities */}
+        <div
+          style={{
+            display: "flex",
+            flex: 1,
+            backgroundColor: "green",
+            height: "25vh",
+            marginInline: "5vw",
+            marginTop: "1vh",
+            padding: "5px",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ fontSize: "24px", fontWeight: "bold", fontFamily: "Arial" }}
+          >
+            Top Specialistis
+          </Typography>
+          <div style={{ display: "flex", flex: "1" }}>
+            {specialistImgs.map((e) => (
+              <SpecialistChip
+                image={e?.image}
+                title={e?.title}
+                price={e?.price}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
