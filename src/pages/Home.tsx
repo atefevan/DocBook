@@ -22,17 +22,16 @@ const Home = () => {
           overflow: "scroll",
         }}
       >
-        
         {/* Search */}
         <Box
           sx={{
             display: "flex",
             flex: 1,
-            height: "20vh",
+            height: "22vh",
             backgroundColor: "#397693",
             marginInline: "5vw",
             marginTop: "10vh",
-            borderRadius: 10,
+            borderRadius: 3,
             alignItems: "center",
             flexDirection: "column",
             overflow: "hidden",
@@ -41,7 +40,11 @@ const Home = () => {
           <Box sx={{ width: { sm: "flex", md: "none" } }}>
             <img
               src={svg.city}
-              style={{ justifyContent:"center", top: 42, width: "100%" }}
+              style={{
+                position: "absolute",
+                top: 70,
+                left: "15vw",
+              }}
             />
           </Box>
           <Typography
@@ -67,7 +70,7 @@ const Home = () => {
               placeHolder="Search By : Doctors, Services"
               fieldOnChange={setQuery}
               prefixIcon={<SearchIcon />}
-              style={{marginBlock:{xs:"1vh",md:"0vh"}}}
+              style={{ marginBlock: { xs: "1vh", md: "0vh" } }}
             />
             <AutoComplete options={areas} label={"Locations"} />
           </Box>
