@@ -6,6 +6,7 @@ import TxtField from "../components/atoms/TxtField";
 
 const Login = () => {
   const [formData, setFormData] = React.useState<any>({});
+  const [hasAccount, setHasAccount] = React.useState<boolean>(true);
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
     let obj: any = {};
@@ -48,7 +49,7 @@ const Login = () => {
           alignItems: "center",
         }}
       >
-        <img src={jpeg.banner} style={{ height:"99.2vh",width:"50vw" }} />
+        <img src={jpeg.banner} style={{ height: "99.2vh", width: "50vw" }} />
       </Box>
       <Box
         sx={{
@@ -57,7 +58,7 @@ const Login = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          paddingInline:"10vw"
+          paddingInline: "10vw",
         }}
       >
         <Typography
@@ -66,10 +67,10 @@ const Login = () => {
             fontSize: "42px",
             fontWeight: "bold",
             fontFamily: "Arial",
-            margin: 2,
+            marginBlock: 2
           }}
         >
-          Welcome Back :)
+          {hasAccount ? `Welcome Back :)` : `Create an account`}
         </Typography>
         <TxtField
           id="email"
@@ -84,7 +85,7 @@ const Login = () => {
           variant="outlined"
           placeHolder="Type Registered Email"
           fieldOnChange={handleFormDataInput}
-          style={{ margin: 1 }}
+          style={{ marginBlock: 1 }}
         />
         <TxtField
           id="password"
@@ -97,16 +98,23 @@ const Login = () => {
           focuseBorderColor="black"
           label="Password"
           variant="outlined"
-          style={{ margin: 1 }}
+          style={{ marginBlock: 1 }}
           placeHolder="Type Registered Pass"
           fieldOnChange={handleFormDataInput}
         />
         <Button
           onClick={handleLogin}
           variant="contained"
-          sx={{ alignSelf: "center", width: "100%", marginLeft: 2 }}
+          sx={{ alignSelf: "center", width: "100%",marginBlock: 1 }}
         >
           Login
+        </Button>
+        <Button
+          onClick={() => setHasAccount(!hasAccount)}
+          variant="text"
+          sx={{ alignSelf: "center", width: "100%", marginBlock: 1 }}
+        >
+          {!hasAccount ? `Already Have An Account ?` : `Don't have an account ?`}
         </Button>
       </Box>
     </Box>
