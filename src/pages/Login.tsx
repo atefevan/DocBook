@@ -70,7 +70,7 @@ const Login = () => {
           height: { xs: "30vh", md: "99.2vh" },
           width: { xs: "100vw", md: "51vw" },
         }}
-      ></Box>
+      />
       <Box
         sx={{
           display: "flex",

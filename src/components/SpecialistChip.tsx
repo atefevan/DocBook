@@ -13,6 +13,7 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
       sx={{
         display: "flex",
         minWidth: { xs: "110px", sm: "120px", md: "150px" },
+        height:"21vh",
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: "column",

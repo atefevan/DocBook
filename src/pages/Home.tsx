@@ -12,45 +12,14 @@ import {
   specialistImgs,
 } from "../mock/strings";
 import SpecialistChip from "../components/SpecialistChip";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import IconBtn from "../components/atoms/IconButton";
 import HealthChip from "../components/HealthChip";
-import DoctorChip from "../components/DoctorChip";
+import InfoChip from "../components/InfoChip";
 import AmbulanceChip from "../components/AmbulanceChip";
 import Slider from "../components/Slider";
 
 const Home = () => {
-  const TOP_ITEM_WIDTH = 150;
-  const COMMON_ITEM_WIDTH = 300;
-  const DOCTOR_ITEM_WIDTH = 500;
-
   const [query, setQuery] = React.useState<string>("");
-  const [topScroll, setTopScroll] = React.useState<number>(0);
-  const [commonScroll, setCommonScroll] = React.useState<number>(0);
-  const [doctorScroll, setDoctorScroll] = React.useState<number>(0);
-
-  const topContainerRef = React.useRef();
-  const commonContainerRef = React.useRef();
   const doctorRef = React.useRef();
-
-  const handleScroll = (
-    amount: number,
-    ref: any,
-    state: number,
-    setState: (data: number) => void,
-    count: number,
-  ) => {
-    const new_position = state + amount;
-    const max_limit = amount * count;
-
-    if (new_position >= -amount && new_position <= max_limit) {
-      console.log("run", new_position, window.innerWidth);
-      setState(new_position);
-      ref.current.scrollLeft = new_position;
-    }
-  };
-
   return (
     <>
       <div
@@ -85,14 +54,15 @@ const Home = () => {
               display: { md: "none", lg: "flex" },
             }}
           >
-            <img
+            <Box
+              component={"img"}
               src={svg.city}
-              // width={"100%"}
-              style={{
+              sx={{
                 position: "absolute",
                 top: 70,
-                left: "15vw",
-                right: "15vw",
+                left: { xs: "1vw", md: "15vw" },
+                right: { xs: "1vw", md: "15vw" },
+                // width:{ xs: "1vw", md: "10vw" }
               }}
             />
           </Box>
@@ -125,16 +95,6 @@ const Home = () => {
           </Box>
         </Box>
 
-        <Slider autoScroll autoHideButton>
-          {specialistImgs.map((e) => (
-            <SpecialistChip
-              image={e?.image}
-              title={e?.title}
-              price={e?.price}
-            />
-          ))}
-        </Slider>
-
         {/* Top Specialities */}
         <Box
           style={{
@@ -154,65 +114,16 @@ const Home = () => {
             >
               Top Specialistis
             </Typography>
-            <Button
-              variant="outlined"
-              // onClick={onClick}
-              sx={{
-                width: { xs: "100px", sm: "110px", md: "90px" },
-                fontSize: { xs: "8px", sm: "9px", md: "12px" },
-                marginBlock: ".5vh",
-              }}
-            >
-              See All
-            </Button>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconBtn
-              muiIcon={<KeyboardArrowLeftIcon />}
-              onClick={() =>
-                handleScroll(
-                  -TOP_ITEM_WIDTH,
-                  topContainerRef,
-                  topScroll,
-                  setTopScroll,
-                  specialistImgs.length,
-                )}
-              style={{ boxShadow: 2 }}
-              bgColor="white"
-            />
-            <Box
-              style={{
-                display: "flex",
-                overflowX: "scroll",
-                width: "87vw",
-                scrollBehavior: "smooth",
-              }}
-              component={"div"}
-              ref={topContainerRef}
-            >
-              {specialistImgs.map((e) => (
-                <SpecialistChip
-                  image={e?.image}
-                  title={e?.title}
-                  price={e?.price}
-                  // onClick={()=}
-                />
-              ))}
-            </Box>
-            <IconBtn
-              muiIcon={<KeyboardArrowRightIcon />}
-              onClick={() =>
-                handleScroll(
-                  TOP_ITEM_WIDTH,
-                  topContainerRef,
-                  topScroll,
-                  setTopScroll,
-                  specialistImgs.length,
-                )}
-              style={{ boxShadow: 2 }}
-              bgColor="white"
-            />
-          </Box>
+          <Slider autoHideButton>
+            {specialistImgs.map((e) => (
+              <SpecialistChip
+                image={e?.image}
+                title={e?.title}
+                price={e?.price}
+              />
+            ))}
+          </Slider>
         </Box>
         {/* Common Health Concern */}
         <Box
@@ -233,63 +144,12 @@ const Home = () => {
             >
               Common Health Concern
             </Typography>
-            <Button
-              variant="outlined"
-              // onClick={onClick}
-              sx={{
-                width: { xs: "100px", sm: "110px", md: "90px" },
-                fontSize: { xs: "8px", sm: "9px", md: "12px" },
-                marginBlock: ".5vh",
-              }}
-            >
-              See All
-            </Button>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconBtn
-              muiIcon={<KeyboardArrowLeftIcon />}
-              onClick={() =>
-                handleScroll(
-                  -COMMON_ITEM_WIDTH,
-                  commonContainerRef,
-                  commonScroll,
-                  setCommonScroll,
-                )}
-              style={{ boxShadow: 2 }}
-              bgColor="white"
-            />
-            <Box
-              sx={{
-                display: "flex",
-                overflowX: "scroll",
-                width: "87vw",
-                scrollBehavior: "smooth",
-                flexDirection: "row",
-              }}
-              component={"div"}
-              ref={commonContainerRef}
-            >
-              {common_concerns.map((e) => (
-                <HealthChip
-                  image={e?.image}
-                  title={e?.title}
-                  price={e?.price}
-                />
-              ))}
-            </Box>
-            <IconBtn
-              muiIcon={<KeyboardArrowRightIcon />}
-              onClick={() =>
-                handleScroll(
-                  COMMON_ITEM_WIDTH,
-                  commonContainerRef,
-                  commonScroll,
-                  setCommonScroll,
-                )}
-              style={{ boxShadow: 2 }}
-              bgColor="white"
-            />
-          </Box>
+          <Slider autoScroll autoHideButton>
+            {common_concerns.map((e) => (
+              <HealthChip image={e?.image} title={e?.title} price={e?.price} />
+            ))}
+          </Slider>
         </Box>
 
         {/* Doctors */}
@@ -311,60 +171,19 @@ const Home = () => {
             >
               Some of the Best Doctors
             </Typography>
-            <Button
-              variant="outlined"
-              // onClick={onClick}
-              sx={{
-                width: { xs: "100px", sm: "110px", md: "90px" },
-                fontSize: { xs: "8px", sm: "9px", md: "12px" },
-                marginBlock: ".5vh",
-              }}
-            >
-              See All
-            </Button>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconBtn
-              muiIcon={<KeyboardArrowLeftIcon />}
-              onClick={() =>
-                handleScroll(
-                  DOCTOR_ITEM_WIDTH,
-                  doctorRef,
-                  doctorScroll,
-                  setDoctorScroll,
-                )}
-              style={{ boxShadow: 2 }}
-              bgColor="white"
-            />
-            <Box
-              sx={{
-                display: "flex",
-                overflowX: "scroll",
-                width: "87vw",
-                scrollBehavior: "smooth",
-                flexDirection: "row",
-              }}
-              component={"div"}
-              ref={doctorRef}
-            >
-              {doctors.map((e) => (
-                <DoctorChip
-                  image={e?.image}
-                  title={e?.title}
-                  exp={e?.exp}
-                  location={e?.location}
-                  degree={e?.degree}
-                  dept={e?.dept}
-                />
-              ))}
-            </Box>
-            <IconBtn
-              muiIcon={<KeyboardArrowRightIcon />}
-              onClick={() => handleDoctorScroll(DOCTOR_ITEM_WIDTH)}
-              style={{ boxShadow: 2 }}
-              bgColor="white"
-            />
-          </Box>
+          <Slider autoScroll autoHideButton>
+            {doctors.map((e) => (
+              <InfoChip
+                image={e?.image}
+                title={e?.title}
+                exp={e?.exp}
+                location={e?.location}
+                degree={e?.degree}
+                dept={e?.dept}
+              />
+            ))}
+          </Slider>
         </Box>
 
         {/* Ambulance */}
