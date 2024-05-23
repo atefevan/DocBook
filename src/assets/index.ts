@@ -23,6 +23,7 @@ import psychiatric from "../assets/svg/psychiatric.svg";
 import sexology from "../assets/svg/sexology.svg";
 import urology from "../assets/svg/urology.svg";
 import stomach_and_digestion from "../assets/svg/stomach_and_digestion.svg";
+
 import cough_cold from "../assets/jpeg/cough_cold.jpeg";
 import performance_issuess from "../assets/jpeg/performance_issues.jpeg";
 import period_problems from "../assets/jpeg/period_problems.jpeg";
@@ -32,6 +33,7 @@ import sick_kid from "../assets/jpeg/sick_kid.jpeg";
 import stomach_issues from "../assets/jpeg/stomach_issues.jpeg";
 import vaginal_infections from "../assets/jpeg/vaginal_infections.jpeg";
 import lose_weight from "../assets/jpeg/lose_weight.jpeg";
+import banner from "../assets/jpeg/banner.jpeg";
 
 import helicopter_right_side from "../assets/webp/helicopter_right_side.webp";
 import freezing_ambulance_right_side from "../assets/webp/freezing_ambulance_right_side.webp";
@@ -65,6 +67,7 @@ export const svg = {
 };
 
 export const jpeg = {
+  banner,
   cough_cold,
   period_problems,
   depression_anxiety,

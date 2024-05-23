@@ -74,7 +74,9 @@ Props) => {
           <Button
             variant="outlined"
             sx={{ color: "black", fontSize: "12px" }}
-            onClick={handleLogin}
+            onClick={() => {
+              window.location.href = `/login`;
+            }}
           >
             Login
           </Button>
