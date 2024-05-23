@@ -28,11 +28,10 @@ const Login = () => {
         email: formData.email,
         password: formData.password,
       });
-      console.log("LOGIN: ",res);
-      if(res?.token) {
+      if (res?.token) {
         localStorage.setItem("DOCBOOK_ACCESS_TOKEN", res?.token);
       }
-       return enqueueSnackbar(res?.message, {
+      return enqueueSnackbar(res?.message, {
         variant: res?.status,
       });
     } else {
@@ -40,7 +39,6 @@ const Login = () => {
         email: formData.email,
         password: formData.password,
       });
-      // console.log("SINGuP : ",res)
       return enqueueSnackbar(res?.message, {
         variant: res?.status,
       });
@@ -62,15 +60,17 @@ const Login = () => {
       }}
     >
       <Box
+        component={"img"}
+        src={jpeg.banner}
         sx={{
           display: "flex",
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
+          height: { xs: "30vh", md: "99.2vh" },
+          width: { xs: "100vw", md: "51vw" },
         }}
-      >
-        <img src={jpeg.banner} style={{ height: "99.2vh", width: "50vw" }} />
-      </Box>
+      ></Box>
       <Box
         sx={{
           display: "flex",
