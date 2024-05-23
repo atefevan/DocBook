@@ -7,7 +7,7 @@ import { SnackbarProvider } from "notistack";
 
 const App = () => {
   return (
-    <SnackbarProvider>
+    <SnackbarProvider style={{ fontFamily: "Arial" }}>
       <BrowserRouter>
         <ButtonAppBar />
         <Routes>

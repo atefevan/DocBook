@@ -4,6 +4,7 @@ import React from "react";
 import { enqueueSnackbar } from "notistack";
 import TxtField from "../components/atoms/TxtField";
 import { signin, signup } from "../apis/user";
+import { emailValidator } from "../utils/validator";
 
 const Login = () => {
   const [formData, setFormData] = React.useState<any>({});
@@ -23,9 +24,26 @@ const Login = () => {
     }
 
     if (hasAccount) {
-      const response = await signin({email: formData.email, password: formData.password});
+      const res = await signin({
+        email: formData.email,
+        password: formData.password,
+      });
+      console.log("LOGIN: ",res);
+      if(res?.token) {
+        localStorage.setItem("DOCBOOK_ACCESS_TOKEN", res?.token);
+      }
+       return enqueueSnackbar(res?.message, {
+        variant: res?.status,
+      });
     } else {
-      const response = await signup({email: formData.email, password: formData.password});
+      const res = await signup({
+        email: formData.email,
+        password: formData.password,
+      });
+      // console.log("SINGuP : ",res)
+      return enqueueSnackbar(res?.message, {
+        variant: res?.status,
+      });
     }
   };
   return (
@@ -85,9 +103,10 @@ const Login = () => {
           focuseBorderColor="black"
           label="Email"
           variant="outlined"
-          placeHolder="Type Registered Email"
+          placeHolder="Email"
           fieldOnChange={handleFormDataInput}
           style={{ marginBlock: 1 }}
+          validator={emailValidator(formData?.email)}
         />
         <TxtField
           id="password"
@@ -101,7 +120,8 @@ const Login = () => {
           label="Password"
           variant="outlined"
           style={{ marginBlock: 1 }}
-          placeHolder="Type Registered Pass"
+          placeHolder="Password"
+          type="password"
           fieldOnChange={handleFormDataInput}
         />
         <Button
