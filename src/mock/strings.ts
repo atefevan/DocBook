@@ -1,4 +1,4 @@
-import { jpeg, png, svg } from "../assets";
+import { jpeg, png, svg, webp } from "../assets";
 
 export const specialistImgs = [
   { title: "Urology", image: svg.urology, price: "300BDT" },
@@ -48,13 +48,14 @@ export const areas = [
 ];
 
 export const ambulances = [
-  "AC Ambulance Service",
-  "AIR Ambulance Service",
-  "ALS Ambulance Service",
-  "Freezing Ambulance Service",
-  "ICU Ambulance Service",
-  "NICU Ambulance Service",
-  "Non Ac Ambulance Service",
+  {title:"AC Ambulance",image:webp.ambulance_front,point_1:"Get ambulance within 30 minutes*",point_2:"24/7 affordable quality service",point_3:"We are just a call away: 01405600700"},
+  {title:"AIR Ambulance",image:webp.helicopter_right_side,point_1:"Get ambulance within 30 minutes*",point_2:"24/7 affordable quality service",point_3:"We are just a call away: 01405600700"},
+  {title:"ALS Ambulance",image:webp.als_ambulance_front,point_1:"Get ambulance within 30 minutes*",point_2:"24/7 affordable quality service",point_3:"We are just a call away: 01405600700"},
+  // {title:"Freezing Ambulance Service",image:webp.freezing_ambulance_right_side,point_1:""},
+  // {title:"ICU Ambulance Service",image:webp.icu_ambulance_front_1,point_1:""},
+  // {title:"NICU Ambulance Service",image:webp.nicu_ambulance_front,point_1:""},
+  // {title:"Non Ac Ambulance Service",image:webp.non_ac_ambulance_left_side,point_1:""},
+
 ];
 
 export const pages = ["Doctor", "Hospital", "Ambulance", "Services"];

@@ -4,13 +4,20 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TxtField from "../components/atoms/TxtField";
 import AutoComplete from "../components/atoms/AutoComplete";
-import { areas, common_concerns, doctors, specialistImgs } from "../mock/strings";
+import {
+  ambulances,
+  areas,
+  common_concerns,
+  doctors,
+  specialistImgs,
+} from "../mock/strings";
 import SpecialistChip from "../components/SpecialistChip";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import IconBtn from "../components/atoms/IconButton";
 import HealthChip from "../components/HealthChip";
 import DoctorChip from "../components/DoctorChip";
+import AmbulanceChip from "../components/AmbulanceChip";
 
 const Home = () => {
   const TOP_ITEM_WIDTH = 150;
@@ -50,7 +57,7 @@ const Home = () => {
           bottom: 0,
           position: "absolute",
           overflow: "scroll",
-          backgroundColor:"#F2F2F2"
+          backgroundColor: "#F2F2F2",
         }}
       >
         {/* Search */}
@@ -301,7 +308,6 @@ const Home = () => {
                   location={e?.location}
                   degree={e?.degree}
                   dept={e?.dept}
-                  // price={e?.price}
                 />
               ))}
             </Box>
@@ -311,6 +317,48 @@ const Home = () => {
               style={{ boxShadow: 2 }}
               bgColor="white"
             />
+          </Box>
+        </Box>
+
+        {/* Ambulance */}
+        <Box
+          style={{
+            display: "flex",
+            flex: 1,
+            height: "15vh",
+            marginInline: "5vw",
+            marginTop: "15vh",
+            padding: "5px",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "24px", fontWeight: "bold", fontFamily: "Arial" }}
+            >
+              On Emergency
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box
+              sx={{
+                display: "flex",
+                width: "87vw",
+              }}
+              component={"div"}
+              ref={doctorRef}
+            >
+              {ambulances.map((e) => (
+                <AmbulanceChip
+                  image={e?.image}
+                  title={e?.title}
+                  point_1={e?.point_1}
+                  point_2={e?.point_2}
+                  point_3={e?.point_3}
+                />
+              ))}
+            </Box>
           </Box>
         </Box>
       </div>
