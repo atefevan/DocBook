@@ -1,6 +1,6 @@
 import { Avatar, Box, Button, Icon, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
-import SchoolIcon from '@mui/icons-material/School';
+import SchoolIcon from "@mui/icons-material/School";
 interface Props {
   title?: string;
   degree?: string;
@@ -14,8 +14,8 @@ const DoctorChip = ({ title, degree, image, location, exp, dept }: Props) => {
     <Box
       sx={{
         display: "flex",
-        minWidth: { sm: "18vw", md: "25vw" },
-        height: { sm: "28vh", md: "18vh" },
+        minWidth: { xs:"18vw",sm: "18vw", md: "25vw" },
+        minHeight: { xs:"60vw",sm: "28vh", md: "18vh" },
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: { xs: "column", md: "row" },
@@ -50,8 +50,8 @@ const DoctorChip = ({ title, degree, image, location, exp, dept }: Props) => {
         <Avatar
           src={image}
           sx={{
-            height: { xs: "30px", sm: "55px", md: "80px" },
-            width: { xs: "30px", sm: "55px", md: "80px" },
+            height: { sm: "55px", md: "80px" },
+            width: { sm: "55px", md: "80px" },
             marginBlock: { xs: ".3vh", sm: ".5vh", md: ".7vh" },
             margin: 1,
           }}
@@ -157,18 +157,18 @@ const DoctorChip = ({ title, degree, image, location, exp, dept }: Props) => {
           </Typography>
         </Box>
         <Button
-        variant="text"
-        // onClick={onClick}
-        sx={{
-          width: { xs: "100px", sm: "110px", md: "140px" },
-          fontSize: { xs: "8px", sm: "9px", md: "12px" },
-          marginBlock: ".5vh",
-          marginRight:{xs:"0px",md:"5px"},
-          alignSelf:{xs:"center",md:"end"}
-        }}
-      >
-        Consult Now
-      </Button>
+          variant="text"
+          // onClick={onClick}
+          sx={{
+            width: { xs: "100px", sm: "110px", md: "140px" },
+            fontSize: { xs: "8px", sm: "9px", md: "12px" },
+            marginBlock: ".5vh",
+            marginRight: { xs: "0px", md: "5px" },
+            alignSelf: { xs: "center", md: "end" },
+          }}
+        >
+          Consult Now
+        </Button>
       </Box>
 
       {/* 

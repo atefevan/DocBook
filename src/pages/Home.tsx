@@ -251,14 +251,16 @@ const Home = () => {
             />
           </Box>
         </Box>
+
+
         {/* Doctors */}
         <Box
-          style={{
+          sx={{
             display: "flex",
             flex: 1,
             height: "25vh",
             marginInline: "5vw",
-            marginTop: "15vh",
+            marginTop: { xs: "6vh",sm:"10vh", md: "13vh" },
             padding: "5px",
             flexDirection: "column",
           }}
@@ -322,12 +324,12 @@ const Home = () => {
 
         {/* Ambulance */}
         <Box
-          style={{
+          sx={{
             display: "flex",
             flex: 1,
             height: "15vh",
             marginInline: "5vw",
-            marginTop: "15vh",
+            marginTop: { xs: "15vh",sm:"10vh", md: "5vh" },
             padding: "5px",
             flexDirection: "column",
           }}
