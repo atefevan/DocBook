@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Doctors from "./pages/Doctors";
+import Doctors from "./pages/Doctor";
 import ButtonAppBar from "./components/Appbar";
 
 const App = () => {

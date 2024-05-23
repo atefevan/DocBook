@@ -1,15 +1,45 @@
-import { Box, Select, Typography } from "@mui/material";
-import ButtonAppBar from "../components/Appbar";
+import { Box, Button, Typography } from "@mui/material";
 import { png, svg } from "../assets";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TxtField from "../components/atoms/TxtField";
 import AutoComplete from "../components/atoms/AutoComplete";
-import { areas, specialistImgs, specialities } from "../mock/strings";
+import { areas, common_concerns, doctors, specialistImgs } from "../mock/strings";
 import SpecialistChip from "../components/SpecialistChip";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import IconBtn from "../components/atoms/IconButton";
+import HealthChip from "../components/HealthChip";
+import DoctorChip from "../components/DoctorChip";
 
 const Home = () => {
+  const TOP_ITEM_WIDTH = 150;
+  const COMMON_ITEM_WIDTH = 300;
+  const DOCTOR_ITEM_WIDTH = 500;
+
   const [query, setQuery] = React.useState<string>("");
+  const [topScroll, setTopScroll] = React.useState<number>(0);
+  const [commonScroll, setCommonScroll] = React.useState<number>(0);
+  const [doctorScroll, setDoctorScroll] = React.useState<number>(0);
+
+  const handleTopScroll = (scrollAmount: number) => {
+    const newScrollPosition = topScroll + scrollAmount;
+    setTopScroll(newScrollPosition);
+    topContainerRef.current.scrollLeft = newScrollPosition;
+  };
+  const handleCommonScroll = (scrollAmount: number) => {
+    const newScrollPosition = commonScroll + scrollAmount;
+    setCommonScroll(newScrollPosition);
+    commonContainerRef.current.scrollLeft = newScrollPosition;
+  };
+  const handleDoctorScroll = (scrollAmount: number) => {
+    const newScrollPosition = doctorScroll + scrollAmount;
+    setDoctorScroll(newScrollPosition);
+    doctorRef.current.scrollLeft = newScrollPosition;
+  };
+  const topContainerRef = React.useRef();
+  const commonContainerRef = React.useRef();
+  const doctorRef = React.useRef();
   return (
     <>
       <div
@@ -20,6 +50,7 @@ const Home = () => {
           bottom: 0,
           position: "absolute",
           overflow: "scroll",
+          backgroundColor:"#F2F2F2"
         }}
       >
         {/* Search */}
@@ -37,7 +68,12 @@ const Home = () => {
             overflow: "hidden",
           }}
         >
-          <Box sx={{ width: { sm: "flex", md: "none" },display:{md:"none",lg:"flex"} }}>
+          <Box
+            sx={{
+              width: { sm: "flex", md: "none" },
+              display: { md: "none", lg: "flex" },
+            }}
+          >
             <img
               src={svg.city}
               // width={"100%"}
@@ -83,7 +119,6 @@ const Home = () => {
           style={{
             display: "flex",
             flex: 1,
-            backgroundColor: "green",
             height: "25vh",
             marginInline: "5vw",
             marginTop: "1vh",
@@ -91,20 +126,191 @@ const Home = () => {
             flexDirection: "column",
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{ fontSize: "24px", fontWeight: "bold", fontFamily: "Arial" }}
-          >
-            Top Specialistis
-          </Typography>
-          <Box style={{ display: "flex",overflow:"scroll",width:"89vw" }}>
-            {specialistImgs.map((e) => (
-              <SpecialistChip
-                image={e?.image}
-                title={e?.title}
-                price={e?.price}
-              />
-            ))}
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "24px", fontWeight: "bold", fontFamily: "Arial" }}
+            >
+              Top Specialistis
+            </Typography>
+            <Button
+              variant="outlined"
+              // onClick={onClick}
+              sx={{
+                width: { xs: "100px", sm: "110px", md: "90px" },
+                fontSize: { xs: "8px", sm: "9px", md: "12px" },
+                marginBlock: ".5vh",
+              }}
+            >
+              See All
+            </Button>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconBtn
+              muiIcon={<KeyboardArrowLeftIcon />}
+              onClick={() => handleTopScroll(-TOP_ITEM_WIDTH)}
+              style={{ boxShadow: 2 }}
+              bgColor="white"
+            />
+            <Box
+              style={{
+                display: "flex",
+                overflowX: "scroll",
+                width: "87vw",
+                scrollBehavior: "smooth",
+              }}
+              component={"div"}
+              ref={topContainerRef}
+            >
+              {specialistImgs.map((e) => (
+                <SpecialistChip
+                  image={e?.image}
+                  title={e?.title}
+                  price={e?.price}
+                  // onClick={()=}
+                />
+              ))}
+            </Box>
+            <IconBtn
+              muiIcon={<KeyboardArrowRightIcon />}
+              onClick={() => handleTopScroll(TOP_ITEM_WIDTH)}
+              style={{ boxShadow: 2 }}
+              bgColor="white"
+            />
+          </Box>
+        </Box>
+        {/* Common Health Concern */}
+        <Box
+          style={{
+            display: "flex",
+            flex: 1,
+            height: "25vh",
+            marginInline: "5vw",
+            marginTop: "5.5vh",
+            padding: "5px",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "24px", fontWeight: "bold", fontFamily: "Arial" }}
+            >
+              Common Health Concern
+            </Typography>
+            <Button
+              variant="outlined"
+              // onClick={onClick}
+              sx={{
+                width: { xs: "100px", sm: "110px", md: "90px" },
+                fontSize: { xs: "8px", sm: "9px", md: "12px" },
+                marginBlock: ".5vh",
+              }}
+            >
+              See All
+            </Button>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconBtn
+              muiIcon={<KeyboardArrowLeftIcon />}
+              onClick={() => handleCommonScroll(-COMMON_ITEM_WIDTH)}
+              style={{ boxShadow: 2 }}
+              bgColor="white"
+            />
+            <Box
+              sx={{
+                display: "flex",
+                overflowX: "scroll",
+                width: "87vw",
+                scrollBehavior: "smooth",
+                flexDirection: "row",
+              }}
+              component={"div"}
+              ref={commonContainerRef}
+            >
+              {common_concerns.map((e) => (
+                <HealthChip
+                  image={e?.image}
+                  title={e?.title}
+                  price={e?.price}
+                />
+              ))}
+            </Box>
+            <IconBtn
+              muiIcon={<KeyboardArrowRightIcon />}
+              onClick={() => handleCommonScroll(COMMON_ITEM_WIDTH)}
+              style={{ boxShadow: 2 }}
+              bgColor="white"
+            />
+          </Box>
+        </Box>
+        {/* Doctors */}
+        <Box
+          style={{
+            display: "flex",
+            flex: 1,
+            height: "25vh",
+            marginInline: "5vw",
+            marginTop: "15vh",
+            padding: "5px",
+            flexDirection: "column",
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography
+              variant="h6"
+              sx={{ fontSize: "24px", fontWeight: "bold", fontFamily: "Arial" }}
+            >
+              Some of the Best Doctors
+            </Typography>
+            <Button
+              variant="outlined"
+              // onClick={onClick}
+              sx={{
+                width: { xs: "100px", sm: "110px", md: "90px" },
+                fontSize: { xs: "8px", sm: "9px", md: "12px" },
+                marginBlock: ".5vh",
+              }}
+            >
+              See All
+            </Button>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconBtn
+              muiIcon={<KeyboardArrowLeftIcon />}
+              onClick={() => handleDoctorScroll(-DOCTOR_ITEM_WIDTH)}
+              style={{ boxShadow: 2 }}
+              bgColor="white"
+            />
+            <Box
+              sx={{
+                display: "flex",
+                overflowX: "scroll",
+                width: "87vw",
+                scrollBehavior: "smooth",
+                flexDirection: "row",
+              }}
+              component={"div"}
+              ref={doctorRef}
+            >
+              {doctors.map((e) => (
+                <DoctorChip
+                  image={e?.image}
+                  title={e?.title}
+                  exp={e?.exp}
+                  location={e?.location}
+                  degree={e?.degree}
+                  dept={e?.dept}
+                  // price={e?.price}
+                />
+              ))}
+            </Box>
+            <IconBtn
+              muiIcon={<KeyboardArrowRightIcon />}
+              onClick={() => handleDoctorScroll(DOCTOR_ITEM_WIDTH)}
+              style={{ boxShadow: 2 }}
+              bgColor="white"
+            />
           </Box>
         </Box>
       </div>
