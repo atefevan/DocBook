@@ -3,6 +3,7 @@ import { jpeg } from "../assets";
 import React from "react";
 import { enqueueSnackbar } from "notistack";
 import TxtField from "../components/atoms/TxtField";
+import { signin, signup } from "../apis/user";
 
 const Login = () => {
   const [formData, setFormData] = React.useState<any>({});
@@ -14,17 +15,18 @@ const Login = () => {
     obj[key] = e.target.value;
     setFormData({ ...formData, ...obj });
   };
-  const handleLogin = async () => {
+  const handleAuthentication = async () => {
     if (!formData?.email || !formData?.password) {
       return enqueueSnackbar("Fill the Input Values !", {
         variant: "error",
       });
     }
-    // leaveTypeAdd(formData).then((res: any) => {
-    //   enqueueSnackbar(res.message, {
-    //     variant: res.status,
-    //   });
-    // });
+
+    if (hasAccount) {
+      const response = await signin({email: formData.email, password: formData.password});
+    } else {
+      const response = await signup({email: formData.email, password: formData.password});
+    }
   };
   return (
     <Box
@@ -67,7 +69,7 @@ const Login = () => {
             fontSize: "42px",
             fontWeight: "bold",
             fontFamily: "Arial",
-            marginBlock: 2
+            marginBlock: 2,
           }}
         >
           {hasAccount ? `Welcome Back :)` : `Create an account`}
@@ -103,18 +105,20 @@ const Login = () => {
           fieldOnChange={handleFormDataInput}
         />
         <Button
-          onClick={handleLogin}
+          onClick={handleAuthentication}
           variant="contained"
-          sx={{ alignSelf: "center", width: "100%",marginBlock: 1 }}
+          sx={{ alignSelf: "center", width: "100%", marginBlock: 1 }}
         >
-          Login
+          {hasAccount ? "Sign In" : "Sign Up"}
         </Button>
         <Button
           onClick={() => setHasAccount(!hasAccount)}
           variant="text"
           sx={{ alignSelf: "center", width: "100%", marginBlock: 1 }}
         >
-          {!hasAccount ? `Already Have An Account ?` : `Don't have an account ?`}
+          {!hasAccount
+            ? `Already Have An Account ?`
+            : `Don't have an account ?`}
         </Button>
       </Box>
     </Box>
