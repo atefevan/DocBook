@@ -32,6 +32,12 @@ const Login = () => {
         alignItems: "center",
         justifyContent: "space-between",
         flexDirection: { xs: "column", sm: "column", md: "row", lg: "row" },
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        padding: 0,
+        margin: 0,
       }}
     >
       <Box
@@ -42,15 +48,16 @@ const Login = () => {
           alignItems: "center",
         }}
       >
-        <img src={jpeg.banner} style={{ width: "100%" }} />
+        <img src={jpeg.banner} style={{ height:"99.2vh",width:"50vw" }} />
       </Box>
       <Box
         sx={{
           display: "flex",
           flex: 1,
           flexDirection: "column",
-          justifyContent: "end",
-          alignItems: "end",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingInline:"10vw"
         }}
       >
         <Typography
