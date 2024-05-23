@@ -18,6 +18,7 @@ import IconBtn from "../components/atoms/IconButton";
 import HealthChip from "../components/HealthChip";
 import DoctorChip from "../components/DoctorChip";
 import AmbulanceChip from "../components/AmbulanceChip";
+import Slider from "../components/Slider";
 
 const Home = () => {
   const TOP_ITEM_WIDTH = 150;
@@ -123,6 +124,16 @@ const Home = () => {
             <AutoComplete options={areas} label={"Locations"} />
           </Box>
         </Box>
+
+        <Slider autoScroll autoHideButton>
+          {specialistImgs.map((e) => (
+            <SpecialistChip
+              image={e?.image}
+              title={e?.title}
+              price={e?.price}
+            />
+          ))}
+        </Slider>
 
         {/* Top Specialities */}
         <Box
