@@ -29,24 +29,27 @@ const Home = () => {
   const [commonScroll, setCommonScroll] = React.useState<number>(0);
   const [doctorScroll, setDoctorScroll] = React.useState<number>(0);
 
-  const handleTopScroll = (scrollAmount: number) => {
-    const newScrollPosition = topScroll + scrollAmount;
-    setTopScroll(newScrollPosition);
-    topContainerRef.current.scrollLeft = newScrollPosition;
-  };
-  const handleCommonScroll = (scrollAmount: number) => {
-    const newScrollPosition = commonScroll + scrollAmount;
-    setCommonScroll(newScrollPosition);
-    commonContainerRef.current.scrollLeft = newScrollPosition;
-  };
-  const handleDoctorScroll = (scrollAmount: number) => {
-    const newScrollPosition = doctorScroll + scrollAmount;
-    setDoctorScroll(newScrollPosition);
-    doctorRef.current.scrollLeft = newScrollPosition;
-  };
   const topContainerRef = React.useRef();
   const commonContainerRef = React.useRef();
   const doctorRef = React.useRef();
+
+  const handleScroll = (
+    amount: number,
+    ref: any,
+    state: number,
+    setState: (data: number) => void,
+    count: number,
+  ) => {
+    const new_position = state + amount;
+    const max_limit = amount * count;
+
+    if (new_position >= -amount && new_position <= max_limit) {
+      console.log("run", new_position, window.innerWidth);
+      setState(new_position);
+      ref.current.scrollLeft = new_position;
+    }
+  };
+
   return (
     <>
       <div
@@ -155,7 +158,14 @@ const Home = () => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconBtn
               muiIcon={<KeyboardArrowLeftIcon />}
-              onClick={() => handleTopScroll(-TOP_ITEM_WIDTH)}
+              onClick={() =>
+                handleScroll(
+                  -TOP_ITEM_WIDTH,
+                  topContainerRef,
+                  topScroll,
+                  setTopScroll,
+                  specialistImgs.length,
+                )}
               style={{ boxShadow: 2 }}
               bgColor="white"
             />
@@ -180,7 +190,14 @@ const Home = () => {
             </Box>
             <IconBtn
               muiIcon={<KeyboardArrowRightIcon />}
-              onClick={() => handleTopScroll(TOP_ITEM_WIDTH)}
+              onClick={() =>
+                handleScroll(
+                  TOP_ITEM_WIDTH,
+                  topContainerRef,
+                  topScroll,
+                  setTopScroll,
+                  specialistImgs.length,
+                )}
               style={{ boxShadow: 2 }}
               bgColor="white"
             />
@@ -220,7 +237,13 @@ const Home = () => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconBtn
               muiIcon={<KeyboardArrowLeftIcon />}
-              onClick={() => handleCommonScroll(-COMMON_ITEM_WIDTH)}
+              onClick={() =>
+                handleScroll(
+                  -COMMON_ITEM_WIDTH,
+                  commonContainerRef,
+                  commonScroll,
+                  setCommonScroll,
+                )}
               style={{ boxShadow: 2 }}
               bgColor="white"
             />
@@ -245,13 +268,18 @@ const Home = () => {
             </Box>
             <IconBtn
               muiIcon={<KeyboardArrowRightIcon />}
-              onClick={() => handleCommonScroll(COMMON_ITEM_WIDTH)}
+              onClick={() =>
+                handleScroll(
+                  COMMON_ITEM_WIDTH,
+                  commonContainerRef,
+                  commonScroll,
+                  setCommonScroll,
+                )}
               style={{ boxShadow: 2 }}
               bgColor="white"
             />
           </Box>
         </Box>
-
 
         {/* Doctors */}
         <Box
@@ -260,7 +288,7 @@ const Home = () => {
             flex: 1,
             height: "25vh",
             marginInline: "5vw",
-            marginTop: { xs: "6vh",sm:"10vh", md: "13vh" },
+            marginTop: { xs: "6vh", sm: "10vh", md: "13vh" },
             padding: "5px",
             flexDirection: "column",
           }}
@@ -287,7 +315,13 @@ const Home = () => {
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconBtn
               muiIcon={<KeyboardArrowLeftIcon />}
-              onClick={() => handleDoctorScroll(-DOCTOR_ITEM_WIDTH)}
+              onClick={() =>
+                handleScroll(
+                  DOCTOR_ITEM_WIDTH,
+                  doctorRef,
+                  doctorScroll,
+                  setDoctorScroll,
+                )}
               style={{ boxShadow: 2 }}
               bgColor="white"
             />
@@ -329,7 +363,7 @@ const Home = () => {
             flex: 1,
             height: "15vh",
             marginInline: "5vw",
-            marginTop: { xs: "15vh",sm:"10vh", md: "5vh" },
+            marginTop: { xs: "15vh", sm: "10vh", md: "5vh" },
             padding: "5px",
             flexDirection: "column",
           }}
