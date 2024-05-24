@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { svg } from "../assets";
+import { png, svg } from "../assets";
 import AutoComplete from "../components/atoms/AutoComplete";
 import TxtField from "../components/atoms/TxtField";
 import { areas } from "../mock/strings";
@@ -32,7 +32,7 @@ const Doctor = () => {
     setFormData({ ...formData, ...obj });
   };
   return (
-    <Box sx={{marginInline: "5vw",}}>
+    <Box sx={{ marginInline: "5vw" }}>
       {/* Search */}
       <Box
         sx={{
@@ -40,7 +40,7 @@ const Doctor = () => {
           flex: 1,
           height: "25vh",
           backgroundColor: "#397693",
-          
+
           marginTop: "10vh",
           borderRadius: 3,
 
@@ -83,10 +83,10 @@ const Doctor = () => {
           sx={{
             display: "flex",
             // flex: 1,
-            width:"100%",
+            width: "100%",
             margin: 2,
             // alignItems:"center",
-            justifyContent: "space-between" ,
+            justifyContent: "space-between",
           }}
         >
           <MenuList
@@ -102,11 +102,10 @@ const Doctor = () => {
             }
             items={[...specialities]}
             labelFontSize={"18px"}
-            style={{ width: { xs: "25vw", md: "25vw" },marginBottom:1 }}
-            
+            style={{ width: { xs: "25vw", md: "25vw" }, marginBottom: 1 }}
             onChange={handleFormDataInput}
           />
-           <MenuList
+          <MenuList
             id="districts"
             name="districts"
             key="districts"
@@ -134,14 +133,25 @@ const Doctor = () => {
                 : ""
             }
             labelFontSize={"18px"}
-            items={["Video","Audio","Face to Face"]}
+            items={["Video", "Audio", "Face to Face"]}
             style={{ width: { xs: "25vw", md: "25vw" } }}
             onChange={handleFormDataInput}
-          /> 
+          />
         </Box>
       </Box>
-      <Typography sx={{fontSize:"16px",marginBlock:"1vh"}}>Book Appoinment with Specialized Doctors</Typography>
-      {/* <DoctorChip image={png.}/> */}
+      <Typography sx={{ fontSize: "16px", marginBlock: "1vh" }}>
+        Book Appoinment with Specialized Doctors
+      </Typography>
+      <DoctorChip
+        image={png.d1}
+        title="Atef Shahrier Evann"
+        degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
+        dept="Orthopedic Surgeon"
+        exp="16"
+        avaiableIn="1"
+        time={{start:"04.00 am",end:"7.00 am"}}
+        days={["Sat","Sun","Mon"]}
+      />
     </Box>
   );
 };
