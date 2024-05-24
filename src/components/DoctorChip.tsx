@@ -13,18 +13,18 @@ interface Props {
   title?: string;
   degree?: string;
   image?: any;
-  location?: string;
   exp?: string;
   dept?: string;
   avaiableIn?: string;
   time?: any;
   days?: any;
+  address?:string;
 }
 const DoctorChip = ({
   title,
   degree,
   image,
-  location,
+  address,
   exp,
   dept,
   avaiableIn,
@@ -127,6 +127,18 @@ const DoctorChip = ({
             </Typography>
           </Box>
         </Box>
+        <Typography
+          sx={{
+            fontSize: { xs: "10px", md: "12px" },
+            color: "#007292",
+            marginLeft: { xs: 0, md: 1 },
+            marginBlock: { xs: 0, md: 0.5 },
+            textAlign:{xs:"center",md:"start"},
+            paddingInline:{xs:"2vw",md:"0vw"}
+          }}
+        >
+          {address}
+        </Typography>
         <Box>
           <Box
             sx={{ display: "flex", marginBlock: "1vh", alignItems: "start" }}

@@ -157,6 +157,7 @@ const Doctor = () => {
             degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
             dept="Orthopedic Surgeon"
             exp="16"
+            address="House # 479, DIT Road, (Near Malibagh Rail Gate, W Malibagh, Dhaka, 1217, Bangladesh"
             avaiableIn="1"
             time={{ start: "04.00 am", end: "7.00 am" }}
             days={["Sat", "Sun", "Mon"]}
@@ -168,6 +169,7 @@ const Doctor = () => {
             degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
             dept="Orthopedic Surgeon"
             exp="16"
+            address="House # 479, DIT Road, (Near Malibagh Rail Gate, W Malibagh, Dhaka, 1217, Bangladesh"
             avaiableIn="1"
             time={{ start: "04.00 am", end: "7.00 am" }}
             days={["Sat", "Sun", "Mon"]}
@@ -178,6 +180,7 @@ const Doctor = () => {
             degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
             dept="Orthopedic Surgeon"
             exp="16"
+            address="House # 479, DIT Road, (Near Malibagh Rail Gate, W Malibagh, Dhaka, 1217, Bangladesh"
             avaiableIn="1"
             time={{ start: "04.00 am", end: "7.00 am" }}
             days={["Sat", "Sun", "Mon"]}
