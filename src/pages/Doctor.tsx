@@ -139,19 +139,65 @@ const Doctor = () => {
           />
         </Box>
       </Box>
-      <Typography sx={{ fontSize: "16px", marginBlock: "1vh" }}>
+      <Typography sx={{ fontSize: "16px", marginTop: "2vh" }}>
         Book Appoinment with Specialized Doctors
       </Typography>
-      <DoctorChip
-        image={png.d1}
-        title="Atef Shahrier Evann"
-        degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
-        dept="Orthopedic Surgeon"
-        exp="16"
-        avaiableIn="1"
-        time={{start:"04.00 am",end:"7.00 am"}}
-        days={["Sat","Sun","Mon"]}
-      />
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            overflow: "scroll",
+            height: "60vh",
+          }}
+        >
+          <DoctorChip
+            image={png.d1}
+            title="Atef Shahrier Evann"
+            degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
+            dept="Orthopedic Surgeon"
+            exp="16"
+            avaiableIn="1"
+            time={{ start: "04.00 am", end: "7.00 am" }}
+            days={["Sat", "Sun", "Mon"]}
+          />
+
+          <DoctorChip
+            image={png.d1}
+            title="Atef Shahrier Evann"
+            degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
+            dept="Orthopedic Surgeon"
+            exp="16"
+            avaiableIn="1"
+            time={{ start: "04.00 am", end: "7.00 am" }}
+            days={["Sat", "Sun", "Mon"]}
+          />
+          <DoctorChip
+            image={png.d1}
+            title="Atef Shahrier Evann"
+            degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
+            dept="Orthopedic Surgeon"
+            exp="16"
+            avaiableIn="1"
+            time={{ start: "04.00 am", end: "7.00 am" }}
+            days={["Sat", "Sun", "Mon"]}
+          />
+        </Box>
+        {/* <Box
+          sx={{
+            display:{xs:"none",md:"flex"},
+            width: { md: "35vw" },
+            height: "30vh",
+            boxShadow: 3,
+            margin: 2,
+            borderRadius: 2,
+          }}
+        >
+          <Typography>
+
+          </Typography>
+        </Box> */}
+      </Box>
     </Box>
   );
 };
