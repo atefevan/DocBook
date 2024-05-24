@@ -1,19 +1,20 @@
 import { Box, Button, Typography } from "@mui/material";
-import { png, svg } from "../assets";
-import AutoComplete from "../components/atoms/AutoComplete";
-import TxtField from "../components/atoms/TxtField";
-import { areas } from "../mock/strings";
+import { png, svg } from "../../assets";
+import AutoComplete from "../../components/atoms/AutoComplete";
+import TxtField from "../../components/atoms/TxtField";
+import { areas } from "../../mock/strings";
 
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
-import MenuList from "../components/atoms/MenuList";
-import HospitalChip from "../components/HospitalChip";
+import MenuList from "../../components/atoms/MenuList";
+import HospitalChip from "../../components/HospitalChip";
 
 const Hospital = () => {
   const [query, setQuery] = React.useState<string>("");
   const [formData, setFormData] = React.useState({});
   const [specialities, setSpecialities] = React.useState(["AA", "BB"]);
   const [districts, setDistricts] = React.useState(["CC", "DD"]);
+
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
     let obj: any = {};
@@ -153,6 +154,10 @@ const Hospital = () => {
             address="122 Kazi Nazrul Islam Ave, Dhaka, 1000, Bangladesh"
             price_range={{ start: 500, end: 1200 }}
             assignedDoctor={6}
+            onClick={() => {
+              window.location.href = `/hospitalDetails`;
+              // console.log("DOC");
+            }}
           />
           <HospitalChip
             image={

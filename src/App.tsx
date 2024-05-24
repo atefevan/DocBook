@@ -4,7 +4,8 @@ import Doctors from "./pages/Doctor";
 import ButtonAppBar from "./components/Appbar";
 import Login from "./pages/Login";
 import { SnackbarProvider } from "notistack";
-import Hospital from "./pages/Hospital";
+import Hospital from "./pages/hospital/Hospital";
+import HospitalDetails from "./pages/hospital/HospitalDetails";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="doctor" element={<Doctors />} />
           <Route path="login" element={<Login />} />
           <Route path="hospital" element={<Hospital />} />
+          <Route path="hospitalDetails" element={<HospitalDetails />} />
         </Routes>
       </BrowserRouter>
     </SnackbarProvider>

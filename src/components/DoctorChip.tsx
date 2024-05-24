@@ -18,7 +18,8 @@ interface Props {
   avaiableIn?: string;
   time?: any;
   days?: any;
-  address?:string;
+  address?: string;
+  onClick?: (value?: any) => void;
 }
 const DoctorChip = ({
   title,
@@ -133,8 +134,8 @@ const DoctorChip = ({
             color: "#007292",
             marginLeft: { xs: 0, md: 1 },
             marginBlock: { xs: 0, md: 0.5 },
-            textAlign:{xs:"center",md:"start"},
-            paddingInline:{xs:"2vw",md:"0vw"}
+            textAlign: { xs: "center", md: "start" },
+            paddingInline: { xs: "2vw", md: "0vw" },
           }}
         >
           {address}

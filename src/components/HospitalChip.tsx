@@ -7,6 +7,7 @@ interface Props {
   price_range?: any;
   image?: any;
   assignedDoctor?: number;
+  onClick?: (value?: any) => void;
 }
 const HospitalChip = ({
   title,
@@ -14,6 +15,7 @@ const HospitalChip = ({
   price_range,
   image,
   assignedDoctor,
+  onClick,
 }: Props) => {
   return (
     <Box
@@ -44,7 +46,7 @@ const HospitalChip = ({
           justifyContent: "center",
           display: "flex",
           flex: 1,
-          overflow:"clip",
+          overflow: "clip",
           flexDirection: "column",
           alignItems: { xs: "center", md: "start" },
         }}
@@ -52,7 +54,7 @@ const HospitalChip = ({
         <Typography
           sx={{
             fontSize: { xs: "14px", md: "18px" },
-            fontWeight:"bold",
+            fontWeight: "bold",
             color: "#007292",
             margin: { xs: 0, md: 1 },
           }}
@@ -147,18 +149,17 @@ const HospitalChip = ({
         </Box>
         <Box
           sx={{
-            width: { sm:"100%",md: "100%" },
+            width: { sm: "100%", md: "100%" },
             // flex:1,
             backgroundColor: "grey",
-            height: {md:"1px"},
+            height: { md: "1px" },
             borderRadius: 10,
-
           }}
         />
         <Box
           sx={{
             display: "flex",
-            justifyContent: { xs: "center",sm:"center", md: "end" },
+            justifyContent: { xs: "center", sm: "center", md: "end" },
             width: "100%",
             // flex:1,
           }}
@@ -167,8 +168,9 @@ const HospitalChip = ({
             variant="outlined"
             sx={{
               margin: 1,
-              display:"flex"
+              display: "flex",
             }}
+            onClick={onClick}
           >
             View More
           </Button>
