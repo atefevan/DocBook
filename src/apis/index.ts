@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = `https://docbook-backend-delta.vercel.app`
+const BASE_URL = `https://docbook-backend-delta.vercel.app`;
 // const BASE_URL = "http://localhost:3000";
 
 const apiHandler = axios.create({
@@ -10,7 +10,7 @@ const apiHandler = axios.create({
 // Request interceptor for adding the bearer token
 apiHandler.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("DOCBOOK_ACCESS_TOKEN"); // Assuming you store the token in localStorage
+    const token = localStorage.getItem("DOCBOOK_ACCESS_TOKEN");
     if (token) {
       config.headers.Authorization = `${token}`;
     }
@@ -18,7 +18,7 @@ apiHandler.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  },
+  }
 );
 
 export default apiHandler;

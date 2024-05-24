@@ -14,16 +14,16 @@ const Doctor = () => {
   const [formData, setFormData] = React.useState({});
   const [specialities, setSpecialities] = React.useState(["A", "B"]);
   const [districts, setDistricts] = React.useState(["C", "D"]);
-  React.useEffect(() => {
-    // bankInfoRead().then((res) => {
-    //   const { data } = res;
-    //   const specialities = [];
-    //   if (data) {
-    //     data.map((item) => specialities.push(item?.speciality_english));
-    //     setSpecialities([...specialities]);
-    //   }
-    // });
-  }, []);
+  // React.useEffect(() => {
+  //   // bankInfoRead().then((res) => {
+  //   //   const { data } = res;
+  //   //   const specialities = [];
+  //   //   if (data) {
+  //   //     data.map((item) => specialities.push(item?.speciality_english));
+  //   //     setSpecialities([...specialities]);
+  //   //   }
+  //   // });
+  // }, []);
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
     let obj: any = {};
@@ -61,6 +61,7 @@ const Doctor = () => {
           <TxtField
             placeHolder="Search Doctors....."
             fieldOnChange={setQuery}
+            value={query}
             prefixIcon={<SearchIcon />}
             style={{ marginBlock: { xs: "1vh", md: "0vh" } }}
           />
@@ -95,13 +96,14 @@ const Doctor = () => {
             key="speciality"
             label="Speciality"
             isRequired={true}
+            size={"small"}
             value={
               Object.keys(formData).length && formData?.speciality
                 ? formData?.speciality
                 : ""
             }
             items={[...specialities]}
-            labelFontSize={"18px"}
+            labelFontSize={{ xs: "14px", md: "18px" }}
             style={{ width: { xs: "25vw", md: "25vw" }, marginBottom: 1 }}
             onChange={handleFormDataInput}
           />
@@ -111,12 +113,13 @@ const Doctor = () => {
             key="districts"
             label="districts"
             isRequired={true}
+            size={"small"}
             value={
               Object.keys(formData).length && formData?.districts
                 ? formData?.districts
                 : ""
             }
-            labelFontSize={"18px"}
+            labelFontSize={{ xs: "14px", md: "18px" }}
             items={[...districts]}
             style={{ width: { xs: "25vw", md: "25vw" } }}
             onChange={handleFormDataInput}
@@ -127,12 +130,13 @@ const Doctor = () => {
             key="consult_type"
             label="Consult Type"
             isRequired={true}
+            size={"small"}
             value={
               Object.keys(formData).length && formData?.consult_type
                 ? formData?.consult_type
                 : ""
             }
-            labelFontSize={"18px"}
+            labelFontSize={{ xs: "14px", md: "18px" }}
             items={["Video", "Audio", "Face to Face"]}
             style={{ width: { xs: "25vw", md: "25vw" } }}
             onChange={handleFormDataInput}

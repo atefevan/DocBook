@@ -25,7 +25,7 @@ interface Props {
   onClick?: () => void;
   onChange?: (e: any) => void;
   value?: string;
-  labelFontSize?: number | string;
+  labelFontSize?: any;
   placeHolder?: string;
   name?: string;
   outlineColor?: string;
