@@ -16,10 +16,16 @@ import HealthChip from "../components/HealthChip";
 import InfoChip from "../components/InfoChip";
 import AmbulanceChip from "../components/AmbulanceChip";
 import Slider from "../components/Slider";
+import { specialitiesRead } from "../apis/speciality";
 
 const Home = () => {
   const [query, setQuery] = React.useState<string>("");
   const doctorRef = React.useRef();
+  const [specialists, setSpecialists] = React.useState<[]>([]);
+  React.useEffect(() => {
+    specialitiesRead().then((res) => setSpecialists(res?.data));
+  }, []);
+  // console.log("SPECIALS : ", specialists);
   return (
     <>
       <div
@@ -59,9 +65,9 @@ const Home = () => {
               src={svg.city}
               sx={{
                 position: "absolute",
-                top: 70,
-                left: { xs: "1vw", md: "15vw" },
-                right: { xs: "1vw", md: "15vw" },
+                top: 35,
+                left: { xs: "1vw", md: "10vw" },
+                // right: { xs: "1vw", md: "15vw" },
                 // width:{ xs: "1vw", md: "10vw" }
               }}
             />
@@ -116,10 +122,10 @@ const Home = () => {
             </Typography>
           </Box>
           <Slider autoHideButton>
-            {specialistImgs.map((e) => (
+            {specialists.map((e) => (
               <SpecialistChip
-                image={e?.image}
-                title={e?.title}
+                image={e?.image_url}
+                title={e?.speciality}
                 price={e?.price}
               />
             ))}
