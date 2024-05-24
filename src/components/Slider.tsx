@@ -1,5 +1,6 @@
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import * as React from "react";
+import IconBtn from "./atoms/IconButton";
 
 interface SliderProps {
   children: React.ReactNode;
@@ -79,12 +80,11 @@ const Slider: React.FC<SliderProps> = ({
   return (
     <div style={styles.sliderContainer}>
       {!(autoHideButton && currentIndex === 0) && (
-        <button
+        <IconBtn
+          muiIcon={<KeyboardArrowLeft />}
           style={{ ...styles.button, ...styles.prevButton }}
           onClick={handlePrev}
-        >
-          <KeyboardArrowLeft />
-        </button>
+        />
       )}
       <div style={styles.sliderWrapper} ref={sliderRef}>
         {childrenArray.map((child, index) => (
@@ -97,12 +97,11 @@ const Slider: React.FC<SliderProps> = ({
         ))}
       </div>
       {!(autoHideButton && currentIndex >= totalChildren - visibleItems) && (
-        <button
+        <IconBtn
+          muiIcon={<KeyboardArrowRight />}
           style={{ ...styles.button, ...styles.nextButton }}
           onClick={handleNext}
-        >
-          <KeyboardArrowRight />
-        </button>
+        />
       )}
     </div>
   );
