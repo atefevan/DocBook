@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Skeleton, Typography } from "@mui/material";
 import TxtField from "../../components/atoms/TxtField";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -123,19 +123,35 @@ const Hospital = () => {
             height: "60vh",
           }}
         >
-          {hospitals?.map((hospital: any) => (
-            <HospitalChip
-              image={hospital?.image_url}
-              title={hospital?.name}
-              onTitleClick={() => navigate(`/hospital/${hospital?._id}`)}
-              address={hospital?.address}
-              phone={hospital?.contact}
-              assignedDoctor={hospital?.doctors.length}
-              onClick={() => {
-                navigate(`/hospital/${hospital?._id}`);
-              }}
-            />
-          ))}
+          {!loading ? (
+            hospitals?.map((hospital: any) => (
+              <HospitalChip
+                image={hospital?.image_url}
+                title={hospital?.name}
+                onTitleClick={() => navigate(`/hospital/${hospital?._id}`)}
+                address={hospital?.address}
+                phone={hospital?.contact}
+                assignedDoctor={hospital?.doctors.length}
+                onClick={() => {
+                  navigate(`/hospital/${hospital?._id}`);
+                }}
+              />
+            ))
+          ) : (
+            <Box>
+              {[1, 2, 3, 4, 5].map(() => (
+                <Skeleton
+                  // variant="rectangular"
+                  sx={{
+                    width: { xs: "45vw", sm: "320px", md: "53vw" },
+                    height: { xs: "50vh", sm: "30vh", md: "20vh" },
+                    borderRadius: 2,
+                    margin: 1,
+                  }}
+                />
+              ))}
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>

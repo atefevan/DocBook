@@ -93,13 +93,13 @@ const HospitalDetails = ({}: Props) => {
           <Typography
             sx={{ marginLeft: "2vw", fontSize: { xs: "", md: "14px" } }}
           >
-            {loading ? <Skeleton /> : details?.service_year === undefined
-              ? (
-                0
-              )
-              : (
-                details?.service_year
-              )}
+            {loading ? (
+              <Skeleton />
+            ) : details?.service_year === undefined ? (
+              0
+            ) : (
+              details?.service_year
+            )}
             Years in service
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -206,8 +206,7 @@ const HospitalDetails = ({}: Props) => {
             alignItems: "center",
           }}
         >
-          {
-            /*
+          {/*
           <Box
             sx={{
               display: "flex",
@@ -221,11 +220,8 @@ const HospitalDetails = ({}: Props) => {
           >
             GOOGLE MAPS
           </Box>
-          */
-          }
-          <MapView
-            url={`${details?.map_url}`}
-          />
+          */}
+          <MapView url={`${details?.map_url}`} />
         </Box>
       </Box>
       <Box
@@ -301,15 +297,13 @@ const HospitalDetails = ({}: Props) => {
                 marginInline: "2vw",
               }}
             >
-              {loading
-                ? <Skeleton count={5} />
-                : details?.description === undefined
-                ? (
-                  "No Description Available !"
-                )
-                : (
-                  details?.description
-                )}
+              {loading ? (
+                <Skeleton count={5} />
+              ) : details?.description === undefined ? (
+                "No Description Available !"
+              ) : (
+                details?.description
+              )}
             </Typography>
           </Box>
         )}
@@ -321,20 +315,34 @@ const HospitalDetails = ({}: Props) => {
               boxShadow: 1,
               marginInline: "4.5vw",
               overflow: "scroll",
-              height: "50vh",
+              height: details?.doctors?.length ? "50vh" : "10vh",
             }}
           >
-            {details?.doctors?.map((doctor) => (
-              <DoctorChip
-                image={doctor?.image_url}
-                title={doctor?.name}
-                degree={doctor?.qualification}
-                dept={doctor?.speciality}
-                exp={doctor?.experience}
-                address={doctor?.address}
-                availability={doctor?.availability}
-              />
-            ))}
+            {details?.doctors?.length ? (
+              details?.doctors?.map((doctor) => (
+                <DoctorChip
+                  image={doctor?.image_url}
+                  title={doctor?.name}
+                  degree={doctor?.qualification}
+                  dept={doctor?.speciality}
+                  exp={doctor?.experience}
+                  address={doctor?.address}
+                  availability={doctor?.availability}
+                />
+              ))
+            ) : (
+              <Typography
+                sx={{
+                  margin: 2,
+                  fontSize: "14px",
+                  fontFamily: "Arial",
+                  color: "#007292",
+                  marginTop: "2vw",
+                }}
+              >
+                No Doctors assigned to this Hospital !
+              </Typography>
+            )}
           </Box>
         )}
       </Box>
