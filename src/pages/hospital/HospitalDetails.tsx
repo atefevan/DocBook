@@ -9,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import DoctorChip from "../../components/DoctorChip";
 import { png } from "../../assets";
+import MapView from "../../components/MapView";
 // import { doctors } from "../../mock/strings";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
@@ -92,13 +93,13 @@ const HospitalDetails = ({}: Props) => {
           <Typography
             sx={{ marginLeft: "2vw", fontSize: { xs: "", md: "14px" } }}
           >
-            {loading ? (
-              <Skeleton />
-            ) : details?.service_year === undefined ? (
-              0
-            ) : (
-              details?.service_year
-            )}
+            {loading ? <Skeleton /> : details?.service_year === undefined
+              ? (
+                0
+              )
+              : (
+                details?.service_year
+              )}
             Years in service
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -205,6 +206,8 @@ const HospitalDetails = ({}: Props) => {
             alignItems: "center",
           }}
         >
+          {
+            /*
           <Box
             sx={{
               display: "flex",
@@ -218,6 +221,11 @@ const HospitalDetails = ({}: Props) => {
           >
             GOOGLE MAPS
           </Box>
+          */
+          }
+          <MapView
+            url={`${details?.map_url}`}
+          />
         </Box>
       </Box>
       <Box
@@ -293,13 +301,15 @@ const HospitalDetails = ({}: Props) => {
                 marginInline: "2vw",
               }}
             >
-              {loading ? (
-                <Skeleton count={5} />
-              ) : details?.description === undefined ? (
-                "No Description Available !"
-              ) : (
-                details?.description
-              )}
+              {loading
+                ? <Skeleton count={5} />
+                : details?.description === undefined
+                ? (
+                  "No Description Available !"
+                )
+                : (
+                  details?.description
+                )}
             </Typography>
           </Box>
         )}
