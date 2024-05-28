@@ -1,29 +1,27 @@
-import { Box, Button, Typography } from "@mui/material";
-import { png, svg } from "../assets";
-import AutoComplete from "../components/atoms/AutoComplete";
+import { Box, Button, Skeleton, Typography } from "@mui/material";
 import TxtField from "../components/atoms/TxtField";
-import { areas } from "../mock/strings";
 
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 import MenuList from "../components/atoms/MenuList";
 import DoctorChip from "../components/DoctorChip";
+import { doctorsRead } from "../apis/doctor";
+import { svg } from "../assets";
 
 const Doctor = () => {
   const [query, setQuery] = React.useState<string>("");
   const [formData, setFormData] = React.useState({});
   const [specialities, setSpecialities] = React.useState(["A", "B"]);
   const [districts, setDistricts] = React.useState(["C", "D"]);
-  // React.useEffect(() => {
-  //   // bankInfoRead().then((res) => {
-  //   //   const { data } = res;
-  //   //   const specialities = [];
-  //   //   if (data) {
-  //   //     data.map((item) => specialities.push(item?.speciality_english));
-  //   //     setSpecialities([...specialities]);
-  //   //   }
-  //   // });
-  // }, []);
+  const [doctors, setDoctors] = React.useState<[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const consultPhone = "02 981 4246";
+  React.useEffect(() => {
+    setLoading(true);
+    doctorsRead()
+      .then((res) => setDoctors(res?.data))
+      .finally(() => setLoading(false));
+  }, []);
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
     let obj: any = {};
@@ -150,60 +148,87 @@ const Doctor = () => {
         <Box
           sx={{
             display: "flex",
+            width: { xs: "100%", sm: "100%", md: "70%" },
+            backgroundColor: "white",
             flexDirection: "column",
             overflow: "scroll",
             height: "60vh",
           }}
         >
-          <DoctorChip
-            image={png.d1}
-            title="Atef Shahrier Evann"
-            degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
-            dept="Orthopedic Surgeon"
-            exp="16"
-            address="House # 479, DIT Road, (Near Malibagh Rail Gate, W Malibagh, Dhaka, 1217, Bangladesh"
-            avaiableIn="1"
-            time={{ start: "04.00 am", end: "7.00 am" }}
-            days={["Sat", "Sun", "Mon"]}
-          />
-
-          <DoctorChip
-            image={png.d1}
-            title="Atef Shahrier Evann"
-            degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
-            dept="Orthopedic Surgeon"
-            exp="16"
-            address="House # 479, DIT Road, (Near Malibagh Rail Gate, W Malibagh, Dhaka, 1217, Bangladesh"
-            avaiableIn="1"
-            time={{ start: "04.00 am", end: "7.00 am" }}
-            days={["Sat", "Sun", "Mon"]}
-          />
-          <DoctorChip
-            image={png.d1}
-            title="Atef Shahrier Evann"
-            degree="MBBS BCS (Health),FCPS (Surgery),MS (ORTHO)"
-            dept="Orthopedic Surgeon"
-            exp="16"
-            address="House # 479, DIT Road, (Near Malibagh Rail Gate, W Malibagh, Dhaka, 1217, Bangladesh"
-            avaiableIn="1"
-            time={{ start: "04.00 am", end: "7.00 am" }}
-            days={["Sat", "Sun", "Mon"]}
-          />
+          {!loading ? (
+            doctors?.map((doctor) => (
+              <DoctorChip
+                image={doctor?.image_url}
+                title={doctor?.name}
+                degree={doctor?.qualification}
+                dept={doctor?.speciality}
+                exp={doctor?.experience}
+                address={doctor?.address}
+                availability={doctor?.availability}
+              />
+            ))
+          ) : (
+            <Box>
+              {[1, 2, 3, 4, 5].map(() => (
+                <Skeleton
+                  sx={{
+                    width: { xs: "45vw", sm: "320px", md: "61vw" },
+                    height: { xs: "50vh", sm: "30vh", md: "26vh" },
+                    borderRadius: 2,
+                    margin: 0.5,
+                  }}
+                />
+              ))}
+            </Box>
+          )}
         </Box>
-        {/* <Box
+        <Box
           sx={{
-            display:{xs:"none",md:"flex"},
-            width: { md: "35vw" },
-            height: "30vh",
-            boxShadow: 3,
-            margin: 2,
-            borderRadius: 2,
+            display: { xs: "none", sm: "none", md: "flex" },
+            width: "30%",
+            backgroundColor: "white",
+            height: "40vh",
+            justifyContent: "center",
+            alignItems: "center",
+            // boxShadow: 1,
+            border: ".5px solid black",
+            borderRadius: 3,
           }}
         >
-          <Typography>
-
+          <Box
+            component={"img"}
+            src={svg.need_help}
+            draggable={false}
+            sx={{
+              width: { xs: "90%", md: "90%" },
+              height: { xs: "80%", md: "70%" },
+              borderRadius: 2,
+            }}
+          />
+          <Typography
+            sx={{
+              position: "absolute",
+              fontFamily: "Arial",
+              fontSize: "16px",
+              color: "#e9ad0f",
+              marginBottom: "8vh",
+            }}
+          >
+            Consult Problem
           </Typography>
-        </Box> */}
+          <Typography
+            sx={{
+              position: "absolute",
+              fontSize: "16px",
+              fontFamily: "Arial",
+              marginBottom: "2vh",
+              cursor: "pointer",
+            }}
+            onClick={() => window.open(`tel:${consultPhone}`)}
+          >
+            {consultPhone}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

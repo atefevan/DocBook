@@ -1,14 +1,7 @@
 import { Box, Button, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
-// import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import React from "react";
-import dayjs, { Dayjs } from "dayjs";
-import DatePickerValue from "./atoms/DatePicker";
-import { jpeg, png, svg } from "../assets";
+import { jpeg } from "../assets";
 
 interface Props {
   title?: string;
@@ -17,8 +10,6 @@ interface Props {
   exp?: string;
   dept?: string;
   avaiableIn?: string;
-  // time?: any;
-  // days?: any;
   availability?: any;
   address?: string;
   onClick?: (value?: any) => void;
@@ -35,13 +26,11 @@ const DoctorChip = ({
   onClick,
   onTitleClick,
 }: Props) => {
-  // const [days, setDays] = React.useState<[]>([]);
-
   return (
     <Box
       sx={{
         display: "flex",
-        width: { xs: "60vw", sm: "70vw", md: "60vw" },
+        width: { xs: "70vw", sm: "70vw", md: "60vw" },
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: { xs: "column", md: "row" },
@@ -54,7 +43,7 @@ const DoctorChip = ({
         component={"img"}
         src={image ? image : jpeg.doctor_skeleton}
         sx={{
-          width: { xs: "9vw", md: "90px" },
+          width: { xs: "11vw", md: "90px" },
           height: { xs: "11vw", md: "90px" },
           margin: 2,
           borderRadius: 1,

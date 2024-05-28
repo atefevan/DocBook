@@ -64,7 +64,7 @@ const HospitalDetails = ({}: Props) => {
               },
               marginTop: 9,
               borderRadius: 2,
-              backgroundColor: "#B4B4B8",
+              backgroundColor: "#E3E1D9",
             }}
           />
         )}
@@ -320,62 +320,64 @@ const HospitalDetails = ({}: Props) => {
               </Typography>
             </Box>
 
-            <Box sx={{ backgroundColor: "white" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  height: "29vh",
-                  width: { xs: "90%", md: "20vw" },
-                  backgroundColor: "#F6F5F2",
-                  borderRadius: 2,
-                  margin: 2,
-                  // justifyContent: "center",
-                  alignItems: "center",
-                  boxShadow: 1,
-                  flexDirection: "column",
-                }}
-              >
-                <Typography
+            {details?.doctors?.length && (
+              <Box sx={{ backgroundColor: "white" }}>
+                <Box
                   sx={{
-                    margin: 1,
-                    fontSize: "18px",
-                    fontFamily: "Arial",
-                    fontWeight: "bold",
-                    color: "#007292",
+                    display: "flex",
+                    height: "29vh",
+                    width: { xs: "90%", md: "20vw" },
+                    backgroundColor: "#F6F5F2",
+                    borderRadius: 2,
+                    margin: 2,
+                    // justifyContent: "center",
+                    alignItems: "center",
+                    boxShadow: 1,
+                    flexDirection: "column",
                   }}
                 >
-                  Appoinment
-                </Typography>
-                <DatePickerValue
-                  label={"Day"}
-                  value={value}
-                  width={"90%"}
-                  setValue={setValue}
-                  style={{ margin: 1 }}
-                />
-                <PickTime
-                  variant="mobile"
-                  label={"Appoinment Time"}
-                  value={value}
-                  setValue={setValue}
-                  width={"90%"}
-                  style={{ margin: 2 }}
-                />
-                <Button
-                  variant="outlined"
-                  // sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
-                >
-                  Book Appoinment
-                </Button>
+                  <Typography
+                    sx={{
+                      margin: 1,
+                      fontSize: "18px",
+                      fontFamily: "Arial",
+                      fontWeight: "bold",
+                      color: "#007292",
+                    }}
+                  >
+                    Appoinment
+                  </Typography>
+                  <DatePickerValue
+                    label={"Day"}
+                    value={value}
+                    width={"90%"}
+                    setValue={setValue}
+                    style={{ margin: 1 }}
+                  />
+                  <PickTime
+                    variant="mobile"
+                    label={"Appoinment Time"}
+                    value={value}
+                    setValue={setValue}
+                    width={"90%"}
+                    style={{ margin: 2 }}
+                  />
+                  <Button
+                    variant="outlined"
+                    // sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
+                  >
+                    Book Appoinment
+                  </Button>
+                </Box>
               </Box>
-            </Box>
+            )}
           </Box>
         )}
         {selected === "Doctor" && (
           <Box
             sx={{
               display: "flex",
-              // flexDirection: { xs: "column", sm: "column", md: "row" },
+              flexDirection: { xs: "column", sm: "column", md: "row" },
               width: "100%",
               backgroundColor: "white",
               boxShadow: 1,
@@ -417,56 +419,53 @@ const HospitalDetails = ({}: Props) => {
                 </Typography>
               )}
             </Box>
-            <Box sx={{ backgroundColor: "white" }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  height: "29vh",
-                  width: { xs: "90%", md: "20vw" },
-                  backgroundColor: "#F6F5F2",
-                  borderRadius: 2,
-                  margin: 2,
-                  // justifyContent: "center",
-                  alignItems: "center",
-                  boxShadow: 1,
-                  flexDirection: "column",
-                }}
-              >
-                <Typography
+            {details?.doctors?.length && (
+              <Box sx={{ backgroundColor: "white" }}>
+                <Box
                   sx={{
-                    margin: 1,
-                    fontSize: "18px",
-                    fontFamily: "Arial",
-                    fontWeight: "bold",
-                    color: "#007292",
+                    display: { xs: "none", md: "flex" },
+                    height: "29vh",
+                    width: { xs: "90%", md: "22vw" },
+                    backgroundColor: "#F6F5F2",
+                    borderRadius: 2,
+                    margin: 2,
+                    // justifyContent: "center",
+                    alignItems: "center",
+                    boxShadow: 1,
+                    flexDirection: "column",
                   }}
                 >
-                  Appoinment
-                </Typography>
-                <DatePickerValue
-                  label={"Day"}
-                  value={value}
-                  width={"90%"}
-                  setValue={setValue}
-                  style={{ margin: 1 }}
-                />
-                <PickTime
-                  variant="mobile"
-                  label={"Appoinment Time"}
-                  value={value}
-                  setValue={setValue}
-                  width={"90%"}
-                  style={{ margin: 2 }}
-                />
+                  <Typography
+                    sx={{
+                      margin: 1,
+                      fontSize: "18px",
+                      fontFamily: "Arial",
+                      fontWeight: "bold",
+                      color: "#007292",
+                    }}
+                  >
+                    Appoinment
+                  </Typography>
+                  <DatePickerValue
+                    label={"Day"}
+                    value={value}
+                    width={"90%"}
+                    setValue={setValue}
+                    style={{ margin: 1 }}
+                  />
+                  <PickTime
+                    variant="mobile"
+                    label={"Appoinment Time"}
+                    value={value}
+                    setValue={setValue}
+                    width={"90%"}
+                    style={{ margin: 2 }}
+                  />
 
-                <Button
-                  variant="outlined"
-                  // sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
-                >
-                  Book Appoinment
-                </Button>
+                  <Button variant="outlined">Book Appoinment</Button>
+                </Box>
               </Box>
-            </Box>
+            )}
           </Box>
         )}
       </Box>
