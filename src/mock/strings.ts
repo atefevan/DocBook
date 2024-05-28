@@ -38,14 +38,16 @@ export const common_concerns = [
   },
 ];
 
-export const areas = [
-  "Dhaka",
-  "Cumilla",
-  "Syllet",
-  "Barishal",
-  "Noakhali",
-  "Khulna",
-];
+export const areas =  [
+  "Barguna", "Barisal", "Bhola", "Jhalokati", "Patuakhali", "Pirojpur", // Barishal Division
+  "Bandarban", "Brahmanbaria", "Chandpur", "Chittagong", "Comilla", "Cox's Bazar", "Feni", "Khagrachari", "Lakshmipur", "Noakhali", "Rangamati", // Chattogram Division
+  "Dhaka", "Faridpur", "Gazipur", "Gopalganj", "Kishoreganj", "Madaripur", "Manikganj", "Munshiganj", "Narayanganj", "Narsingdi", "Rajbari", "Shariatpur", "Tangail", // Dhaka Division
+  "Jamalpur", "Mymensingh", "Netrakona", "Sherpur", // Mymensingh Division
+  "Bagerhat", "Chuadanga", "Jessore", "Jhenaidah", "Khulna", "Kushtia", "Magura", "Meherpur", "Narail", "Satkhira", // Khulna Division
+  "Bogura", "Joypurhat", "Naogaon", "Natore", "Chapainawabganj", "Pabna", "Rajshahi", "Sirajganj", // Rajshahi Division
+  "Dinajpur", "Gaibandha", "Kurigram", "Lalmonirhat", "Nilphamari", "Panchagarh", "Rangpur", "Thakurgaon", // Rangpur Division
+  "Habiganj", "Moulvibazar", "Sunamganj", "Sylhet" // Sylhet Division
+];;
 
 export const ambulances = [
   {title:"AC Ambulance",image:webp.ambulance_front,point_1:"Get ambulance within 30 minutes*",point_2:"24/7 affordable quality service",point_3:"We are just a call away: 01405600700"},

@@ -1,8 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import { png, svg } from "../../assets";
-import AutoComplete from "../../components/atoms/AutoComplete";
 import TxtField from "../../components/atoms/TxtField";
-import { areas } from "../../mock/strings";
 
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
@@ -10,12 +7,13 @@ import MenuList from "../../components/atoms/MenuList";
 import HospitalChip from "../../components/HospitalChip";
 import { hospitalsRead } from "../../apis/hospitals";
 import { useNavigate } from "react-router-dom";
+import { areas } from "../../mock/strings";
 
 const Hospital = () => {
   const [query, setQuery] = React.useState<string>("");
   const [formData, setFormData] = React.useState({});
   const [specialities, setSpecialities] = React.useState(["AA", "BB"]);
-  const [districts, setDistricts] = React.useState(["CC", "DD"]);
+  const [districts, setDistricts] = React.useState([...areas]);
   const [hospitals, setHospitals] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const navigate = useNavigate();
@@ -42,11 +40,8 @@ const Hospital = () => {
           flex: 1,
           height: "25vh",
           backgroundColor: "#397693",
-
           marginTop: "10vh",
           borderRadius: 3,
-
-          // alignItems: "center",
           flexDirection: "column",
           overflow: "hidden",
         }}
@@ -91,7 +86,7 @@ const Hospital = () => {
             justifyContent: "space-between",
           }}
         >
-          <MenuList
+          {/* <MenuList
             id="speciality"
             name="speciality"
             key="speciality"
@@ -107,7 +102,7 @@ const Hospital = () => {
             labelFontSize={{ xs: "14px", md: "18px" }}
             style={{ width: { xs: "25vw", md: "25vw" }, marginBottom: 1 }}
             onChange={handleFormDataInput}
-          />
+          /> */}
           <MenuList
             id="districts"
             name="districts"
@@ -161,6 +156,7 @@ const Hospital = () => {
             <HospitalChip
               image={hospital?.image_url}
               title={hospital?.name}
+              onTitleClick={() => navigate(`/hospital/${hospital?._id}`)}
               address={hospital?.address}
               phone={hospital?.contact}
               assignedDoctor={hospital?.doctors.length}

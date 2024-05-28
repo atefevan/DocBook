@@ -1,11 +1,15 @@
 import { Box, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { hospitalRead } from "../../apis/hospitals";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import DoctorChip from "../../components/DoctorChip";
+import { png } from "../../assets";
+// import { doctors } from "../../mock/strings";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
   const { hospitalId } = useParams();
@@ -148,6 +152,38 @@ const HospitalDetails = ({}: Props) => {
                   fontSize: { xs: "12px", md: "14px" },
                   wordWrap: "break-word",
                   whiteSpace: "normal",
+                  width: { xs: "15vw", md: "8vw" },
+                  marginLeft: 0.5,
+                  color: "#007292",
+                  marginBlock: { xs: 0, md: 0.5 },
+                  textAlign: { xs: "center", md: "left" },
+                  cursor: "pointer",
+                }}
+                onClick={() => window.open(`tel:${details?.contact}`)}
+              >
+                {details?.contact || <Skeleton />}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                marginTop: "1vh",
+                alignItems: "center",
+                marginLeft: "2vw",
+                marginBlock: "2vh",
+              }}
+            >
+              <Icon>
+                <LocalHospitalIcon
+                  sx={{ height: "20px", width: "20px", color: "#007292" }}
+                />
+              </Icon>
+              <Typography
+                sx={{
+                  overflow: "scroll",
+                  fontSize: { xs: "12px", md: "14px" },
+                  wordWrap: "break-word",
+                  whiteSpace: "normal",
                   width: { xs: "15vw", md: "20vw" },
                   marginLeft: 0.5,
                   color: "#007292",
@@ -155,7 +191,7 @@ const HospitalDetails = ({}: Props) => {
                   textAlign: { xs: "center", md: "left" },
                 }}
               >
-                {details?.contact || <Skeleton />}
+                {details?.speciality || <Skeleton />}
               </Typography>
             </Box>
           </Box>
@@ -257,7 +293,7 @@ const HospitalDetails = ({}: Props) => {
                 marginInline: "2vw",
               }}
             >
-              {details?.description || <Skeleton />}
+              {loading ? <Skeleton /> : details?.description}
             </Typography>
           </Box>
         )}
@@ -270,7 +306,20 @@ const HospitalDetails = ({}: Props) => {
               marginInline: "4.5vw",
             }}
           >
-            DOCTORS
+            {details?.doctors?.map((doctor) => (
+              <DoctorChip
+                image={doctor?.image_url}
+                title={doctor?.name}
+                degree={doctor?.qualification}
+                dept={doctor?.speciality}
+                exp={doctor?.experience}
+                address={doctor?.address}
+                avaiableIn="1"
+                // time={{ start: "04.00 am", end: "7.00 am" }}
+                // days={["Sat", "Sun", "Mon"]}
+                availability={doctor?.availability}
+              />
+            ))}
           </Box>
         )}
       </Box>

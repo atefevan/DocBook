@@ -18,6 +18,7 @@ const Home = () => {
   const doctorRef = React.useRef();
   const [specialists, setSpecialists] = React.useState<[]>([]);
   const [doctors, setDoctors] = React.useState<[]>([]);
+  const [selectedArea, setSelectedArea] = React.useState<string | null>();
   React.useEffect(() => {
     specialitiesRead().then((res) => setSpecialists(res?.data));
   }, []);
@@ -96,7 +97,7 @@ const Home = () => {
               prefixIcon={<SearchIcon />}
               style={{ marginBlock: { xs: "1vh", md: "0vh" } }}
             />
-            <AutoComplete options={areas} label={"Locations"} />
+            <AutoComplete options={areas} label={"Locations"} setValue={setSelectedArea}/>
           </Box>
         </Box>
 

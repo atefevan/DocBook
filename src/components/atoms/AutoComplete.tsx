@@ -9,6 +9,8 @@ interface Props {
   focuseBorderColor?: string;
   label?: string;
   outlineColor?: string;
+  setValue?: (value?: any) => void;
+  value?: any;
 }
 const AutoComplete = ({
   options,
@@ -18,14 +20,25 @@ const AutoComplete = ({
   outlineColor = "white",
   focuseBorderColor = "white",
   label = "demo",
+  value,
+  setValue,
 }: Props) => {
+  const [inputValue, setInputValue] = React.useState("");
+
   return (
     <Autocomplete
       disablePortal
       id="combo-box-demo"
       options={options}
       //   sx={{ width: 300 }}
-
+      value={value}
+      onChange={(event: any, newValue: string | null) => {
+        setValue(newValue);
+      }}
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
       sx={{
         width: "100%",
         height: "30%",
@@ -60,12 +73,19 @@ const AutoComplete = ({
         "& .Mui-focused.MuiAutocomplete-input": {
           color: outlineColor,
         },
-        "&.MuiAutocomplete-inputRoot":{
-            color: outlineColor,
-        }
+        "&.MuiAutocomplete-inputRoot": {
+          color: outlineColor,
+        },
       }}
       renderInput={(params) => <TextField {...params} label={label} />}
     />
+    // <Autocomplete
+
+    //     id="controllable-states-demo"
+    //     options={options}
+    //     sx={{ width: 300 }}
+    //     renderInput={(params) => <TextField {...params} label="Controllable" />}
+    //   />
   );
 };
 

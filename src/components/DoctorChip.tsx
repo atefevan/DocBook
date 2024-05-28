@@ -1,10 +1,10 @@
 import { Box, Button, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+// import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import React from "react";
 import dayjs, { Dayjs } from "dayjs";
 import DatePickerValue from "./atoms/DatePicker";
@@ -16,8 +16,9 @@ interface Props {
   exp?: string;
   dept?: string;
   avaiableIn?: string;
-  time?: any;
-  days?: any;
+  // time?: any;
+  // days?: any;
+  availability?: any;
   address?: string;
   onClick?: (value?: any) => void;
 }
@@ -29,11 +30,15 @@ const DoctorChip = ({
   exp,
   dept,
   avaiableIn,
-  time,
-  days,
+  // time,
+  // days,
+  availability,
 }: Props) => {
   const [value, setValue] = React.useState<Dayjs | null>(dayjs());
   // console.log("DATE : ", value["$d"]);
+  const [time, setTime] = React.useState({});
+  // const [days, setDays] = React.useState<[]>([]);
+
   return (
     <Box
       sx={{
@@ -62,6 +67,7 @@ const DoctorChip = ({
         sx={{
           justifyContent: "center",
           display: "flex",
+          flex: 1,
           flexDirection: "column",
           alignItems: { xs: "center", md: "start" },
         }}
@@ -170,20 +176,21 @@ const DoctorChip = ({
               >
                 Availability
               </Typography>
-              <Typography
-                sx={{
-                  overflow: "scroll",
-                  fontSize: "12px",
-                  wordWrap: "break-word",
-                  whiteSpace: "normal",
-                  marginLeft: 0.5,
-                  color: "#007292",
-                  textAlign: { xs: "center", md: "left" },
-                }}
-              >
-                {days?.map((day: string) => `${day} `)}
-                {time?.start} - {time?.end}
-              </Typography>
+              {availability?.map((available) => (
+                <Typography
+                  sx={{
+                    overflow: "scroll",
+                    fontSize: "12px",
+                    wordWrap: "break-word",
+                    whiteSpace: "normal",
+                    marginLeft: 0.5,
+                    color: "#007292",
+                    textAlign: { xs: "center", md: "left" },
+                  }}
+                >
+                  {available?.day} - {available?.start} - {available?.end}
+                </Typography>
+              ))}
             </Box>
           </Box>
         </Box>

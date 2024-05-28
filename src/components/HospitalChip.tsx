@@ -9,6 +9,7 @@ interface Props {
   image?: any;
   assignedDoctor?: number;
   onClick?: (value?: any) => void;
+  onTitleClick?: (value?: any) => void;
 }
 const HospitalChip = ({
   title,
@@ -17,6 +18,7 @@ const HospitalChip = ({
   image,
   assignedDoctor,
   onClick,
+  onTitleClick,
 }: Props) => {
   return (
     <Box
@@ -60,7 +62,15 @@ const HospitalChip = ({
             fontWeight: "bold",
             color: "#007292",
             margin: { xs: 0, md: 1 },
+            cursor: "pointer",
+
+            "&:hover": {
+              textDecoration: "underline",
+              cursor: "pointer",
+              textDecorationColor: "#007292",
+            },
           }}
+          onClick={onTitleClick}
         >
           {title}
         </Typography>
