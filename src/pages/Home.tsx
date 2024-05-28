@@ -18,14 +18,15 @@ const Home = () => {
   const doctorRef = React.useRef();
   const [specialists, setSpecialists] = React.useState<[]>([]);
   const [doctors, setDoctors] = React.useState<[]>([]);
-  const [selectedArea, setSelectedArea] = React.useState<string | null>();
+  const [selectedArea, setSelectedArea] = React.useState<string | null>(
+    areas[0]
+  );
   React.useEffect(() => {
     specialitiesRead().then((res) => setSpecialists(res?.data));
   }, []);
   React.useEffect(() => {
     doctorsRead().then((res) => setDoctors(res?.data));
   }, []);
-  // console.log("SPECIALS : ", specialists);
   return (
     <>
       <div
@@ -81,7 +82,7 @@ const Home = () => {
               marginBlock: "2vh",
             }}
           >
-            {`Best Doctors in {LOCATION}`}
+            {`Best Doctors in : ${selectedArea}`}
           </Typography>
           <Box
             sx={{
@@ -97,7 +98,11 @@ const Home = () => {
               prefixIcon={<SearchIcon />}
               style={{ marginBlock: { xs: "1vh", md: "0vh" } }}
             />
-            <AutoComplete options={areas} label={"Locations"} setValue={setSelectedArea}/>
+            <AutoComplete
+              options={areas}
+              label={"Locations"}
+              setValue={setSelectedArea}
+            />
           </Box>
         </Box>
 

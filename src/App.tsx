@@ -6,21 +6,24 @@ import Login from "./pages/Login";
 import { SnackbarProvider } from "notistack";
 import Hospital from "./pages/hospital/Hospital";
 import HospitalDetails from "./pages/hospital/HospitalDetails";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const App = () => {
   return (
     <SnackbarProvider style={{ fontFamily: "Arial" }}>
-      <BrowserRouter>
-        <ButtonAppBar />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="doctor" element={<Doctors />} />
-          <Route path="doctor/:doctorId" element={<Doctors />} />
-          <Route path="login" element={<Login />} />
-          <Route path="hospital" element={<Hospital />} />
-          <Route path="hospital/:hospitalId" element={<HospitalDetails />} />
-        </Routes>
-      </BrowserRouter>
+      <SkeletonTheme>
+        <BrowserRouter>
+          <ButtonAppBar />
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="doctor" element={<Doctors />} />
+            <Route path="doctor/:doctorId" element={<Doctors />} />
+            <Route path="login" element={<Login />} />
+            <Route path="hospital" element={<Hospital />} />
+            <Route path="hospital/:hospitalId" element={<HospitalDetails />} />
+          </Routes>
+        </BrowserRouter>
+      </SkeletonTheme>
     </SnackbarProvider>
   );
 };

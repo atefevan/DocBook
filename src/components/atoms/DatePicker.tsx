@@ -6,8 +6,9 @@ interface Props {
   label?: string;
   value?: any;
   setValue?: any;
+  style?: any;
 }
-const DatePickerValue = ({ label, value, setValue }: Props) => {
+const DatePickerValue = ({ label, value, style, setValue }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={["DatePicker", "DatePicker"]}>
@@ -15,6 +16,8 @@ const DatePickerValue = ({ label, value, setValue }: Props) => {
           label={label}
           value={value}
           onChange={(newValue) => setValue(newValue)}
+          format="DD-MMM-YYYY"
+          sx={{ ...style }}
         />
       </DemoContainer>
     </LocalizationProvider>

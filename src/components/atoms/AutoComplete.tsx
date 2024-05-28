@@ -7,21 +7,27 @@ interface Props {
   focuseColorUnderline?: string;
   fontColor?: string;
   focuseBorderColor?: string;
+  fontSize?: number | string;
   label?: string;
   outlineColor?: string;
   setValue?: (value?: any) => void;
   value?: any;
+  style?: any;
+  size?: string | number;
 }
 const AutoComplete = ({
   options,
   focuseColor = "white",
   focuseColorUnderline = "white",
   fontColor = "white",
+  fontSize,
   outlineColor = "white",
   focuseBorderColor = "white",
   label = "demo",
   value,
+  size,
   setValue,
+  style,
 }: Props) => {
   const [inputValue, setInputValue] = React.useState("");
 
@@ -33,7 +39,7 @@ const AutoComplete = ({
       //   sx={{ width: 300 }}
       value={value}
       onChange={(event: any, newValue: string | null) => {
-        setValue(newValue);
+        newValue ? setValue(newValue) : setValue("");
       }}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
@@ -64,7 +70,6 @@ const AutoComplete = ({
         ".MuiInputLabel-root": {
           color: focuseColor,
         },
-        // ...style,
         zIndex: 0,
         color: outlineColor,
         "& .MuiSvgIcon-root": {
@@ -76,16 +81,22 @@ const AutoComplete = ({
         "&.MuiAutocomplete-inputRoot": {
           color: outlineColor,
         },
+        ...style,
       }}
-      renderInput={(params) => <TextField {...params} label={label} />}
+      ListboxProps={{ style: { maxHeight: 150 } }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={label}
+          variant="outlined"
+          size={size}
+          InputProps={{
+            ...params.InputProps,
+            style: { color: "white", fontSize: fontSize },
+          }}
+        />
+      )}
     />
-    // <Autocomplete
-
-    //     id="controllable-states-demo"
-    //     options={options}
-    //     sx={{ width: 300 }}
-    //     renderInput={(params) => <TextField {...params} label="Controllable" />}
-    //   />
   );
 };
 

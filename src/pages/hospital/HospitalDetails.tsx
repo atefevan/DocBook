@@ -293,7 +293,13 @@ const HospitalDetails = ({}: Props) => {
                 marginInline: "2vw",
               }}
             >
-              {loading ? <Skeleton /> : details?.description}
+              {loading ? (
+                <Skeleton count={5} />
+              ) : details?.description === undefined ? (
+                "No Description Available !"
+              ) : (
+                details?.description
+              )}
             </Typography>
           </Box>
         )}
@@ -304,6 +310,8 @@ const HospitalDetails = ({}: Props) => {
               backgroundColor: "white",
               boxShadow: 1,
               marginInline: "4.5vw",
+              overflow: "scroll",
+              height: "50vh",
             }}
           >
             {details?.doctors?.map((doctor) => (
@@ -314,9 +322,6 @@ const HospitalDetails = ({}: Props) => {
                 dept={doctor?.speciality}
                 exp={doctor?.experience}
                 address={doctor?.address}
-                avaiableIn="1"
-                // time={{ start: "04.00 am", end: "7.00 am" }}
-                // days={["Sat", "Sun", "Mon"]}
                 availability={doctor?.availability}
               />
             ))}

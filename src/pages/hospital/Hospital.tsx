@@ -8,6 +8,7 @@ import HospitalChip from "../../components/HospitalChip";
 import { hospitalsRead } from "../../apis/hospitals";
 import { useNavigate } from "react-router-dom";
 import { areas } from "../../mock/strings";
+import AutoComplete from "../../components/atoms/AutoComplete";
 
 const Hospital = () => {
   const [query, setQuery] = React.useState<string>("");
@@ -16,6 +17,9 @@ const Hospital = () => {
   const [districts, setDistricts] = React.useState([...areas]);
   const [hospitals, setHospitals] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [selectedArea, setSelectedArea] = React.useState<string | null>(
+    areas[0]
+  );
   const navigate = useNavigate();
 
   const handleFormDataInput = (e: any) => {
@@ -38,7 +42,7 @@ const Hospital = () => {
         sx={{
           display: "flex",
           flex: 1,
-          height: "25vh",
+          height: "22vh",
           backgroundColor: "#397693",
           marginTop: "10vh",
           borderRadius: 3,
@@ -50,7 +54,7 @@ const Hospital = () => {
           sx={{
             display: "flex",
             flex: 1,
-            margin: 2,
+            marginInline: 2,
             alignItems: "center",
             flexDirection: { xs: "column", md: "row" },
           }}
@@ -81,61 +85,28 @@ const Hospital = () => {
           sx={{
             display: "flex",
             width: "100%",
-            marginLeft: 1,
             marginBottom: 1,
             justifyContent: "space-between",
           }}
         >
-          {/* <MenuList
-            id="speciality"
-            name="speciality"
-            key="speciality"
-            label="Speciality"
-            isRequired={true}
-            size={"small"}
-            value={
-              Object.keys(formData).length && formData?.speciality
-                ? formData?.speciality
-                : ""
-            }
-            items={[...specialities]}
-            labelFontSize={{ xs: "14px", md: "18px" }}
-            style={{ width: { xs: "25vw", md: "25vw" }, marginBottom: 1 }}
-            onChange={handleFormDataInput}
-          /> */}
-          <MenuList
-            id="districts"
-            name="districts"
-            key="districts"
-            label="districts"
-            isRequired={true}
-            size="small"
-            value={
-              Object.keys(formData).length && formData?.districts
-                ? formData?.districts
-                : ""
-            }
-            labelFontSize={{ xs: "14px", md: "18px" }}
-            items={[...districts]}
-            style={{ width: { xs: "25vw", md: "25vw" } }}
-            onChange={handleFormDataInput}
+          <AutoComplete
+            options={areas}
+            label={"Districts"}
+            setValue={setSelectedArea}
+            style={{ marginLeft: "5vw" }}
           />
-          <MenuList
-            id="cities"
-            name="cities"
-            key="cities"
-            label="Cities"
-            size="small"
-            isRequired={true}
-            value={
-              Object.keys(formData).length && formData?.cities
-                ? formData?.cities
-                : ""
-            }
-            labelFontSize={{ xs: "14px", md: "18px" }}
-            items={["A CITY", "B CITY", "C CITY"]}
-            style={{ width: { xs: "25vw", md: "25vw" } }}
-            onChange={handleFormDataInput}
+
+          <AutoComplete
+            options={areas}
+            label={"Districts"}
+            setValue={setSelectedArea}
+            style={{ marginInline: "5vw" }}
+          />
+          <AutoComplete
+            options={areas}
+            label={"Districts"}
+            setValue={setSelectedArea}
+            style={{ marginRight: "5vw" }}
           />
         </Box>
       </Box>

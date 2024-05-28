@@ -8,6 +8,7 @@ import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
 import React from "react";
 import dayjs, { Dayjs } from "dayjs";
 import DatePickerValue from "./atoms/DatePicker";
+import { jpeg, png, svg } from "../assets";
 
 interface Props {
   title?: string;
@@ -43,7 +44,7 @@ const DoctorChip = ({
     <Box
       sx={{
         display: "flex",
-        width: { sm: "320px", md: "470px" },
+        width: { xs: "60vw", sm: "70vw", md: "60vw" },
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: { xs: "column", md: "row" },
@@ -54,99 +55,104 @@ const DoctorChip = ({
     >
       <Box
         component={"img"}
-        src={image}
+        src={image ? image : jpeg.doctor_skeleton}
         sx={{
-          width: { xs: "10vw", md: "100px" },
-          height: { xs: "12vw", md: "100px" },
+          width: { xs: "9vw", md: "90px" },
+          height: { xs: "11vw", md: "90px" },
           margin: 2,
           borderRadius: 1,
         }}
       />
-
-      <Box
-        sx={{
-          justifyContent: "center",
-          display: "flex",
-          flex: 1,
-          flexDirection: "column",
-          alignItems: { xs: "center", md: "start" },
-        }}
-      >
-        <Typography
+      <Box sx={{ display: "flex", flex: 1 }}>
+        <Box
           sx={{
-            fontSize: { xs: "14px", md: "18px" },
-            fontWeight: { xs: "bold", md: "normal" },
-            color: "#007292",
-            margin: { xs: 0, md: 1 },
+            justifyContent: "center",
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            alignItems: { xs: "center", md: "start" },
           }}
         >
-          {title}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: { xs: "12px", md: "14px" },
-            color: "#007292",
-            marginLeft: { xs: 0, md: 1 },
-          }}
-        >
-          {degree}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: { xs: "12px", md: "14px" },
-            color: "#007292",
-            marginLeft: { xs: 0, md: 1 },
-            marginBlock: { xs: 0, md: 1 },
-          }}
-        >
-          {dept}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: { xs: "12px", md: "14px" },
-            color: "#007292",
-            marginLeft: { xs: 0, md: 1 },
-            marginBlock: { xs: 0, md: 0.5 },
-          }}
-        >
-          {exp} Years of Experience Overall
-        </Typography>
-        <Box>
-          <Box sx={{ display: "flex", marginTop: "1vh", alignItems: "center" }}>
-            <Icon>
-              <ApartmentSharpIcon
-                sx={{ height: "20px", width: "20px", color: "#007292" }}
-              />
-            </Icon>
-            <Typography
-              sx={{
-                overflow: "scroll",
-                fontSize: { xs: "12px", md: "14px" },
-                wordWrap: "break-word",
-                whiteSpace: "normal",
-                marginLeft: 0.5,
-                color: "#007292",
-                marginBlock: { xs: 0, md: 0.5 },
-                textAlign: { xs: "center", md: "left" },
-              }}
+          <Typography
+            sx={{
+              fontSize: { xs: "14px", md: "18px" },
+              fontWeight: { xs: "bold", md: "normal" },
+              color: "#007292",
+              margin: { xs: 0, md: 1 },
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: { xs: "12px", md: "14px" },
+              color: "#007292",
+              marginLeft: { xs: 0, md: 1 },
+            }}
+          >
+            {degree}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: { xs: "12px", md: "14px" },
+              color: "#007292",
+              marginLeft: { xs: 0, md: 1 },
+              marginBlock: { xs: 0, md: 0.2 },
+            }}
+          >
+            {dept}
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: { xs: "12px", md: "14px" },
+              color: "#007292",
+              marginLeft: { xs: 0, md: 1 },
+              marginBlock: { xs: 0, md: 0.5 },
+            }}
+          >
+            {exp} Years of Experience Overall
+          </Typography>
+          <Box>
+            <Box
+              sx={{ display: "flex", marginTop: "1vh", alignItems: "center" }}
             >
-              Available in {avaiableIn} locations
-            </Typography>
+              <Icon>
+                <ApartmentSharpIcon
+                  sx={{ height: "20px", width: "20px", color: "#007292" }}
+                />
+              </Icon>
+              <Typography
+                sx={{
+                  overflow: "scroll",
+                  fontSize: { xs: "12px", md: "14px" },
+                  wordWrap: "break-word",
+                  whiteSpace: "normal",
+                  marginLeft: 0.5,
+                  color: "#007292",
+                  marginBlock: { xs: 0, md: 0.5 },
+                  textAlign: { xs: "center", md: "left" },
+                }}
+              >
+                Available in :
+              </Typography>
+            </Box>
           </Box>
+          <Typography
+            sx={{
+              fontSize: { xs: "10px", md: "12px" },
+              color: "#007292",
+              marginLeft: { xs: 0, md: 1 },
+              marginBlock: { xs: 0, md: 0.5 },
+              textAlign: { xs: "center", md: "start" },
+              paddingInline: { xs: "2vw", md: "0vw" },
+            }}
+          >
+            {address}
+          </Typography>
         </Box>
-        <Typography
-          sx={{
-            fontSize: { xs: "10px", md: "12px" },
-            color: "#007292",
-            marginLeft: { xs: 0, md: 1 },
-            marginBlock: { xs: 0, md: 0.5 },
-            textAlign: { xs: "center", md: "start" },
-            paddingInline: { xs: "2vw", md: "0vw" },
-          }}
-        >
-          {address}
-        </Typography>
-        <Box>
+      </Box>
+      <Box sx={{ display: "flex", flex: 1 }}>
+        <Box sx={{ display: "flex", flexDirection: "column",marginBottom:1, }}>
           <Box
             sx={{ display: "flex", marginBlock: "1vh", alignItems: "start" }}
           >
@@ -159,7 +165,6 @@ const DoctorChip = ({
               sx={{
                 flexDirection: "column",
                 display: "flex",
-
                 alignItems: "start",
               }}
             >
@@ -180,11 +185,12 @@ const DoctorChip = ({
                 <Typography
                   sx={{
                     overflow: "scroll",
-                    fontSize: "12px",
+                    fontSize: "13px",
                     wordWrap: "break-word",
                     whiteSpace: "normal",
                     marginLeft: 0.5,
                     color: "#007292",
+                    margin: 1,
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
@@ -193,19 +199,20 @@ const DoctorChip = ({
               ))}
             </Box>
           </Box>
+          <DatePickerValue
+            label={"Appoinemnt"}
+            value={value}
+            setValue={setValue}
+            style={{ marginBottom: 1 }}
+          />
         </Box>
-        <DatePickerValue
-          label={"Appoinemnt"}
-          value={value}
-          setValue={setValue}
-        />
-        <Button
-          variant="outlined"
-          sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
-        >
-          Book Appoinment
-        </Button>
       </Box>
+      <Button
+        variant="outlined"
+        sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
+      >
+        Book Appoinment
+      </Button>
     </Box>
   );
 };
