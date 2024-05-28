@@ -1,10 +1,11 @@
 import { Box, Button, Icon, Typography } from "@mui/material";
-import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 interface Props {
   title?: string;
   address?: string;
-  price_range?: any;
+  phone?: any;
   image?: any;
   assignedDoctor?: number;
   onClick?: (value?: any) => void;
@@ -12,7 +13,7 @@ interface Props {
 const HospitalChip = ({
   title,
   address,
-  price_range,
+  phone,
   image,
   assignedDoctor,
   onClick,
@@ -33,11 +34,13 @@ const HospitalChip = ({
       <Box
         component={"img"}
         src={image}
+        draggable={false}
         sx={{
           width: { xs: "10vw", md: "100px" },
           height: { xs: "10vw", md: "100px" },
           margin: 2,
-          //   borderRadius: 1,
+
+          borderRadius: 15,
         }}
       />
 
@@ -105,7 +108,7 @@ const HospitalChip = ({
               sx={{ display: "flex", marginTop: "1vh", alignItems: "center" }}
             >
               <Icon>
-                <LocalOfferIcon
+                <LocalPhoneIcon
                   sx={{ height: "20px", width: "20px", color: "#007292" }}
                 />
               </Icon>
@@ -122,26 +125,12 @@ const HospitalChip = ({
                     fontSize: { xs: "12px", md: "14px" },
                     wordWrap: "break-word",
                     whiteSpace: "normal",
-                    width: { xs: "15vw", md: "20vw" },
                     marginLeft: 0.5,
                     color: "#007292",
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
-                  Price starts from
-                </Typography>
-                <Typography
-                  sx={{
-                    overflow: "scroll",
-                    fontSize: "12px",
-                    wordWrap: "break-word",
-                    whiteSpace: "normal",
-                    marginLeft: 0.5,
-                    color: "#007292",
-                    textAlign: { xs: "center", md: "left" },
-                  }}
-                >
-                  {price_range?.start} - {price_range?.end} BDT
+                  {phone}
                 </Typography>
               </Box>
             </Box>

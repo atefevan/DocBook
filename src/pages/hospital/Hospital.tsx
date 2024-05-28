@@ -162,7 +162,7 @@ const Hospital = () => {
               image={hospital?.image_url}
               title={hospital?.name}
               address={hospital?.address}
-              price_range={{ start: 500, end: 1200 }}
+              phone={hospital?.contact}
               assignedDoctor={hospital?.doctors.length}
               onClick={() => {
                 navigate(`/hospital/${hospital?._id}`);

@@ -1,17 +1,24 @@
 import { Box, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { hospitalRead } from "../../apis/hospitals";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
   const { hospitalId } = useParams();
   const [selected, setSelected] = React.useState<string>("Info");
   const [details, setDetails] = React.useState({});
+  const [loading, setLoading] = React.useState<boolean>(false);
   React.useEffect(() => {
-    hospitalRead({ id: hospitalId }).then((res) => {
-      setDetails(res?.data);
-    });
+    setLoading(true);
+    hospitalRead({ id: hospitalId })
+      .then((res) => {
+        setDetails(res?.data);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -20,54 +27,40 @@ const HospitalDetails = ({}: Props) => {
         display: "flex",
         flex: 1,
         flexDirection: "column",
-        // marginInline: "5vw",
         backgroundColor: "#F2F2F2",
       }}
     >
       <Box sx={{ display: "flex", flex: 1, justifyContent: "center" }}>
-        <Box
-          component={"img"}
-          src={
-            "https://img.sasthyaseba.com/NgsDK0RCAzICFSpfVWUHBwNnW0k9/hospitals/cover-photos/5/zkqpQlChJP4hAWn42JeGTMvj7ODww32ToTFN9YvD/birdem-general-hospital.webp"
-          }
-          draggable={false}
-          sx={{
-            width: { xs: "90%", md: "90%" },
-            height: { xs: "120%", md: "90%" },
-            marginTop: 9,
-          }}
-        />
+        {!loading && (
+          <Box
+            component={"img"}
+            src={details?.image_url}
+            draggable={false}
+            sx={{
+              width: { xs: "90%", md: "90%" },
+              height: { xs: "120%", md: "90%" },
+              marginTop: 9,
+              borderRadius: 2,
+            }}
+          />
+        )}
+        {loading && (
+          <Box
+            sx={{
+              width: { xs: "90%", md: "90%" },
+              height: { xs: "110px", md: "350px" },
+              marginTop: 9,
+              borderRadius: 2,
+              backgroundColor: "#B4B4B8",
+            }}
+          />
+        )}
       </Box>
-      {/* <Box
-        sx={{
-          // display: "flex",
-          position: "absolute",
-          top: 350,
-          left: 150,
-          height: "140px",
-          width: "140px",
-          borderRadius: 2,
-          // overflow: "clip",
-          backgroundColor: "blue",
-          marginInline: "3vw",
-          overflow: "clip",
-          border: ".2px solid black",
-        }}
-      >
-        <Box
-          component={"img"}
-          src={
-            "https://img.sasthyaseba.com/LBUDK0RCAzICFSpfVWEGCwhiWz0/hospitals/5/jOXEyfiYRcxupDG1a4jjksOjXLAurfEgS6Gd3cQ9/birdem-general-hospital.webp"
-          }
-          draggable={false}
-          sx={{ height: "100%", width: "100%" }}
-        />
-      </Box> */}
       <Box
         sx={{
           display: "flex",
           backgroundColor: "white",
-          height: "28vh",
+          height: { xs: "20vh", md: "31vh" },
           boxShadow: 1,
           borderRadius: 2,
           marginInline: "4.5vw",
@@ -86,12 +79,19 @@ const HospitalDetails = ({}: Props) => {
               fontWeight: "bold",
             }}
           >
-            BIRDEM General Hospital
+            {details?.name || <Skeleton />}
           </Typography>
           <Typography
             sx={{ marginLeft: "2vw", fontSize: { xs: "", md: "14px" } }}
           >
-            10 Years in service
+            {loading ? (
+              <Skeleton />
+            ) : details?.service_year === undefined ? (
+              0
+            ) : (
+              details?.service_year
+            )}
+            Years in service
           </Typography>
           <Box
             sx={{
@@ -127,7 +127,37 @@ const HospitalDetails = ({}: Props) => {
                   textAlign: { xs: "center", md: "left" },
                 }}
               >
-                {"122 Kazi Nazrul Islam Ave, Dhaka, 1000, Bangladesh"}
+                {details?.address || <Skeleton />}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                marginTop: "1vh",
+                alignItems: "center",
+                marginLeft: "2vw",
+                marginBlock: "2vh",
+              }}
+            >
+              <Icon>
+                <LocalPhoneIcon
+                  sx={{ height: "20px", width: "20px", color: "#007292" }}
+                />
+              </Icon>
+              <Typography
+                sx={{
+                  overflow: "scroll",
+                  fontSize: { xs: "12px", md: "14px" },
+                  wordWrap: "break-word",
+                  whiteSpace: "normal",
+                  width: { xs: "15vw", md: "20vw" },
+                  marginLeft: 0.5,
+                  color: "#007292",
+                  marginBlock: { xs: 0, md: 0.5 },
+                  textAlign: { xs: "center", md: "left" },
+                }}
+              >
+                {details?.contact || <Skeleton />}
               </Typography>
             </Box>
             <Box
@@ -159,7 +189,7 @@ const HospitalDetails = ({}: Props) => {
           sx={{
             display: "flex",
             height: "3vh",
-            width: "5vw",
+            width: "80px",
             borderTopLeftRadius: 5,
             borderTopRightRadius: 5,
             backgroundColor: selected === "Info" ? "white" : "transparent",
@@ -170,11 +200,11 @@ const HospitalDetails = ({}: Props) => {
         >
           <Typography sx={{ fontSize: "14px" }}>Info</Typography>
         </Box>
-        {/* <Box
+        <Box
           sx={{
             display: "flex",
             height: "3vh",
-            width: "5vw",
+            width: "80px",
             cursor: "pointer",
             justifyContent: "center",
             borderTopLeftRadius: 5,
@@ -183,8 +213,10 @@ const HospitalDetails = ({}: Props) => {
           }}
           onClick={() => setSelected("Doctor")}
         >
-          <Typography sx={{ fontSize: "14px" }}>Doctors</Typography>
-        </Box> */}
+          <Typography sx={{ fontSize: "14px" }}>
+            Doctors ({details?.doctors?.length ? details?.doctors?.length : 0})
+          </Typography>
+        </Box>
       </Box>
       <Box sx={{ display: "flex" }}>
         {selected === "Info" && (
@@ -217,20 +249,11 @@ const HospitalDetails = ({}: Props) => {
                 marginInline: "2vw",
               }}
             >
-              BIRDEM Academy is a postgraduate institutions of BIRDEM General
-              Hospital for conducting postgraduate courses for medical
-              graduates. DAB, Diabetic Association of Bangladesh established
-              BIRDEM Academy in 1986 with a view to creating skilled manpower in
-              the field of Endocrinology & Metabolism to improve the care of
-              patients in the country. Now BIRDEM conduct more than 18
-              (Eighteen) residency & non-residency postgraduate courses like
-              MD,MS, M.Phil. Diploma & Ph.D in different subjects under
-              University of Dhaka and Bangabandhu Sheikh Mujib Medical
-              University (BSMMU).
+              {details?.description || <Skeleton />}
             </Typography>
           </Box>
         )}
-        {/* {selected === "Doctor" && (
+        {selected === "Doctor" && (
           <Box
             sx={{
               width: "100%",
@@ -241,7 +264,7 @@ const HospitalDetails = ({}: Props) => {
           >
             DOCTORS
           </Box>
-        )} */}
+        )}
       </Box>
     </Box>
   );
