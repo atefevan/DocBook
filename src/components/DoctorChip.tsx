@@ -22,6 +22,7 @@ interface Props {
   availability?: any;
   address?: string;
   onClick?: (value?: any) => void;
+  onTitleClick?: (value?: any) => void;
 }
 const DoctorChip = ({
   title,
@@ -30,14 +31,10 @@ const DoctorChip = ({
   address,
   exp,
   dept,
-  avaiableIn,
-  // time,
-  // days,
   availability,
+  onClick,
+  onTitleClick,
 }: Props) => {
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-  // console.log("DATE : ", value["$d"]);
-  const [time, setTime] = React.useState({});
   // const [days, setDays] = React.useState<[]>([]);
 
   return (
@@ -75,11 +72,17 @@ const DoctorChip = ({
         >
           <Typography
             sx={{
+              "&:hover": {
+                textDecoration: "underline",
+                cursor: "pointer",
+                textDecorationColor: "#007292",
+              },
               fontSize: { xs: "14px", md: "18px" },
               fontWeight: { xs: "bold", md: "normal" },
               color: "#007292",
               margin: { xs: 0, md: 1 },
             }}
+            onClick={onTitleClick}
           >
             {title}
           </Typography>
@@ -152,7 +155,7 @@ const DoctorChip = ({
         </Box>
       </Box>
       <Box sx={{ display: "flex", flex: 1 }}>
-        <Box sx={{ display: "flex", flexDirection: "column",marginBottom:1, }}>
+        <Box sx={{ display: "flex", flexDirection: "column", marginBottom: 1 }}>
           <Box
             sx={{ display: "flex", marginBlock: "1vh", alignItems: "start" }}
           >
@@ -181,7 +184,7 @@ const DoctorChip = ({
               >
                 Availability
               </Typography>
-              {availability?.map((available) => (
+              {availability?.map((available: any) => (
                 <Typography
                   sx={{
                     overflow: "scroll",
@@ -199,19 +202,18 @@ const DoctorChip = ({
               ))}
             </Box>
           </Box>
-          <DatePickerValue
-            label={"Appoinemnt"}
-            value={value}
-            setValue={setValue}
-            style={{ marginBottom: 1 }}
-          />
         </Box>
       </Box>
       <Button
-        variant="outlined"
-        sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
+        variant="contained"
+        sx={{
+          alignSelf: { xs: "center", md: "end" },
+          margin: 1,
+          backgroundColor: "#007292",
+        }}
+        onClick={onClick}
       >
-        Book Appoinment
+        Details
       </Button>
     </Box>
   );

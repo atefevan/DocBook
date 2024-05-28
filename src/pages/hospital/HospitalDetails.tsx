@@ -1,4 +1,4 @@
-import { Box, Icon, Typography } from "@mui/material";
+import { Box, Button, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
@@ -10,6 +10,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import DoctorChip from "../../components/DoctorChip";
 import { png } from "../../assets";
 import MapView from "../../components/MapView";
+import DatePickerValue from "../../components/atoms/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
+import PickTime from "../../components/atoms/TimePicker";
 // import { doctors } from "../../mock/strings";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
@@ -17,6 +20,7 @@ const HospitalDetails = ({}: Props) => {
   const [selected, setSelected] = React.useState<string>("Info");
   const [details, setDetails] = React.useState({});
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
   React.useEffect(() => {
     setLoading(true);
     hospitalRead({ id: hospitalId })
@@ -33,6 +37,7 @@ const HospitalDetails = ({}: Props) => {
         flex: 1,
         flexDirection: "column",
         backgroundColor: "#F2F2F2",
+        position: "relative",
       }}
     >
       <Box sx={{ display: "flex", flex: 1, justifyContent: "center" }}>
@@ -270,46 +275,107 @@ const HospitalDetails = ({}: Props) => {
         {selected === "Info" && (
           <Box
             sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "column", md: "row" },
               width: "100%",
               backgroundColor: "white",
               boxShadow: 1,
               marginInline: "4.5vw",
-              flexDirection: "column",
             }}
           >
-            <Typography
+            <Box
               sx={{
-                margin: 2,
-                fontSize: "18px",
-                fontFamily: "Arial",
-                fontWeight: "bold",
-                color: "#007292",
+                width: "75%",
+                backgroundColor: "white",
+                flexDirection: "column",
               }}
             >
-              About
-            </Typography>
-            <Typography
-              sx={{
-                margin: 2,
-                fontSize: "14px",
-                fontFamily: "Arial",
-                color: "#007292",
-                marginInline: "2vw",
-              }}
-            >
-              {loading ? (
-                <Skeleton count={5} />
-              ) : details?.description === undefined ? (
-                "No Description Available !"
-              ) : (
-                details?.description
-              )}
-            </Typography>
+              <Typography
+                sx={{
+                  margin: 2,
+                  fontSize: "18px",
+                  fontFamily: "Arial",
+                  fontWeight: "bold",
+                  color: "#007292",
+                }}
+              >
+                About
+              </Typography>
+              <Typography
+                sx={{
+                  margin: 2,
+                  fontSize: "14px",
+                  fontFamily: "Arial",
+                  color: "#007292",
+                  marginInline: "2vw",
+                }}
+              >
+                {loading ? (
+                  <Skeleton count={5} />
+                ) : details?.description === undefined ? (
+                  "No Description Available !"
+                ) : (
+                  details?.description
+                )}
+              </Typography>
+            </Box>
+
+            <Box sx={{ backgroundColor: "white" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  height: "29vh",
+                  width: { xs: "90%", md: "20vw" },
+                  backgroundColor: "#F6F5F2",
+                  borderRadius: 2,
+                  margin: 2,
+                  // justifyContent: "center",
+                  alignItems: "center",
+                  boxShadow: 1,
+                  flexDirection: "column",
+                }}
+              >
+                <Typography
+                  sx={{
+                    margin: 1,
+                    fontSize: "18px",
+                    fontFamily: "Arial",
+                    fontWeight: "bold",
+                    color: "#007292",
+                  }}
+                >
+                  Appoinment
+                </Typography>
+                <DatePickerValue
+                  label={"Day"}
+                  value={value}
+                  width={"90%"}
+                  setValue={setValue}
+                  style={{ margin: 1 }}
+                />
+                <PickTime
+                  variant="mobile"
+                  label={"Appoinment Time"}
+                  value={value}
+                  setValue={setValue}
+                  width={"90%"}
+                  style={{ margin: 2 }}
+                />
+                <Button
+                  variant="outlined"
+                  // sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
+                >
+                  Book Appoinment
+                </Button>
+              </Box>
+            </Box>
           </Box>
         )}
         {selected === "Doctor" && (
           <Box
             sx={{
+              display: "flex",
+              // flexDirection: { xs: "column", sm: "column", md: "row" },
               width: "100%",
               backgroundColor: "white",
               boxShadow: 1,
@@ -318,31 +384,89 @@ const HospitalDetails = ({}: Props) => {
               height: details?.doctors?.length ? "50vh" : "10vh",
             }}
           >
-            {details?.doctors?.length ? (
-              details?.doctors?.map((doctor) => (
-                <DoctorChip
-                  image={doctor?.image_url}
-                  title={doctor?.name}
-                  degree={doctor?.qualification}
-                  dept={doctor?.speciality}
-                  exp={doctor?.experience}
-                  address={doctor?.address}
-                  availability={doctor?.availability}
-                />
-              ))
-            ) : (
-              <Typography
+            <Box
+              sx={{
+                width: "75%",
+                backgroundColor: "white",
+                flexDirection: "column",
+              }}
+            >
+              {details?.doctors?.length ? (
+                details?.doctors?.map((doctor) => (
+                  <DoctorChip
+                    image={doctor?.image_url}
+                    title={doctor?.name}
+                    degree={doctor?.qualification}
+                    dept={doctor?.speciality}
+                    exp={doctor?.experience}
+                    address={doctor?.address}
+                    availability={doctor?.availability}
+                  />
+                ))
+              ) : (
+                <Typography
+                  sx={{
+                    margin: 2,
+                    fontSize: "14px",
+                    fontFamily: "Arial",
+                    color: "#007292",
+                    marginTop: "2vw",
+                  }}
+                >
+                  No Doctors assigned to this Hospital !
+                </Typography>
+              )}
+            </Box>
+            <Box sx={{ backgroundColor: "white" }}>
+              <Box
                 sx={{
+                  display: "flex",
+                  height: "29vh",
+                  width: { xs: "90%", md: "20vw" },
+                  backgroundColor: "#F6F5F2",
+                  borderRadius: 2,
                   margin: 2,
-                  fontSize: "14px",
-                  fontFamily: "Arial",
-                  color: "#007292",
-                  marginTop: "2vw",
+                  // justifyContent: "center",
+                  alignItems: "center",
+                  boxShadow: 1,
+                  flexDirection: "column",
                 }}
               >
-                No Doctors assigned to this Hospital !
-              </Typography>
-            )}
+                <Typography
+                  sx={{
+                    margin: 1,
+                    fontSize: "18px",
+                    fontFamily: "Arial",
+                    fontWeight: "bold",
+                    color: "#007292",
+                  }}
+                >
+                  Appoinment
+                </Typography>
+                <DatePickerValue
+                  label={"Day"}
+                  value={value}
+                  width={"90%"}
+                  setValue={setValue}
+                  style={{ margin: 1 }}
+                />
+                <PickTime
+                  variant="mobile"
+                  label={"Appoinment Time"}
+                  value={value}
+                  setValue={setValue}
+                  width={"90%"}
+                  style={{ margin: 2 }}
+                />
+
+                <Button
+                  variant="outlined"
+                  // sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
+                >
+                  Book Appoinment
+                </Button>
+              </Box>
+            </Box>
           </Box>
         )}
       </Box>
