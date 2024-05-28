@@ -48,7 +48,10 @@ const HospitalDetails = ({}: Props) => {
           <Box
             sx={{
               width: { xs: "90%", md: "90%" },
-              height: { xs: "110px", md: "350px" },
+              height: {
+                xs: loading ? "110px" : "",
+                md: loading ? "350px" : "",
+              },
               marginTop: 9,
               borderRadius: 2,
               backgroundColor: "#B4B4B8",
@@ -60,7 +63,7 @@ const HospitalDetails = ({}: Props) => {
         sx={{
           display: "flex",
           backgroundColor: "white",
-          height: { xs: "20vh", md: "31vh" },
+          height: { xs: "20vh", md: "23vh" },
           boxShadow: 1,
           borderRadius: 2,
           marginInline: "4.5vw",
@@ -68,6 +71,7 @@ const HospitalDetails = ({}: Props) => {
       >
         <Box
           sx={{
+            width: "70vw",
             flexDirection: "column",
           }}
         >
@@ -93,13 +97,7 @@ const HospitalDetails = ({}: Props) => {
             )}
             Years in service
           </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              width: "80vw",
-              justifyContent: "space-between",
-            }}
-          >
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
             <Box
               sx={{
                 display: "flex",
@@ -160,19 +158,29 @@ const HospitalDetails = ({}: Props) => {
                 {details?.contact || <Skeleton />}
               </Typography>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                width: "20vw",
-                height: "10vw",
-                borderRadius: 2,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "grey",
-              }}
-            >
-              GOOGLE MAPS
-            </Box>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            width: "30vw",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              width: "20vw",
+              height: "10vw",
+              borderRadius: 2,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "grey",
+            }}
+          >
+            GOOGLE MAPS
           </Box>
         </Box>
       </Box>
@@ -204,7 +212,7 @@ const HospitalDetails = ({}: Props) => {
           sx={{
             display: "flex",
             height: "3vh",
-            width: "80px",
+            width: "100px",
             cursor: "pointer",
             justifyContent: "center",
             borderTopLeftRadius: 5,
