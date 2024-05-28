@@ -1,9 +1,19 @@
 import { Box, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 import React from "react";
+import { useParams } from "react-router-dom";
+import { hospitalRead } from "../../apis/hospitals";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
+  const { hospitalId } = useParams();
   const [selected, setSelected] = React.useState<string>("Info");
+  const [details, setDetails] = React.useState({});
+  React.useEffect(() => {
+    hospitalRead({ id: hospitalId }).then((res) => {
+      setDetails(res?.data);
+    });
+  }, []);
+
   return (
     <Box
       sx={{

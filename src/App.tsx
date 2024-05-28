@@ -15,9 +15,10 @@ const App = () => {
         <Routes>
           <Route index element={<Home />} />
           <Route path="doctor" element={<Doctors />} />
+          <Route path="doctor/:doctorId" element={<Doctors />} />
           <Route path="login" element={<Login />} />
           <Route path="hospital" element={<Hospital />} />
-          <Route path="hospitalDetails" element={<HospitalDetails />} />
+          <Route path="hospital/:hospitalId" element={<HospitalDetails />} />
         </Routes>
       </BrowserRouter>
     </SnackbarProvider>

@@ -4,26 +4,25 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TxtField from "../components/atoms/TxtField";
 import AutoComplete from "../components/atoms/AutoComplete";
-import {
-  ambulances,
-  areas,
-  common_concerns,
-  doctors,
-  specialistImgs,
-} from "../mock/strings";
+import { ambulances, areas, common_concerns } from "../mock/strings";
 import SpecialistChip from "../components/SpecialistChip";
 import HealthChip from "../components/HealthChip";
 import InfoChip from "../components/InfoChip";
 import AmbulanceChip from "../components/AmbulanceChip";
 import Slider from "../components/Slider";
 import { specialitiesRead } from "../apis/speciality";
+import { doctorsRead } from "../apis/doctor";
 
 const Home = () => {
   const [query, setQuery] = React.useState<string>("");
   const doctorRef = React.useRef();
   const [specialists, setSpecialists] = React.useState<[]>([]);
+  const [doctors, setDoctors] = React.useState<[]>([]);
   React.useEffect(() => {
     specialitiesRead().then((res) => setSpecialists(res?.data));
+  }, []);
+  React.useEffect(() => {
+    doctorsRead().then((res) => setDoctors(res?.data));
   }, []);
   // console.log("SPECIALS : ", specialists);
   return (
@@ -122,7 +121,7 @@ const Home = () => {
             </Typography>
           </Box>
           <Slider autoHideButton>
-            {specialists.map((e) => (
+            {specialists?.map((e) => (
               <SpecialistChip
                 image={e?.image_url}
                 title={e?.speciality}
@@ -181,12 +180,12 @@ const Home = () => {
           <Slider autoScroll autoHideButton>
             {doctors.map((e) => (
               <InfoChip
-                image={e?.image}
-                title={e?.title}
-                exp={e?.exp}
-                location={e?.location}
-                degree={e?.degree}
-                dept={e?.dept}
+                image={e?.image_url}
+                title={e?.name}
+                exp={e?.experience}
+                location={e?.address}
+                degree={e?.qualification}
+                dept={e?.speciality}
               />
             ))}
           </Slider>

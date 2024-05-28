@@ -8,12 +8,17 @@ import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 import MenuList from "../../components/atoms/MenuList";
 import HospitalChip from "../../components/HospitalChip";
+import { hospitalsRead } from "../../apis/hospitals";
+import { useNavigate } from "react-router-dom";
 
 const Hospital = () => {
   const [query, setQuery] = React.useState<string>("");
   const [formData, setFormData] = React.useState({});
   const [specialities, setSpecialities] = React.useState(["AA", "BB"]);
   const [districts, setDistricts] = React.useState(["CC", "DD"]);
+  const [hospitals, setHospitals] = React.useState<[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
@@ -22,6 +27,12 @@ const Hospital = () => {
     obj[key] = e.target.value;
     setFormData({ ...formData, ...obj });
   };
+  React.useEffect(() => {
+    setLoading(true);
+    hospitalsRead()
+      .then((res) => setHospitals(res?.data))
+      .finally(() => setLoading(false));
+  }, []);
   return (
     <Box sx={{ marginInline: "5vw" }}>
       {/* Search */}
@@ -146,37 +157,18 @@ const Hospital = () => {
             height: "60vh",
           }}
         >
-          <HospitalChip
-            image={
-              "https://img.sasthyaseba.com/LBUDK0RCAzICFSpfVmMGCwtgWz0/hospitals/5/jOXEyfiYRcxupDG1a4jjksOjXLAurfEgS6Gd3cQ9/birdem-general-hospital.webp"
-            }
-            title="BIRDEM General Hospital"
-            address="122 Kazi Nazrul Islam Ave, Dhaka, 1000, Bangladesh"
-            price_range={{ start: 500, end: 1200 }}
-            assignedDoctor={6}
-            onClick={() => {
-              window.location.href = `/hospitalDetails`;
-              // console.log("DOC");
-            }}
-          />
-          <HospitalChip
-            image={
-              "https://img.sasthyaseba.com/LBUDK0RCAzICFSpfVmMGCwtgWz0/hospitals/5/jOXEyfiYRcxupDG1a4jjksOjXLAurfEgS6Gd3cQ9/birdem-general-hospital.webp"
-            }
-            title="BIRDEM General Hospital"
-            address="122 Kazi Nazrul Islam Ave, Dhaka, 1000, Bangladesh"
-            price_range={{ start: 500, end: 1200 }}
-            assignedDoctor={6}
-          />
-          <HospitalChip
-            image={
-              "https://img.sasthyaseba.com/LBUDK0RCAzICFSpfVmMGCwtgWz0/hospitals/5/jOXEyfiYRcxupDG1a4jjksOjXLAurfEgS6Gd3cQ9/birdem-general-hospital.webp"
-            }
-            title="BIRDEM General Hospital"
-            address="122 Kazi Nazrul Islam Ave, Dhaka, 1000, Bangladesh"
-            price_range={{ start: 500, end: 1200 }}
-            assignedDoctor={6}
-          />
+          {hospitals?.map((hospital: any) => (
+            <HospitalChip
+              image={hospital?.image_url}
+              title={hospital?.name}
+              address={hospital?.address}
+              price_range={{ start: 500, end: 1200 }}
+              assignedDoctor={hospital?.doctors.length}
+              onClick={() => {
+                navigate(`/hospital/${hospital?._id}`);
+              }}
+            />
+          ))}
         </Box>
       </Box>
     </Box>
