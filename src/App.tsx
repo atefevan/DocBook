@@ -9,6 +9,7 @@ import HospitalDetails from "./pages/hospital/HospitalDetails";
 import { SkeletonTheme } from "react-loading-skeleton";
 import DoctorDetails from "./pages/doctor/DoctorDetails";
 import AmbulanceDetails from "./pages/Ambulance/AmbulanceDetails";
+import Ambulance from "./pages/Ambulance/Ambulance";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="doctor/:doctorId" element={<DoctorDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="hospital" element={<Hospital />} />
+            <Route path="ambulance" element={<Ambulance />} />
             <Route path="hospital/:hospitalId" element={<HospitalDetails />} />
             <Route
               path="ambulance/:ambulanceId"

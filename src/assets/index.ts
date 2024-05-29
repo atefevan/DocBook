@@ -35,6 +35,7 @@ import vaginal_infections from "../assets/jpeg/vaginal_infections.jpeg";
 import lose_weight from "../assets/jpeg/lose_weight.jpeg";
 import banner from "../assets/jpeg/banner.jpeg";
 import doctor_skeleton from "../assets/jpeg/doctor_skeleton.jpeg";
+import car_skeleton from "../assets/jpeg/card_skeleton.jpeg";
 
 import helicopter_right_side from "../assets/webp/helicopter_right_side.webp";
 import freezing_ambulance_right_side from "../assets/webp/freezing_ambulance_right_side.webp";
@@ -79,6 +80,7 @@ export const jpeg = {
   vaginal_infections,
   lose_weight,
   doctor_skeleton,
+  car_skeleton,
 };
 
 export const webp = {
