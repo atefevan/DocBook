@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Skeleton, Typography } from "@mui/material";
 import { png, svg } from "../assets";
 import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -22,13 +22,17 @@ const Home = () => {
   const [specialists, setSpecialists] = React.useState<[]>([]);
   const [doctors, setDoctors] = React.useState<[]>([]);
   const [ambulances, setAmbulances] = React.useState<[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [selectedArea, setSelectedArea] = React.useState<string | null>(
     areas[0]
   );
   React.useEffect(() => {
+    setLoading(true);
     specialitiesRead().then((res) => setSpecialists(res?.data));
     ambulancesRead().then((res) => setAmbulances(res?.data));
-    doctorsRead().then((res) => setDoctors(res?.data));
+    doctorsRead()
+      .then((res) => setDoctors(res?.data))
+      .finally(() => setLoading(false));
   }, []);
   return (
     <>
@@ -114,7 +118,7 @@ const Home = () => {
           style={{
             display: "flex",
             flex: 1,
-            height: "25vh",
+            height: "28vh",
             marginInline: "5vw",
             marginTop: "1vh",
             padding: "5px",
@@ -129,7 +133,7 @@ const Home = () => {
               Top Specialistis
             </Typography>
           </Box>
-          <Slider autoHideButton>
+          <Slider autoScroll autoHideButton>
             {specialists?.map((e) => (
               <SpecialistChip
                 image={e?.image_url}
@@ -141,10 +145,10 @@ const Home = () => {
         </Box>
         {/* Common Health Concern */}
         <Box
-          style={{
+          sx={{
             display: "flex",
             flex: 1,
-            height: "25vh",
+            height: { xs: "35vh" },
             marginInline: "5vw",
             marginTop: "5.5vh",
             padding: "5px",
@@ -159,10 +163,27 @@ const Home = () => {
               Common Health Concern
             </Typography>
           </Box>
-          <Slider autoScroll autoHideButton>
-            {common_concerns.map((e) => (
-              <HealthChip image={e?.image} title={e?.title} price={e?.price} />
-            ))}
+          <Slider autoHideButton>
+            {!loading ? (
+              common_concerns.map((e) => (
+                <HealthChip
+                  image={e?.image}
+                  title={e?.title}
+                  price={e?.price}
+                />
+              ))
+            ) : (
+              <Box sx={{ display: "flex",width:"85vw" }}>
+                {[1, 2, 3, 4, 5].map(() => (
+                  <Skeleton
+                    variant="rectangular"
+                    width={"33vw"}
+                    height={"40vh"}
+                    sx={{ margin: 3, borderRadius: 5 }}
+                  />
+                ))}
+              </Box>
+            )}
           </Slider>
         </Box>
 
@@ -171,9 +192,9 @@ const Home = () => {
           sx={{
             display: "flex",
             flex: 1,
-            height: "25vh",
+            height: { xs: "40vh", sm: "38vh", md: "25vh" },
             marginInline: "5vw",
-            marginTop: { xs: "6vh", sm: "10vh", md: "13vh" },
+            marginTop: { xs: "6vh", sm: "10vh", md: "10vh" },
             padding: "5px",
             flexDirection: "column",
           }}
@@ -190,7 +211,7 @@ const Home = () => {
               // onClick={onClick}
               sx={{
                 width: { xs: "100px", sm: "110px", md: "90px" },
-                fontSize: { xs: "8px", sm: "9px", md: "12px" },
+                fontSize: { xs: "10px", sm: "11px", md: "12px" },
                 marginBlock: ".5vh",
               }}
               onClick={() => navigate("/doctor")}
@@ -198,44 +219,63 @@ const Home = () => {
               See All
             </Button>
           </Box>
-          <Slider autoScroll autoHideButton>
-            {doctors.map((e) => (
-              <InfoChip
-                image={e?.image_url}
-                title={e?.name}
-                exp={e?.experience}
-                location={e?.address}
-                degree={e?.qualification}
-                dept={e?.speciality}
-                onTitleClick={() => navigate(`/doctor/${e?._id}`)}
-                onClick={() => {
-                  navigate(`/doctor/${e?._id}`);
-                }}
-              />
-            ))}
+          <Slider autoHideButton>
+            {!loading ? (
+              doctors?.map((e) => (
+                <InfoChip
+                  image={e?.image_url}
+                  title={e?.name}
+                  exp={e?.experience}
+                  location={e?.address}
+                  degree={e?.qualification}
+                  dept={e?.speciality}
+                  onTitleClick={() => navigate(`/doctor/${e?._id}`)}
+                  onClick={() => {
+                    navigate(`/doctor/${e?._id}`);
+                  }}
+                />
+              ))
+            ) : (
+              <Box sx={{ display: "flex" }}>
+                {[1, 2, 3].map(() => (
+                  <Skeleton
+                    variant="rectangular"
+                    width={"23vw"}
+                    height={"20vh"}
+                    sx={{ margin: 3, borderRadius: 2 }}
+                  />
+                ))}
+              </Box>
+            )}
           </Slider>
         </Box>
 
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: "24px",
+            fontWeight: "bold",
+            fontFamily: "Arial",
+            marginLeft: { xs: 5, sm: 7, md: 9, xl: 12 },
+            marginTop: { xs: 6, sm: 6, md: 12 },
+          }}
+        >
+          On Emergency
+        </Typography>
         {/* Ambulance */}
         <Box
           sx={{
             display: "flex",
             flex: 1,
-            height: "15vh",
+            height: { xs: "40vh", md: "38vh" },
             marginInline: "5vw",
-            marginTop: { xs: "15vh", sm: "10vh", md: "5vh" },
+            marginTop: { xs: "0vh", sm: "1vh", md: "2vh" },
             padding: "5px",
             flexDirection: "column",
+            overflow: "scroll",
+            // width:{xs:"120px",md:""}
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography
-              variant="h6"
-              sx={{ fontSize: "24px", fontWeight: "bold", fontFamily: "Arial" }}
-            >
-              On Emergency
-            </Typography>
-          </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
               sx={{
@@ -243,20 +283,33 @@ const Home = () => {
                 width: "87vw",
               }}
               component={"div"}
-              ref={doctorRef}
+              // ref={doctorRef}
             >
-              {ambulances?.map((e) => (
-                <AmbulanceChip
-                  image={e?.image_url}
-                  title={e?.title}
-                  point_1={"Get ambulance within 30 minutes*"}
-                  point_2={"24/7 affordable quality service"}
-                  point_3={"We are just a call away: 01405600700"}
-                  onClick={() => {
-                    navigate(`/ambulance/${e?._id}`);
-                  }}
-                />
-              ))}
+              {!loading ? (
+                ambulances?.map((e) => (
+                  <AmbulanceChip
+                    image={e?.image_url}
+                    title={e?.title}
+                    point_1={"Get ambulance within 30 minutes*"}
+                    point_2={"24/7 affordable quality service"}
+                    point_3={"We are just a call away: 01405600700"}
+                    onClick={() => {
+                      navigate(`/ambulance/${e?._id}`);
+                    }}
+                  />
+                ))
+              ) : (
+                <Box sx={{ display: "flex" }}>
+                  {[1, 2, 3].map(() => (
+                    <Skeleton
+                      variant="rectangular"
+                      width={"21vw"}
+                      height={"20vh"}
+                      sx={{ margin: 3, borderRadius: 2 }}
+                    />
+                  ))}
+                </Box>
+              )}
             </Box>
           </Box>
         </Box>

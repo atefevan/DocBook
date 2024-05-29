@@ -21,7 +21,7 @@ const AmbulanceChip = ({
     <Box
       sx={{
         display: "flex",
-        minWidth: { sm: "16vw", md: "18vw" },
+        minWidth: { xs: "45vw", sm: "38vw", md: "250px" },
         minHeight: { sm: "28vh", md: "18vh" },
         backgroundColor: "white",
         borderRadius: 2,

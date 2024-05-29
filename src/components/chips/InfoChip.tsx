@@ -25,8 +25,8 @@ const InfoChip = ({
     <Box
       sx={{
         display: "flex",
-        minWidth: { xs: "18vw", sm: "18vw", md: "25vw" },
-        minHeight: { xs: "60vw", sm: "28vh", md: "18vh" },
+        minWidth: { xs: "40vw", sm: "35vw", md: "8vw" },
+        minHeight: { xs: "20vh", sm: "10vh", md: "18vh" },
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: { xs: "column", md: "row" },
@@ -51,8 +51,8 @@ const InfoChip = ({
         sx={{
           backgroundColor: "#f1f6f7",
           display: "flex",
-          height: "18vh",
-          width: { xs: "100%", md: "40%" },
+          height: { xs: "10vh",sm:"18vh",md:"18vh" },
+          width:{xs: "100%",sm:"100%",md:"40%"},
           flexDirection: { xs: "row", md: "column" },
           alignItems: "center",
           justifyContent: { xs: "center", md: "center" },
@@ -61,8 +61,8 @@ const InfoChip = ({
         <Avatar
           src={image}
           sx={{
-            height: { sm: "55px", md: "80px" },
-            width: { sm: "55px", md: "80px" },
+            height: { xs: "65px", sm: "65px", md: "80px" },
+            width: { xs: "65px", sm: "65px", md: "80px" },
             marginBlock: { xs: ".3vh", sm: ".5vh", md: ".7vh" },
             margin: 1,
           }}

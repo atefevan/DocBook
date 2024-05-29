@@ -10,21 +10,18 @@ const HealthChip = ({ image, title, price, onClick }: Props) => {
     <Box
       sx={{
         display: "flex",
-        minWidth: { xs: "20vw", sm: "18vw", md: "15vw" },
-        // minWidth:"15vw",
+        minWidth: { xs: "40vw", sm: "30vw", md: "15vw" },
+        minHeight: { xs: "35vw", sm: "30vw", md: "15vw" },
         backgroundColor: "white",
         borderRadius: 2,
-        flexDirection:"column",
+        flexDirection: "column",
         alignItems: "center",
-        marginInline: 1,
-        // border: ".2px solid grey",
-        
-        overflow:"clip",
-        margin:2,boxShadow:2,
+        overflow: "clip",
+        margin: 2,
+        boxShadow: 2,
       }}
     >
       <img
-        // src={image}
         src={image}
         width={"100%"}
         // sx={{
@@ -33,7 +30,7 @@ const HealthChip = ({ image, title, price, onClick }: Props) => {
         //   marginBlock: { xs: ".4vh", sm: ".6vh", md: ".8vh" },
         // }}
       />
-      
+
       <Typography
         style={{
           overflow: "scroll",
@@ -51,8 +48,8 @@ const HealthChip = ({ image, title, price, onClick }: Props) => {
         variant="text"
         onClick={onClick}
         sx={{
-          width: { xs: "100px", sm: "110px", md: "140px" },
-          fontSize: { xs: "8px", sm: "9px", md: "12px" },
+          width: { xs: "150px", sm: "110px", md: "140px" },
+          fontSize: { xs: "10px", sm: "12px", md: "12px" },
           marginBlock: ".5vh",
         }}
       >

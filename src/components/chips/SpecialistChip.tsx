@@ -13,7 +13,7 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
       sx={{
         display: "flex",
         minWidth: { xs: "110px", sm: "120px", md: "150px" },
-        height: "21vh",
+        height: {xs:"18vh",sm:"19vh",md:"22vh"},
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: "column",
@@ -26,8 +26,8 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
       <Avatar
         src={image}
         sx={{
-          height: { xs: "40px", sm: "65px", md: "90px" },
-          width: { xs: "40px", sm: "65px", md: "90px" },
+          height: { xs: "60px", sm: "70px", md: "90px" },
+          width: { xs: "60px", sm: "70px", md: "90px" },
           marginBlock: { xs: ".4vh", sm: ".6vh", md: ".8vh" },
         }}
       />
@@ -49,8 +49,8 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
         variant="outlined"
         onClick={onClick}
         sx={{
-          width: { xs: "100px", sm: "110px", md: "140px" },
-          fontSize: { xs: "8px", sm: "9px", md: "12px" },
+          width: { xs: "120px", sm: "130px", md: "140px" },
+          fontSize: { xs: "10px", sm: "11px", md: "12px" },
           marginBlock: ".5vh",
         }}
       >
