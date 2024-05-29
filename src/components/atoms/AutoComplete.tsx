@@ -92,7 +92,7 @@ const AutoComplete = ({
           size={size}
           InputProps={{
             ...params.InputProps,
-            style: { color: "white", fontSize: fontSize },
+            style: { color: fontColor, fontSize: fontSize },
           }}
         />
       )}

@@ -1,14 +1,24 @@
 import React from "react";
-import { ambulancesRead } from "../../apis/ambulance";
-import { Box } from "@mui/material";
+import { ambulanceRead, ambulancesRead } from "../../apis/ambulance";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import PlaceIcon from "@mui/icons-material/Place";
+import { Box, Button, Icon, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { jpeg } from "../../assets";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { areas } from "../../mock/strings";
+import AutoComplete from "../../components/atoms/AutoComplete";
 interface Props {}
 const AmbulanceDetails = ({}: Props) => {
+  const { ambulanceId } = useParams();
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [ambulances, setAmbulances] = React.useState<[]>([]);
+  const [location, setLocation] = React.useState<string>(areas[0]);
+  const [details, setDetails] = React.useState<[]>([]);
   React.useEffect(() => {
     setLoading(true);
-    ambulancesRead()
-      .then((res) => setAmbulances(res?.data))
+    ambulanceRead({ id: ambulanceId })
+      .then((res) => setDetails(res?.data))
       .finally(() => setLoading(false));
   }, []);
   return (
@@ -27,8 +37,270 @@ const AmbulanceDetails = ({}: Props) => {
         bottom: 0,
       }}
     >
-      <Box sx={{ display: "flex", flex: 1, }}>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box
+          sx={{
+            display: "flex",
+            height: "50vh",
+            width: "70vw",
+            backgroundColor: "white",
+            marginTop: "10vh",
+            borderRadius: 2,
+            boxShadow: 1,
+            marginLeft: "2vw",
+            overflow: "clip",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              width: "100%",
+            }}
+          >
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box sx={{ display: "flex", flexDirection: "row" }}>
+                <Box sx={{ height: "100%" }}>
+                  <Box
+                    component={"img"}
+                    draggable={false}
+                    src={
+                      details?.image_url
+                        ? details?.image_url
+                        : jpeg.car_skeleton
+                    }
+                    sx={{
+                      width: { xs: "12vw", md: "280px" },
+                      height: { xs: "12vw", md: "240px" },
+                      margin: 2,
+                      borderRadius: 1,
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      width: "53vw",
+                      // backgroundColor:"lightpink",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        // display: "flex",
+                        fontSize: "28px",
+                        marginInline: 1,
+                        marginTop: 2,
+                        width: "25vw",
+                        color: "#007292",
+                      }}
+                    >
+                      {details?.title || <Skeleton />}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "18px",
+                        marginInline: 1,
+                        color: "#007292",
+                      }}
+                    >
+                      {details?.description || <Skeleton count={5} />}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginInline: "5vw",
+                }}
+              >
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "start",
+                      margin: 2,
+                    }}
+                  >
+                    <Icon
+                      sx={{ height: "30px", width: "30px", marginTop: ".5vh" }}
+                    >
+                      <LocalPhoneIcon
+                        sx={{ height: "30px", width: "30px", color: "#007292" }}
+                      />
+                    </Icon>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "12px", md: "18px" },
+                          wordWrap: "break-word",
+                          whiteSpace: "normal",
+                          marginLeft: 0.5,
+                          color: "#007292",
+                          marginBlock: { xs: 0, md: 0.5 },
+                          textAlign: { xs: "center", md: "left" },
+                          cursor: "pointer",
+                        }}
+                      >
+                        On Emergency
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "12px", md: "18px" },
+                          wordWrap: "break-word",
+                          whiteSpace: "normal",
+                          marginLeft: 0.5,
+                          color: "#007292",
+                          marginBlock: { xs: 0, md: 0.5 },
+                          textAlign: { xs: "center", md: "left" },
+                          cursor: "pointer",
+                        }}
+                        onClick={() => window.open(`tel:${details?.contact}`)}
+                      >
+                        {details?.contact || <Skeleton />}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      marginTop: "1vh",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Icon sx={{ height: "30px", width: "30px" }}>
+                      <PlaceIcon
+                        sx={{ height: "30px", width: "30px", color: "#007292" }}
+                      />
+                    </Icon>
+                    <Typography
+                      sx={{
+                        overflow: "scroll",
+                        fontSize: { xs: "12px", md: "18px" },
+                        wordWrap: "break-word",
+                        whiteSpace: "normal",
+                        marginLeft: 0.5,
+                        color: "#007292",
+                        marginBlock: { xs: 0, md: 0.5 },
+                        textAlign: { xs: "center", md: "left" },
+                        cursor: "pointer",
+                      }}
+                      // onClick={() => window.open(`tel:${details?.contact}`)}
+                    >
+                      Location
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            height: "35vh",
+            width: "70vw",
+            backgroundColor: "white",
+            marginTop: "3vh",
+            borderRadius: 2,
+            boxShadow: 1,
+            marginLeft: "2vw",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography sx={{ margin: 3, fontFamily: "Arial", fontSize: "28px" }}>
+            Our Services
+          </Typography>
+          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
+            Get ambulance within 30 minutes*
+          </Typography>
+          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
+            24/7 affordable quality service
+          </Typography>
+          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
+            We are just a call away: 01405600700
+          </Typography>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          width: "25vw",
+          height: "88vh",
+          marginTop: "10vh",
+          marginLeft: "2vw",
+          borderRadius: 2,
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Typography
+          sx={{ fontSize: "24px", fontFamily: "Arial", color: "#007292" }}
+        >
+          On Emergency
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            width: "80%",
+            height: "43%",
+            paddingInline: "2vw",
+            marginBlock: "1vh",
+            borderRadius: 2,
+            boxShadow: 1,
+            backgroundColor: "white",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            sx={{ marginTop: "2vh", fontSize: "24px", fontFamily: "Arial" }}
+          >
+            Location
+          </Typography>
+          <AutoComplete
+            options={areas}
+            label={"Area"}
+            value={location}
+            setValue={setLocation}
+            focuseBorderColor="black"
+            fontColor="black"
+            focuseColor="black"
+            outlineColor="black"
+            // style={{ marginLeft: "5vw" }}
+          />
+          <Typography
+            sx={{ marginTop: "2vh", fontSize: "24px", fontFamily: "Arial" }}
+          >
+            {location}'s provider
+          </Typography>
+          <Typography
+            sx={{ marginTop: "2vh", fontSize: "24px", fontFamily: "Arial" }}
+          >
+            0101010101
+          </Typography>
 
+          <Button
+            variant="contained"
+            sx={{ marginTop: 2, width: "90%" }}
+            onClick={() => window.open(`tel:${"0101010101"}`)}
+          >
+            Call
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
