@@ -134,13 +134,33 @@ const Home = () => {
             </Typography>
           </Box>
           <Slider autoScroll autoHideButton>
-            {specialists?.map((e) => (
+            {/* {specialists?.map((e) => (
               <SpecialistChip
                 image={e?.image_url}
                 title={e?.speciality}
                 price={e?.price}
               />
-            ))}
+            ))} */}
+            {!loading ? (
+              specialists?.map((e) => (
+                <SpecialistChip
+                  image={e?.image_url}
+                  title={e?.speciality}
+                  price={e?.price}
+                />
+              ))
+            ) : (
+              <Box sx={{ display: "flex",width:"85vw" }}>
+                {[1, 2, 3, 4, 5].map(() => (
+                  <Skeleton
+                    variant="rectangular"
+                    width={"33vw"}
+                    height={"40vh"}
+                    sx={{ margin: 3, borderRadius: 5 }}
+                  />
+                ))}
+              </Box>
+            )}
           </Slider>
         </Box>
         {/* Common Health Concern */}
