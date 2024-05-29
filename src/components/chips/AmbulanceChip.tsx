@@ -7,8 +7,16 @@ interface Props {
   point_1?: string;
   point_2?: string;
   point_3?: string;
+  onClick?: (value?: any) => void;
 }
-const AmbulanceChip = ({ title, image, point_1, point_2, point_3 }: Props) => {
+const AmbulanceChip = ({
+  title,
+  image,
+  point_1,
+  point_2,
+  point_3,
+  onClick,
+}: Props) => {
   return (
     <Box
       sx={{
@@ -24,6 +32,7 @@ const AmbulanceChip = ({ title, image, point_1, point_2, point_3 }: Props) => {
         margin: 2,
         boxShadow: 2,
       }}
+      onClick={onClick}
     >
       <img
         // src={image}
@@ -39,7 +48,7 @@ const AmbulanceChip = ({ title, image, point_1, point_2, point_3 }: Props) => {
       />
 
       <Typography
-        style={{
+        sx={{
           overflow: "scroll",
           paddingInline: "10px",
           wordBreak: "break-word",
@@ -50,7 +59,13 @@ const AmbulanceChip = ({ title, image, point_1, point_2, point_3 }: Props) => {
           fontSize: "18px",
           alignSelf: "center",
           paddingBlock: "1vh",
+          "&:hover": {
+            textDecoration: "underline",
+            cursor: "pointer",
+            textDecorationColor: "#007292",
+          },
         }}
+        onClick={onClick}
       >
         {title}
       </Typography>

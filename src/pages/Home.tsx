@@ -4,7 +4,7 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import TxtField from "../components/atoms/TxtField";
 import AutoComplete from "../components/atoms/AutoComplete";
-import { ambulances, areas, common_concerns } from "../mock/strings";
+import { areas, common_concerns } from "../mock/strings";
 import SpecialistChip from "../components/chips/SpecialistChip";
 import HealthChip from "../components/chips/HealthChip";
 import InfoChip from "../components/chips/InfoChip";
@@ -12,19 +12,22 @@ import AmbulanceChip from "../components/chips/AmbulanceChip";
 import Slider from "../components/Slider";
 import { specialitiesRead } from "../apis/speciality";
 import { doctorsRead } from "../apis/doctor";
+import { useNavigate } from "react-router-dom";
+import { ambulancesRead } from "../apis/ambulance";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [query, setQuery] = React.useState<string>("");
   const doctorRef = React.useRef();
   const [specialists, setSpecialists] = React.useState<[]>([]);
   const [doctors, setDoctors] = React.useState<[]>([]);
+  const [ambulances, setAmbulances] = React.useState<[]>([]);
   const [selectedArea, setSelectedArea] = React.useState<string | null>(
     areas[0]
   );
   React.useEffect(() => {
     specialitiesRead().then((res) => setSpecialists(res?.data));
-  }, []);
-  React.useEffect(() => {
+    ambulancesRead().then((res) => setAmbulances(res?.data));
     doctorsRead().then((res) => setDoctors(res?.data));
   }, []);
   return (
@@ -182,6 +185,18 @@ const Home = () => {
             >
               Some of the Best Doctors
             </Typography>
+            <Button
+              variant="outlined"
+              // onClick={onClick}
+              sx={{
+                width: { xs: "100px", sm: "110px", md: "90px" },
+                fontSize: { xs: "8px", sm: "9px", md: "12px" },
+                marginBlock: ".5vh",
+              }}
+              onClick={() => navigate("/doctor")}
+            >
+              See All
+            </Button>
           </Box>
           <Slider autoScroll autoHideButton>
             {doctors.map((e) => (
@@ -192,6 +207,10 @@ const Home = () => {
                 location={e?.address}
                 degree={e?.qualification}
                 dept={e?.speciality}
+                onTitleClick={() => navigate(`/doctor/${e?._id}`)}
+                onClick={() => {
+                  navigate(`/doctor/${e?._id}`);
+                }}
               />
             ))}
           </Slider>
@@ -226,13 +245,16 @@ const Home = () => {
               component={"div"}
               ref={doctorRef}
             >
-              {ambulances.map((e) => (
+              {ambulances?.map((e) => (
                 <AmbulanceChip
-                  image={e?.image}
+                  image={e?.image_url}
                   title={e?.title}
-                  point_1={e?.point_1}
-                  point_2={e?.point_2}
-                  point_3={e?.point_3}
+                  point_1={"Get ambulance within 30 minutes*"}
+                  point_2={"24/7 affordable quality service"}
+                  point_3={"We are just a call away: 01405600700"}
+                  onClick={() => {
+                    navigate(`/ambulance/${e?._id}`);
+                  }}
                 />
               ))}
             </Box>

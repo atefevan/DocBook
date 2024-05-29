@@ -8,8 +8,19 @@ interface Props {
   location?: string;
   exp?: string;
   dept?: string;
+  onClick?: (value?: any) => void;
+  onTitleClick?: (value?: any) => void;
 }
-const InfoChip = ({ title, degree, image, location, exp, dept }: Props) => {
+const InfoChip = ({
+  title,
+  degree,
+  image,
+  location,
+  exp,
+  dept,
+  onClick,
+  onTitleClick,
+}: Props) => {
   return (
     <Box
       sx={{
@@ -40,8 +51,8 @@ const InfoChip = ({ title, degree, image, location, exp, dept }: Props) => {
         sx={{
           backgroundColor: "#f1f6f7",
           display: "flex",
-          height: "100%",
-          width: { xs: "100%", md: "60%" },
+          height: "18vh",
+          width: { xs: "100%", md: "40%" },
           flexDirection: { xs: "row", md: "column" },
           alignItems: "center",
           justifyContent: { xs: "center", md: "center" },
@@ -74,7 +85,13 @@ const InfoChip = ({ title, degree, image, location, exp, dept }: Props) => {
             fontWeight: "bold",
             margin: 1,
             color: "#174e61",
+            "&:hover": {
+              textDecoration: "underline",
+              cursor: "pointer",
+              textDecorationColor: "#007292",
+            },
           }}
+          onClick={onTitleClick}
         >
           {title}
         </Typography>
@@ -158,7 +175,7 @@ const InfoChip = ({ title, degree, image, location, exp, dept }: Props) => {
         </Box>
         <Button
           variant="text"
-          // onClick={onClick}
+          onClick={onClick}
           sx={{
             width: { xs: "100px", sm: "110px", md: "140px" },
             fontSize: { xs: "8px", sm: "9px", md: "12px" },
@@ -170,8 +187,6 @@ const InfoChip = ({ title, degree, image, location, exp, dept }: Props) => {
           Consult Now
         </Button>
       </Box>
-
-      
     </Box>
   );
 };
