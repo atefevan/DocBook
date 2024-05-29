@@ -1,6 +1,5 @@
-import React from "react";
-
-const Ambulances = () => {
+interface Props {}
+const Ambulances = ({}: Props) => {
   return <div>Ambulances</div>;
 };
 

@@ -22,6 +22,7 @@ const App = () => {
             <Route path="login" element={<Login />} />
             <Route path="hospital" element={<Hospital />} />
             <Route path="hospital/:hospitalId" element={<HospitalDetails />} />
+            <Route path="ambulance/:ambulanceId" element={<HospitalDetails />} />
           </Routes>
         </BrowserRouter>
       </SkeletonTheme>

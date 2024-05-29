@@ -309,7 +309,7 @@ const DoctorDetails = ({}: Props) => {
             paddingInline: "2vw",
             marginBlock: "1vh",
             borderRadius: 2,
-            boxShadow:1,
+            boxShadow: 1,
             backgroundColor: "white",
             alignItems: "center",
             flexDirection: "column",
