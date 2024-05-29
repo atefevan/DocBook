@@ -1,16 +1,21 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { doctorRead } from "../../apis/doctor";
-import { Box, Icon, Typography } from "@mui/material";
+import { Box, Button, Icon, Typography } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
 import { jpeg } from "../../assets";
+import PickTime from "../../components/atoms/TimePicker";
+import DatePickerValue from "../../components/atoms/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
 interface Props {}
 const DoctorDetails = ({}: Props) => {
   const { doctorId } = useParams();
   const [details, setDetails] = React.useState({});
+  const [date, setDate] = React.useState<Dayjs | null>(dayjs());
+  const [time, setTime] = React.useState<Dayjs | null>(dayjs());
   const [loading, setLoading] = React.useState<boolean>(false);
   React.useEffect(() => {
     setLoading(true);
@@ -55,6 +60,7 @@ const DoctorDetails = ({}: Props) => {
               <Box sx={{ height: "100%" }}>
                 <Box
                   component={"img"}
+                  draggable={false}
                   src={
                     details?.image_url
                       ? details?.image_url
@@ -278,15 +284,69 @@ const DoctorDetails = ({}: Props) => {
       </Box>
       <Box
         sx={{
+          display: "flex",
           width: "25vw",
-          backgroundColor: "white",
-          boxShadow: 1,
+          // backgroundColor: "white",
+          // boxShadow: 1,
           height: "88vh",
           marginTop: "10vh",
           marginLeft: "2vw",
           borderRadius: 2,
+          alignItems: "center",
+          flexDirection: "column",
         }}
-      ></Box>
+      >
+        <Typography
+          sx={{ fontSize: "24px", fontFamily: "Arial", color: "#007292" }}
+        >
+          Book An Appoinment
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            width: "80%",
+            height: "43%",
+            paddingInline: "2vw",
+            marginBlock: "1vh",
+            borderRadius: 2,
+            boxShadow:1,
+            backgroundColor: "white",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Typography
+            sx={{ marginTop: "2vh", fontSize: "24px", fontFamily: "Arial" }}
+          >
+            Time
+          </Typography>
+
+          <PickTime
+            variant="mobile"
+            label={""}
+            value={time}
+            setValue={setTime}
+            width={"90%"}
+            style={{ margin: 2 }}
+          />
+          <Typography
+            sx={{ marginTop: "2vh", fontSize: "24px", fontFamily: "Arial" }}
+          >
+            Date
+          </Typography>
+
+          <DatePickerValue
+            label={""}
+            value={date}
+            width={"90%"}
+            setValue={setDate}
+            style={{ margin: 1 }}
+          />
+          <Button variant="contained" sx={{ marginTop: 2, width: "90%" }}>
+            Book Appoinment
+          </Button>
+        </Box>
+      </Box>
     </Box>
   );
 };
