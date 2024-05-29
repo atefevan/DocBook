@@ -1,7 +1,7 @@
 import { Box, Button, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
-import { jpeg } from "../assets";
+import { jpeg } from "../../assets";
 
 interface Props {
   title?: string;

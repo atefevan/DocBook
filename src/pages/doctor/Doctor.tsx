@@ -1,12 +1,13 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material";
-import TxtField from "../components/atoms/TxtField";
+import TxtField from "../../components/atoms/TxtField";
 
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
-import MenuList from "../components/atoms/MenuList";
-import DoctorChip from "../components/DoctorChip";
-import { doctorsRead } from "../apis/doctor";
-import { svg } from "../assets";
+import MenuList from "../../components/atoms/MenuList";
+import DoctorChip from "../../components/chips/DoctorChip";
+import { doctorsRead } from "../../apis/doctor";
+import { svg } from "../../assets";
+import { useNavigate } from "react-router-dom";
 
 const Doctor = () => {
   const [query, setQuery] = React.useState<string>("");
@@ -16,6 +17,8 @@ const Doctor = () => {
   const [doctors, setDoctors] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const consultPhone = "02 981 4246";
+  const navigate = useNavigate();
+
   React.useEffect(() => {
     setLoading(true);
     doctorsRead()
@@ -165,6 +168,10 @@ const Doctor = () => {
                 exp={doctor?.experience}
                 address={doctor?.address}
                 availability={doctor?.availability}
+                onTitleClick={() => navigate(`/doctor/${doctor?._id}`)}
+                onClick={() => {
+                  navigate(`/doctor/${doctor?._id}`);
+                }}
               />
             ))
           ) : (

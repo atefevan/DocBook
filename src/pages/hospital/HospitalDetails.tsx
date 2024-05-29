@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { hospitalRead } from "../../apis/hospitals";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import DoctorChip from "../../components/DoctorChip";
+import DoctorChip from "../../components/chips/DoctorChip";
 import { png } from "../../assets";
 import MapView from "../../components/MapView";
 import DatePickerValue from "../../components/atoms/DatePicker";

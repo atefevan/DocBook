@@ -4,7 +4,7 @@ import TxtField from "../../components/atoms/TxtField";
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 import MenuList from "../../components/atoms/MenuList";
-import HospitalChip from "../../components/HospitalChip";
+import HospitalChip from "../../components/chips/HospitalChip";
 import { hospitalsRead } from "../../apis/hospitals";
 import { useNavigate } from "react-router-dom";
 import { areas } from "../../mock/strings";

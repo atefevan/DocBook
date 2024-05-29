@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import { png } from "../assets";
+import { png } from "../../assets";
 
 interface Props {
   image?: any;
@@ -13,7 +13,7 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
       sx={{
         display: "flex",
         minWidth: { xs: "110px", sm: "120px", md: "150px" },
-        height:"21vh",
+        height: "21vh",
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: "column",
@@ -32,7 +32,16 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
         }}
       />
 
-      <Typography style={{ overflow: "scroll",paddingInline:"10px",wordBreak:"break-word",textAlign:"center" }}>{title}</Typography>
+      <Typography
+        style={{
+          overflow: "scroll",
+          paddingInline: "10px",
+          wordBreak: "break-word",
+          textAlign: "center",
+        }}
+      >
+        {title}
+      </Typography>
       <Typography style={{ marginBlock: ".5vh", color: "#5AB2FF" }}>
         {price}
       </Typography>
@@ -42,7 +51,7 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
         sx={{
           width: { xs: "100px", sm: "110px", md: "140px" },
           fontSize: { xs: "8px", sm: "9px", md: "12px" },
-          marginBlock:".5vh"
+          marginBlock: ".5vh",
         }}
       >
         Consult Now
