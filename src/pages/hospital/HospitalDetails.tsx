@@ -8,11 +8,12 @@ import { hospitalRead } from "../../apis/hospitals";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import DoctorChip from "../../components/chips/DoctorChip";
-import { png } from "../../assets";
 import MapView from "../../components/MapView";
 import DatePickerValue from "../../components/atoms/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import PickTime from "../../components/atoms/TimePicker";
+import Alert from "../../components/atoms/Alert";
+import BookingModal from "../../components/modal/BookingModal";
 // import { doctors } from "../../mock/strings";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
@@ -21,6 +22,7 @@ const HospitalDetails = ({}: Props) => {
   const [details, setDetails] = React.useState({});
   const [loading, setLoading] = React.useState<boolean>(false);
   const [value, setValue] = React.useState<Dayjs | null>(dayjs());
+  const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
   React.useEffect(() => {
     setLoading(true);
     hospitalRead({ id: hospitalId })
@@ -40,6 +42,19 @@ const HospitalDetails = ({}: Props) => {
         position: "relative",
       }}
     >
+      <BookingModal
+        data={{
+          slots: [
+            "SAT 09:30 - 10:30 PM",
+            "MON 09:30 - 10:30 PM",
+            "WED 09:30 - 10:30 PM",
+          ],
+          doctor: { name: "KISHAN", id: "wkajnsfikojq11" },
+          user: { email: "zz@gmail.vom", id: "asdfjklnai1" },
+        }}
+        setOpen={setOpenAppoinment}
+        open={openAppoinment}
+      />
       <Box sx={{ display: "flex", flex: 1, justifyContent: "center" }}>
         {!loading && (
           <Box
@@ -365,6 +380,7 @@ const HospitalDetails = ({}: Props) => {
                   <Button
                     variant="outlined"
                     // sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
+                    onClick={() => setOpenAppoinment(true)}
                   >
                     Book Appoinment
                   </Button>
@@ -461,7 +477,6 @@ const HospitalDetails = ({}: Props) => {
                     width={"90%"}
                     style={{ margin: 2 }}
                   />
-
                   <Button variant="outlined">Book Appoinment</Button>
                 </Box>
               </Box>

@@ -2,6 +2,7 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 interface Props {
+  id?: string;
   options?: any;
   focuseColor?: string;
   focuseColorUnderline?: string;
@@ -16,6 +17,7 @@ interface Props {
   size?: string | number;
 }
 const AutoComplete = ({
+  id,
   options,
   focuseColor = "white",
   focuseColorUnderline = "white",
@@ -30,11 +32,10 @@ const AutoComplete = ({
   style,
 }: Props) => {
   const [inputValue, setInputValue] = React.useState("");
-
   return (
     <Autocomplete
       disablePortal
-      id="combo-box-demo"
+      id={id}
       options={options}
       //   sx={{ width: 300 }}
       value={value}
