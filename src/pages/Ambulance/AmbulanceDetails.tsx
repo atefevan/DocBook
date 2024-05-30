@@ -59,8 +59,22 @@ const AmbulanceDetails = ({}: Props) => {
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Box sx={{ display: "flex", flexDirection: "row" }}>
-                <Box sx={{ height: "100%" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  overflow: "scroll",
+                  flexDirection: { xs: "column", md: "row" },
+                }}
+              >
+                <Box
+                  sx={{
+                    height: "100%",
+                    width: { xs: "70vw", md: "25vw" },
+                    display: "flex",
+                    justifyContent: { xs: "center" },
+                    // backgroundColor: "lightblue",
+                  }}
+                >
                   <Box
                     component={"img"}
                     draggable={false}
@@ -70,8 +84,8 @@ const AmbulanceDetails = ({}: Props) => {
                         : jpeg.car_skeleton
                     }
                     sx={{
-                      width: { xs: "12vw", md: "280px" },
-                      height: { xs: "12vw", md: "240px" },
+                      width: { xs: "30vw", md: "280px" },
+                      height: { xs: "25vw", md: "240px" },
                       margin: 2,
                       borderRadius: 1,
                     }}
@@ -86,18 +100,19 @@ const AmbulanceDetails = ({}: Props) => {
                   <Box
                     sx={{
                       display: "flex",
-                      width: "53vw",
-                      // backgroundColor:"lightpink",
+                      width: { xs: "70vw", md: "50vw" },
+                      // backgroundColor: "lightpink",
                       flexDirection: "column",
+                      alignItems: { xs: "center", md: "start" },
                     }}
                   >
                     <Typography
                       sx={{
                         // display: "flex",
-                        fontSize: "28px",
+                        fontSize: { xs: "24px", md: "28px" },
                         marginInline: 1,
-                        marginTop: 2,
-                        width: "25vw",
+                        marginBlock: 2,
+                        width: { xs: "45vw", md: "25vw" },
                         color: "#007292",
                       }}
                     >
@@ -105,8 +120,9 @@ const AmbulanceDetails = ({}: Props) => {
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "18px",
+                        fontSize: { xs: "11px", md: "18px" },
                         marginInline: 1,
+                        textAlign: { xs: "center", md: "start" },
                         color: "#007292",
                       }}
                     >
@@ -117,18 +133,21 @@ const AmbulanceDetails = ({}: Props) => {
               </Box>
               <Box
                 sx={{
-                  flex: 1,
+                  width: "63vw",
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: { xs: "center", md: "space-between" },
                   marginInline: "5vw",
                 }}
               >
-                <Box>
+                <Box
+                  sx={{
+                    alignItems: { xs: "center", md: "start" },
+                  }}
+                >
                   <Box
                     sx={{
                       display: "flex",
-                      alignItems: "start",
                       margin: 2,
                     }}
                   >
@@ -172,35 +191,56 @@ const AmbulanceDetails = ({}: Props) => {
                     </Box>
                   </Box>
                 </Box>
-                <Box>
+                <Box
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    alignItems: { xs: "center", md: "start" },
+                  }}
+                >
                   <Box
                     sx={{
                       display: "flex",
-                      marginTop: "1vh",
-                      alignItems: "center",
+                      margin: 2,
                     }}
                   >
-                    <Icon sx={{ height: "30px", width: "30px" }}>
+                    <Icon
+                      sx={{ height: "30px", width: "30px", marginTop: ".5vh" }}
+                    >
                       <PlaceIcon
                         sx={{ height: "30px", width: "30px", color: "#007292" }}
                       />
                     </Icon>
-                    <Typography
-                      sx={{
-                        overflow: "scroll",
-                        fontSize: { xs: "12px", md: "18px" },
-                        wordWrap: "break-word",
-                        whiteSpace: "normal",
-                        marginLeft: 0.5,
-                        color: "#007292",
-                        marginBlock: { xs: 0, md: 0.5 },
-                        textAlign: { xs: "center", md: "left" },
-                        cursor: "pointer",
-                      }}
-                      // onClick={() => window.open(`tel:${details?.contact}`)}
-                    >
-                      Location
-                    </Typography>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "12px", md: "18px" },
+                          wordWrap: "break-word",
+                          whiteSpace: "normal",
+                          marginLeft: 0.5,
+                          color: "#007292",
+                          marginBlock: { xs: 0, md: 0.5 },
+                          textAlign: { xs: "center", md: "left" },
+                          cursor: "pointer",
+                        }}
+                      >
+                        Location
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "12px", md: "18px" },
+                          wordWrap: "break-word",
+                          whiteSpace: "normal",
+                          marginLeft: 0.5,
+                          color: "#007292",
+                          marginBlock: { xs: 0, md: 0.5 },
+                          textAlign: { xs: "center", md: "left" },
+                          cursor: "pointer",
+                        }}
+                        onClick={() => window.open(`tel:${details?.contact}`)}
+                      >
+                        {}
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
@@ -237,7 +277,7 @@ const AmbulanceDetails = ({}: Props) => {
       </Box>
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           width: "25vw",
           height: "88vh",
           marginTop: "10vh",

@@ -56,8 +56,19 @@ const DoctorDetails = ({}: Props) => {
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
-              <Box sx={{ height: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  height: "100%",
+                  justifyContent: { xs: "center" },
+                }}
+              >
                 <Box
                   component={"img"}
                   draggable={false}
@@ -78,14 +89,17 @@ const DoctorDetails = ({}: Props) => {
                 sx={{
                   display: "flex",
                   width: "100%",
-                  // backgroundColor: "lightgreen",
+                  flexDirection: { xs: "column", md: "row" },
+                  // flex:1,
                 }}
               >
                 <Box
                   sx={{
                     display: "flex",
-                    width: "30vw",
+                    width: { xs: "70vw", md: "30vw" },
                     flexDirection: "column",
+                    alignItems: { xs: "center", md: "start" },
+                    textAlign: { xs: "center", md: "start" },
                   }}
                 >
                   <Typography
@@ -150,9 +164,10 @@ const DoctorDetails = ({}: Props) => {
                 <Box
                   sx={{
                     display: "flex",
-                    width: "27vw",
+                    width: { xs: "68vw", md: "27vw" },
                     flexDirection: "column",
                     paddingInline: "1vw",
+                    // overflow:"scroll",
                   }}
                 >
                   <Typography
@@ -187,7 +202,7 @@ const DoctorDetails = ({}: Props) => {
                         <Typography
                           sx={{
                             overflow: "scroll",
-                            fontSize: { xs: "12px", md: "14px" },
+                            fontSize: { xs: "16px", md: "14px" },
                             wordWrap: "break-word",
                             whiteSpace: "normal",
                             marginLeft: 0.5,
@@ -206,7 +221,7 @@ const DoctorDetails = ({}: Props) => {
                 </Box>
               </Box>
             </Box>
-            <Box sx={{ height: "100%" }}>
+            <Box sx={{ height: "100%", display: { xs: "none", md: "flex" } }}>
               <Box
                 sx={{
                   display: "flex",
@@ -284,7 +299,7 @@ const DoctorDetails = ({}: Props) => {
       </Box>
       <Box
         sx={{
-          display: "flex",
+          display: { xs: "none", md: "flex" },
           width: "25vw",
           // backgroundColor: "white",
           // boxShadow: 1,

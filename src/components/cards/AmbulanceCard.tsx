@@ -28,18 +28,23 @@ const AmbulanceCard = ({
         alignItems: { xs: "center", sm: "center", md: "start" },
         boxShadow: 2,
         margin: 2,
+        textAlign:{xs:"center",md:"start"}
       }}
     >
       <Box
-        component={"img"}
-        src={image ? image : jpeg.car_skeleton}
-        sx={{
-          width: { xs: "14vw", md: "180px" },
-          height: { xs: "14vw", md: "150px" },
-          margin: 2,
-          borderRadius: 1,
-        }}
-      />
+        sx={{ display: "flex", height: "100%" }}
+      >
+        <Box
+          component={"img"}
+          src={image ? image : jpeg.car_skeleton}
+          sx={{
+            width: { xs: "14vw", md: "180px" },
+            height: { xs: "14vw", md: "150px" },
+            margin: 2,
+            borderRadius: 1,
+          }}
+        />
+      </Box>
       <Box sx={{ display: "flex", flex: 1 }}>
         <Box
           sx={{
