@@ -4,14 +4,17 @@ import TxtField from "../../components/atoms/TxtField";
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 import HospitalChip from "../../components/chips/HospitalChip";
-import { hospitalsRead } from "../../apis/hospitals";
+import { hospitalsRead, searchHospitals } from "../../apis/hospitals";
 import { useNavigate } from "react-router-dom";
 import AutoComplete from "../../components/atoms/AutoComplete";
+
+import SwitcH from "../../components/atoms/Switch";
 
 const Hospital = () => {
   const [query, setQuery] = React.useState<any>();
   const [formData, setFormData] = React.useState({});
   const [hospitals, setHospitals] = React.useState<[]>([]);
+  const [tempHospitals, setTempHospitals] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [specialities, setSpecialities] = React.useState([]);
   const [cities, setCities] = React.useState<[]>([]);
@@ -19,20 +22,22 @@ const Hospital = () => {
   const [selectedCity, setSelectedCity] = React.useState();
   const [selectedSpeciality, setSelectedSpeciality] = React.useState();
   const [selectedDistrict, setSelectedDistrict] = React.useState();
+  const [searchByDoc, setSearchByDoc] = React.useState<boolean>(true);
   const navigate = useNavigate();
 
-  const handleFormDataInput = (e: any) => {
-    e.preventDefault();
-    let obj: any = {};
-    const key: string = e.target.id ? e.target.id : e.target.name;
-    obj[key] = e.target.value;
-    setFormData({ ...formData, ...obj });
-  };
+  // const handleFormDataInput = (e: any) => {
+  //   e.preventDefault();
+  //   let obj: any = {};
+  //   const key: string = e.target.id ? e.target.id : e.target.name;
+  //   obj[key] = e.target.value;
+  //   setFormData({ ...formData, ...obj });
+  // };
   React.useEffect(() => {
     setLoading(true);
     hospitalsRead()
       .then((res) => {
         setHospitals(res?.data);
+        setTempHospitals(res?.data);
         filterParams(res?.data);
       })
       .finally(() => setLoading(false));
@@ -56,12 +61,39 @@ const Hospital = () => {
     }
   };
 
-  const handleSearch = (
-    city?: string,
-    district?: string,
-    speciality?: string
-  ) => {
-    const data = query.toLowerCase();
+  const handleSearch = () => {
+    if (hospitals) {
+      setTempHospitals(
+        hospitals
+          ?.filter((item) =>
+            item.name.trim().toLowerCase().includes(query.trim().toLowerCase())
+          )
+          .sort((a, b) =>
+            a.name
+              .trim()
+              .toLowerCase()
+              .localeCompare(b.name.trim().toLowerCase())
+          )
+      );
+    }
+  };
+
+  const handleFilter = () => {
+    setLoading(true);
+    searchHospitals({
+      city: selectedCity,
+      district: selectedDistrict,
+      speciality: selectedSpeciality,
+    })
+      .then((res) => {
+        // console.log("RES :: ", res?.data);
+        setTempHospitals(res?.data);
+        // filterParams(res?.data);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+    // .finally(() => setLoading(false));
   };
   return (
     <Box sx={{ marginInline: "5vw" }}>
@@ -70,7 +102,7 @@ const Hospital = () => {
         sx={{
           display: "flex",
           flex: 1,
-          height: "22vh",
+          height: "28vh",
           backgroundColor: "#397693",
           marginTop: "10vh",
           borderRadius: 3,
@@ -88,6 +120,7 @@ const Hospital = () => {
           }}
         >
           <TxtField
+            _disabled={!searchByDoc ? true : false}
             placeHolder="Search Hospitals....."
             fieldOnChange={(event) => setQuery(event.target.value)}
             value={query}
@@ -97,7 +130,7 @@ const Hospital = () => {
           <Button
             variant="contained"
             sx={{
-              height: "50px",
+              height: { xs: "35px", sm: "40px", md: "45px" },
               width: "20%",
               marginInline: 3,
               backgroundColor: "#088df3",
@@ -105,41 +138,74 @@ const Hospital = () => {
                 backgroundColor: "#6DC5D1",
               },
             }}
-            onClick={() =>
-              handleSearch(selectedCity, selectedDistrict, selectedSpeciality)
-            }
+            onClick={() => (searchByDoc ? handleSearch() : handleFilter())}
           >
-            Search
+            {searchByDoc ? "Search" : "Filter"}
           </Button>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            // backgroundColor: "lightgreen",
+            height: "5vh",
+            // alignSelf: "center",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <SwitcH
+            id={"hospital_filter"}
+            isChecked={searchByDoc}
+            onChange={() => {
+              searchByDoc ? setSearchByDoc(false) : setSearchByDoc(true);
+            }}
+            labelColor="white"
+            label={`Filter By : ${searchByDoc ? "Search" : "Filter"}`}
+            labelAlign="start"
+            color="#9DDE8B"
+          />
         </Box>
         <Box
           sx={{
             display: "flex",
             width: "100%",
             marginBottom: 1,
+            marginTop: "2.5vh",
             justifyContent: "space-between",
           }}
         >
           <AutoComplete
+            isDisabled={searchByDoc ? true : false}
             options={districts}
             label={"Districts"}
             value={selectedDistrict}
-            setValue={setSelectedDistrict}
+            focuseColor={searchByDoc ? "grey" : "white"}
+            setValue={(value) => {
+              setSelectedDistrict(value);
+            }}
             style={{ marginLeft: "5vw" }}
           />
 
           <AutoComplete
+            isDisabled={searchByDoc ? true : false}
             options={cities}
             label={"City"}
             value={selectedCity}
-            setValue={setSelectedCity}
+            focuseColor={searchByDoc ? "grey" : "white"}
+            setValue={(value) => {
+              setSelectedCity(value);
+            }}
             style={{ marginInline: "5vw" }}
           />
           <AutoComplete
+            isDisabled={searchByDoc ? true : false}
             options={specialities}
             label={"Speciality"}
             value={selectedSpeciality}
-            setValue={setSelectedSpeciality}
+            focuseColor={searchByDoc ? "grey" : "white"}
+            setValue={(value) => {
+              setSelectedSpeciality(value);
+            }}
             style={{ marginRight: "5vw" }}
           />
         </Box>
@@ -158,7 +224,7 @@ const Hospital = () => {
           }}
         >
           {!loading ? (
-            hospitals?.map((hospital: any) => (
+            tempHospitals?.map((hospital: any) => (
               <HospitalChip
                 image={hospital?.image_url}
                 title={hospital?.name}

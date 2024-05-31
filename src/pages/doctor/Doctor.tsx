@@ -3,17 +3,16 @@ import TxtField from "../../components/atoms/TxtField";
 
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
-import MenuList from "../../components/atoms/MenuList";
+// import MenuList from "../../components/atoms/MenuList";
 import DoctorChip from "../../components/chips/DoctorChip";
 import { doctorsRead } from "../../apis/doctor";
 import { svg } from "../../assets";
 import { useNavigate } from "react-router-dom";
-import SwitcH from "../../components/atoms/Switch";
+// import SwitcH from "../../components/atoms/Switch";
 import AutoComplete from "../../components/atoms/AutoComplete";
 
 const Doctor = () => {
   const [query, setQuery] = React.useState<string>("");
-  const [byDoc, setByDoc] = React.useState<boolean>(true);
   const [formData, setFormData] = React.useState({});
   const [specialities, setSpecialities] = React.useState([]);
   const [tempDoctors, setTempDoctors] = React.useState<[]>([]);
@@ -130,7 +129,7 @@ const Doctor = () => {
             Search
           </Button>
         </Box>
-
+            
         <Box
           sx={{
             display: "flex",
@@ -160,7 +159,6 @@ const Doctor = () => {
             onChange={handleFormDataInput}
           /> */}
           <AutoComplete
-            isDisabled={byDoc ? true : false}
             options={specialities}
             label={"Speciality"}
             value={selectedSpeciality}
