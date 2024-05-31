@@ -8,12 +8,16 @@ import DoctorChip from "../../components/chips/DoctorChip";
 import { doctorsRead } from "../../apis/doctor";
 import { svg } from "../../assets";
 import { useNavigate } from "react-router-dom";
+import SwitcH from "../../components/atoms/Switch";
+import AutoComplete from "../../components/atoms/AutoComplete";
 
 const Doctor = () => {
   const [query, setQuery] = React.useState<string>("");
+  const [byDoc, setByDoc] = React.useState<boolean>(true);
   const [formData, setFormData] = React.useState({});
-  const [specialities, setSpecialities] = React.useState(["A", "B"]);
-  const [districts, setDistricts] = React.useState(["C", "D"]);
+  const [specialities, setSpecialities] = React.useState([]);
+  const [tempDoctors, setTempDoctors] = React.useState<[]>([]);
+  const [selectedSpeciality, setSelectedSpeciality] = React.useState();
   const [doctors, setDoctors] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const consultPhone = "02 981 4246";
@@ -22,15 +26,61 @@ const Doctor = () => {
   React.useEffect(() => {
     setLoading(true);
     doctorsRead()
-      .then((res) => setDoctors(res?.data))
+      .then((res) => {
+        setDoctors(res?.data);
+        setTempDoctors(res?.data);
+        filterParams(res?.data);
+      })
       .finally(() => setLoading(false));
   }, []);
+  const filterParams = (data: any) => {
+    const specialities = [];
+    if (data) {
+      data?.map((item) => specialities.push(item?.speciality));
+      setSpecialities([...new Set(specialities)]);
+    }
+  };
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
     let obj: any = {};
     const key: string = e.target.id ? e.target.id : e.target.name;
     obj[key] = e.target.value;
     setFormData({ ...formData, ...obj });
+  };
+  const handleSearch = () => {
+    if (doctors) {
+      setTempDoctors(
+        doctors
+          ?.filter((item) =>
+            item.name.trim().toLowerCase().includes(query.trim().toLowerCase())
+          )
+          .sort((a, b) =>
+            a.name
+              .trim()
+              .toLowerCase()
+              .localeCompare(b.name.trim().toLowerCase())
+          )
+      );
+    }
+  };
+  const handleFilter = (value: string) => {
+    if (doctors) {
+      setTempDoctors(
+        doctors
+          ?.filter((item) =>
+            item.speciality
+              .trim()
+              .toLowerCase()
+              .includes(value.trim().toLowerCase())
+          )
+          .sort((a, b) =>
+            a.speciality
+              .trim()
+              .toLowerCase()
+              .localeCompare(b.speciality.trim().toLowerCase())
+          )
+      );
+    }
   };
   return (
     <Box sx={{ marginInline: "5vw" }}>
@@ -39,13 +89,11 @@ const Doctor = () => {
         sx={{
           display: "flex",
           flex: 1,
-          height: "25vh",
+          height: "28vh",
           backgroundColor: "#397693",
 
           marginTop: "10vh",
           borderRadius: 3,
-
-          // alignItems: "center",
           flexDirection: "column",
           overflow: "hidden",
         }}
@@ -61,7 +109,7 @@ const Doctor = () => {
         >
           <TxtField
             placeHolder="Search Doctors....."
-            fieldOnChange={setQuery}
+            fieldOnChange={(event) => setQuery(event.target.value)}
             value={query}
             prefixIcon={<SearchIcon />}
             style={{ marginBlock: { xs: "1vh", md: "0vh" } }}
@@ -69,18 +117,20 @@ const Doctor = () => {
           <Button
             variant="contained"
             sx={{
-              height: "50px",
               width: "20%",
+              height: { xs: "32px", sm: "40px", md: "45px" },
               marginInline: 3,
               backgroundColor: "#088df3",
               "&:hover": {
                 backgroundColor: "#6DC5D1",
               },
             }}
+            onClick={handleSearch}
           >
             Search
           </Button>
         </Box>
+
         <Box
           sx={{
             display: "flex",
@@ -91,7 +141,8 @@ const Doctor = () => {
             justifyContent: "space-between",
           }}
         >
-          <MenuList
+          {/* <MenuList
+            isDisabled={byDoc ? true : false}
             id="speciality"
             name="speciality"
             key="speciality"
@@ -107,8 +158,19 @@ const Doctor = () => {
             labelFontSize={{ xs: "14px", md: "18px" }}
             style={{ width: { xs: "25vw", md: "25vw" }, marginBottom: 1 }}
             onChange={handleFormDataInput}
+          /> */}
+          <AutoComplete
+            isDisabled={byDoc ? true : false}
+            options={specialities}
+            label={"Speciality"}
+            value={selectedSpeciality}
+            setValue={(value) => {
+              setSelectedSpeciality(value);
+              handleFilter(value);
+            }}
+            style={{ marginRight: "5vw" }}
           />
-          <MenuList
+          {/* <MenuList
             id="districts"
             name="districts"
             key="districts"
@@ -124,8 +186,8 @@ const Doctor = () => {
             items={[...districts]}
             style={{ width: { xs: "25vw", md: "25vw" } }}
             onChange={handleFormDataInput}
-          />
-          <MenuList
+          /> */}
+          {/* <MenuList
             id="consult_type"
             name="consult_type"
             key="consult_type"
@@ -141,7 +203,7 @@ const Doctor = () => {
             items={["Video", "Audio", "Face to Face"]}
             style={{ width: { xs: "25vw", md: "25vw" } }}
             onChange={handleFormDataInput}
-          />
+          /> */}
         </Box>
       </Box>
       <Typography sx={{ fontSize: "16px", marginTop: "2vh" }}>
@@ -159,7 +221,7 @@ const Doctor = () => {
           }}
         >
           {!loading ? (
-            doctors?.map((doctor) => (
+            tempDoctors?.map((doctor) => (
               <DoctorChip
                 image={doctor?.image_url}
                 title={doctor?.name}

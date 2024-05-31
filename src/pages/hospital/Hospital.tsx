@@ -3,11 +3,9 @@ import TxtField from "../../components/atoms/TxtField";
 
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
-import MenuList from "../../components/atoms/MenuList";
 import HospitalChip from "../../components/chips/HospitalChip";
 import { hospitalsRead } from "../../apis/hospitals";
 import { useNavigate } from "react-router-dom";
-import { areas } from "../../mock/strings";
 import AutoComplete from "../../components/atoms/AutoComplete";
 
 const Hospital = () => {
@@ -64,7 +62,6 @@ const Hospital = () => {
     speciality?: string
   ) => {
     const data = query.toLowerCase();
-    
   };
   return (
     <Box sx={{ marginInline: "5vw" }}>
