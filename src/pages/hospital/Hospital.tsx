@@ -11,15 +11,16 @@ import { areas } from "../../mock/strings";
 import AutoComplete from "../../components/atoms/AutoComplete";
 
 const Hospital = () => {
-  const [query, setQuery] = React.useState<string>("");
+  const [query, setQuery] = React.useState<any>();
   const [formData, setFormData] = React.useState({});
-  const [specialities, setSpecialities] = React.useState(["AA", "BB"]);
-  const [districts, setDistricts] = React.useState([...areas]);
   const [hospitals, setHospitals] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [selectedArea, setSelectedArea] = React.useState<string | null>(
-    areas[0]
-  );
+  const [specialities, setSpecialities] = React.useState([]);
+  const [cities, setCities] = React.useState<[]>([]);
+  const [districts, setDistricts] = React.useState<[]>([]);
+  const [selectedCity, setSelectedCity] = React.useState();
+  const [selectedSpeciality, setSelectedSpeciality] = React.useState();
+  const [selectedDistrict, setSelectedDistrict] = React.useState();
   const navigate = useNavigate();
 
   const handleFormDataInput = (e: any) => {
@@ -32,9 +33,39 @@ const Hospital = () => {
   React.useEffect(() => {
     setLoading(true);
     hospitalsRead()
-      .then((res) => setHospitals(res?.data))
+      .then((res) => {
+        setHospitals(res?.data);
+        filterParams(res?.data);
+      })
       .finally(() => setLoading(false));
   }, []);
+
+  const filterParams = (data: any) => {
+    const cities = [];
+    if (data) {
+      data?.map((item) => cities.push(item?.city));
+      setCities([...new Set(cities)]);
+    }
+    const specialities = [];
+    if (data) {
+      data?.map((item) => specialities.push(item?.speciality));
+      setSpecialities([...new Set(specialities)]);
+    }
+    const districts = [];
+    if (data) {
+      data?.map((item) => districts.push(item?.district));
+      setDistricts([...new Set(districts)]);
+    }
+  };
+
+  const handleSearch = (
+    city?: string,
+    district?: string,
+    speciality?: string
+  ) => {
+    const data = query.toLowerCase();
+    
+  };
   return (
     <Box sx={{ marginInline: "5vw" }}>
       {/* Search */}
@@ -61,7 +92,7 @@ const Hospital = () => {
         >
           <TxtField
             placeHolder="Search Hospitals....."
-            fieldOnChange={setQuery}
+            fieldOnChange={(event) => setQuery(event.target.value)}
             value={query}
             prefixIcon={<SearchIcon />}
             style={{ marginBlock: { xs: "1vh", md: "0vh" } }}
@@ -77,6 +108,9 @@ const Hospital = () => {
                 backgroundColor: "#6DC5D1",
               },
             }}
+            onClick={() =>
+              handleSearch(selectedCity, selectedDistrict, selectedSpeciality)
+            }
           >
             Search
           </Button>
@@ -90,22 +124,25 @@ const Hospital = () => {
           }}
         >
           <AutoComplete
-            options={areas}
+            options={districts}
             label={"Districts"}
-            setValue={setSelectedArea}
+            value={selectedDistrict}
+            setValue={setSelectedDistrict}
             style={{ marginLeft: "5vw" }}
           />
 
           <AutoComplete
-            options={areas}
-            label={"Districts"}
-            setValue={setSelectedArea}
+            options={cities}
+            label={"City"}
+            value={selectedCity}
+            setValue={setSelectedCity}
             style={{ marginInline: "5vw" }}
           />
           <AutoComplete
-            options={areas}
-            label={"Districts"}
-            setValue={setSelectedArea}
+            options={specialities}
+            label={"Speciality"}
+            value={selectedSpeciality}
+            setValue={setSelectedSpeciality}
             style={{ marginRight: "5vw" }}
           />
         </Box>

@@ -1,6 +1,4 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import { png } from "../../assets";
-
 interface Props {
   image?: any;
   title?: string;
@@ -13,7 +11,7 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
       sx={{
         display: "flex",
         minWidth: { xs: "110px", sm: "120px", md: "150px" },
-        height: {xs:"18vh",sm:"19vh",md:"22vh"},
+        height: { xs: "18vh", sm: "19vh", md: "22vh" },
         backgroundColor: "white",
         borderRadius: 2,
         flexDirection: "column",
@@ -26,6 +24,7 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
       <Avatar
         src={image}
         sx={{
+          border: ".5px solid black",
           height: { xs: "60px", sm: "70px", md: "90px" },
           width: { xs: "60px", sm: "70px", md: "90px" },
           marginBlock: { xs: ".4vh", sm: ".6vh", md: ".8vh" },

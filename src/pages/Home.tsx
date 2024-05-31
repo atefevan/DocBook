@@ -45,11 +45,11 @@ const Home = () => {
       .finally(() => setLoading(false));
   }, []);
   // const docByNames = async (data: any) => {
-  //   const docs = [];
-  //   if (data) {
-  //     data?.map((item) => docs.push(item?.name));
-  //     setDocNames([...new Set(docs)]);
-  //   }
+    // const docs = [];
+    // if (data) {
+    //   data?.map((item) => docs.push(item?.name));
+    //   setDocNames([...new Set(docs)]);
+    // }
   // };
   const specialityByNames = async (data: any) => {
     const specialists = [];

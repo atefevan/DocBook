@@ -8,11 +8,11 @@ import { hospitalRead } from "../../apis/hospitals";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import DoctorChip from "../../components/chips/DoctorChip";
-import MapView from "../../components/MapView";
+// import MapView from "../../components/MapView";
 import DatePickerValue from "../../components/atoms/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import PickTime from "../../components/atoms/TimePicker";
-import Alert from "../../components/atoms/Alert";
+// import Alert from "../../components/atoms/Alert";
 import BookingModal from "../../components/modal/BookingModal";
 // import { doctors } from "../../mock/strings";
 interface Props {}
@@ -226,22 +226,30 @@ const HospitalDetails = ({}: Props) => {
             alignItems: "center",
           }}
         >
-          {/*
           <Box
             sx={{
               display: "flex",
-              width: "20vw",
-              height: "10vw",
+              width: { xs: "13vw", md: "15vw" },
+              height: { xs: "10vh", md: "16vh" },
               borderRadius: 2,
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "grey",
+              cursor: "pointer",
+            }}
+            component={"img"}
+            src="https://apps.canva-apps.com/integrations/promo_cards/large/googlemaps_promo_card.jpg"
+            onClick={() => (window.location.href = `${details?.map_url}`)}
+          />
+          <Typography
+            sx={{
+              marginBlock: { xs: ".2vh", md: "1vh" },
+              fontSize: { xs: "10px", md: "14px" },
+              textAlign: "center",
             }}
           >
-            GOOGLE MAPS
-          </Box>
-          */}
-          <MapView url={`${details?.map_url}`} />
+            View Hospital in Google Maps
+          </Typography>
         </Box>
       </Box>
       <Box
@@ -335,7 +343,7 @@ const HospitalDetails = ({}: Props) => {
               </Typography>
             </Box>
 
-            {details?.doctors?.length && (
+            {/* {details?.doctors?.length && (
               <Box sx={{ backgroundColor: "white" }}>
                 <Box
                   sx={{
@@ -386,7 +394,7 @@ const HospitalDetails = ({}: Props) => {
                   </Button>
                 </Box>
               </Box>
-            )}
+            )} */}
           </Box>
         )}
         {selected === "Doctor" && (
