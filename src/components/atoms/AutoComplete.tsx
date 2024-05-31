@@ -15,6 +15,7 @@ interface Props {
   value?: any;
   style?: any;
   size?: string | number;
+  placeHolder?: string;
 }
 const AutoComplete = ({
   id,
@@ -30,6 +31,7 @@ const AutoComplete = ({
   size,
   setValue,
   style,
+  placeHolder,
 }: Props) => {
   const [inputValue, setInputValue] = React.useState("");
   return (
@@ -91,6 +93,7 @@ const AutoComplete = ({
           label={label}
           variant="outlined"
           size={size}
+          placeholder={placeHolder}
           InputProps={{
             ...params.InputProps,
             style: { color: fontColor, fontSize: fontSize },

@@ -37,7 +37,7 @@ const Ambulance = ({}: Props) => {
   return (
     <Box sx={{ marginInline: "5vw" }}>
       {/* Search */}
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           flex: 1,
@@ -145,8 +145,8 @@ const Ambulance = ({}: Props) => {
             onChange={handleFormDataInput}
           />
         </Box>
-      </Box>
-      <Typography sx={{ fontSize: "16px", marginTop: "2vh" }}>
+      </Box> */}
+      <Typography sx={{ fontSize: "16px", marginTop: "10vh" }}>
        On emergency call as you need
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -157,7 +157,7 @@ const Ambulance = ({}: Props) => {
             backgroundColor: "white",
             flexDirection: "column",
             overflow: "scroll",
-            height: "60vh",
+            height: "90vh",
           }}
         >
           {!loading ? (

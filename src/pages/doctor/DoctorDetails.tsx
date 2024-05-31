@@ -132,7 +132,7 @@ const DoctorDetails = ({}: Props) => {
                       color: "#007292",
                     }}
                   >
-                    {details?.designation || <Skeleton />}
+                    {details?.speciality || <Skeleton />}
                   </Typography>
                   <Typography
                     sx={{

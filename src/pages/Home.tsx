@@ -26,14 +26,58 @@ const Home = () => {
   const [selectedArea, setSelectedArea] = React.useState<string | null>(
     areas[0]
   );
+  const [selectedDoctor, setSelectedDoctor] = React.useState<string>("");
+  const [selectedSpeciality, setSelectedSpeciality] =
+    React.useState<string>("");
+  const [docsNames, setDocNames] = React.useState<[]>([]);
+  const [specialityNames, setSpecialityNames] = React.useState<[]>([]);
+  const [idWiseDoc,setIdWiseDoc] = React.useState({});
   React.useEffect(() => {
     setLoading(true);
     specialitiesRead().then((res) => setSpecialists(res?.data));
     ambulancesRead().then((res) => setAmbulances(res?.data));
     doctorsRead()
-      .then((res) => setDoctors(res?.data))
+      .then((res) => {
+        setDoctors(res?.data);
+        // docByNames(res?.data);
+        specialityByNames(res?.data);
+      })
       .finally(() => setLoading(false));
   }, []);
+  // const docByNames = async (data: any) => {
+  //   const docs = [];
+  //   if (data) {
+  //     data?.map((item) => docs.push(item?.name));
+  //     setDocNames([...new Set(docs)]);
+  //   }
+  // };
+  const specialityByNames = async (data: any) => {
+    const specialists = [];
+    if (data) {
+      data?.map((item) => specialists.push(item?.speciality));
+
+      setSpecialityNames([...new Set(specialists)]);
+
+      const result = [];
+
+      const specialityMap = {};
+
+      data?.forEach((item) => {
+        if (!specialityMap[item.speciality]) {
+          specialityMap[item.speciality] = [];
+        }
+        specialityMap[item.speciality].push(item.name);
+      });
+
+      for (const speciality in specialityMap) {
+        const obj = {};
+        obj[speciality] = specialityMap[speciality];
+        result.push(obj);
+      }
+      result ? setDocNames(result) : "";
+      setIdWiseDoc(data.reduce((acc, item) => ({ ...acc, [item.name]: item._id }), {}));
+    }
+  };
   return (
     <>
       <div
@@ -62,7 +106,7 @@ const Home = () => {
             overflow: "hidden",
           }}
         >
-          <Box
+          {/* <Box
             sx={{
               width: { sm: "flex", md: "none" },
               display: { md: "none", lg: "flex" },
@@ -79,17 +123,17 @@ const Home = () => {
                 // width:{ xs: "1vw", md: "10vw" }
               }}
             />
-          </Box>
+          </Box> */}
           <Typography
             variant="h6"
             sx={{
               fontSize: "32px",
               color: "white",
               fontWeight: "bold",
-              marginBlock: "2vh",
+              marginBlock: { xs: "1vh", md: "2vh" },
             }}
           >
-            {`Best Doctors in : ${selectedArea}`}
+            {`Find Doctor by Specialist`}
           </Typography>
           <Box
             sx={{
@@ -99,16 +143,27 @@ const Home = () => {
               flexDirection: { xs: "column", md: "row" },
             }}
           >
-            <TxtField
-              placeHolder="Search By : Doctors, Services"
-              fieldOnChange={setQuery}
-              prefixIcon={<SearchIcon />}
-              style={{ marginBlock: { xs: "1vh", md: "0vh" } }}
+            <AutoComplete
+              options={docsNames.map((item) =>
+                item?.[`${selectedSpeciality}`]
+                  ? item?.[`${selectedSpeciality}`]
+                  : ""
+              )}
+              label={"Doctors"}
+              value={selectedDoctor}
+              placeHolder={"Search By Doctors"}
+              setValue={(value) => {
+                setSelectedDoctor(value);
+                navigate(`/doctor/${idWiseDoc?.[value]}`);
+              }}
+              style={{ marginBlock: { xs: ".5vh", md: "0vh" } }}
             />
             <AutoComplete
-              options={areas}
-              label={"Locations"}
-              setValue={setSelectedArea}
+              options={specialityNames}
+              value={selectedSpeciality}
+              label={"Speciality"}
+              setValue={setSelectedSpeciality}
+              style={{ marginTop: { xs: "2vh", md: "0vh" } }}
             />
           </Box>
         </Box>
@@ -150,7 +205,7 @@ const Home = () => {
                 />
               ))
             ) : (
-              <Box sx={{ display: "flex",width:"85vw" }}>
+              <Box sx={{ display: "flex", width: "85vw" }}>
                 {[1, 2, 3, 4, 5].map(() => (
                   <Skeleton
                     variant="rectangular"
@@ -193,7 +248,7 @@ const Home = () => {
                 />
               ))
             ) : (
-              <Box sx={{ display: "flex",width:"85vw" }}>
+              <Box sx={{ display: "flex", width: "85vw" }}>
                 {[1, 2, 3, 4, 5].map(() => (
                   <Skeleton
                     variant="rectangular"
