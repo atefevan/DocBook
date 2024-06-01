@@ -343,7 +343,7 @@ const HospitalDetails = ({}: Props) => {
               </Typography>
             </Box>
 
-            {/* {details?.doctors?.length && (
+            {details?.doctors?.length && (
               <Box sx={{ backgroundColor: "white" }}>
                 <Box
                   sx={{
@@ -394,7 +394,7 @@ const HospitalDetails = ({}: Props) => {
                   </Button>
                 </Box>
               </Box>
-            )} */}
+            )}
           </Box>
         )}
         {selected === "Doctor" && (

@@ -17,67 +17,70 @@ import { ambulancesRead } from "../apis/ambulance";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [query, setQuery] = React.useState<string>("");
-  const doctorRef = React.useRef();
   const [specialists, setSpecialists] = React.useState<[]>([]);
   const [doctors, setDoctors] = React.useState<[]>([]);
   const [ambulances, setAmbulances] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [selectedArea, setSelectedArea] = React.useState<string | null>(
-    areas[0]
-  );
   const [selectedDoctor, setSelectedDoctor] = React.useState<string>("");
   const [selectedSpeciality, setSelectedSpeciality] =
     React.useState<string>("");
   const [docsNames, setDocNames] = React.useState<[]>([]);
   const [specialityNames, setSpecialityNames] = React.useState<[]>([]);
-  const [idWiseDoc,setIdWiseDoc] = React.useState({});
+  const [docsID, setDocsId] = React.useState({});
   React.useEffect(() => {
     setLoading(true);
-    specialitiesRead().then((res) => setSpecialists(res?.data));
+    specialitiesRead().then((res) => {
+      setSpecialists(res?.data);
+    });
     ambulancesRead().then((res) => setAmbulances(res?.data));
     doctorsRead()
       .then((res) => {
         setDoctors(res?.data);
         // docByNames(res?.data);
         specialityByNames(res?.data);
+        setDocsId(getDocsID(res?.data));
       })
       .finally(() => setLoading(false));
   }, []);
-  // const docByNames = async (data: any) => {
-    // const docs = [];
-    // if (data) {
-    //   data?.map((item) => docs.push(item?.name));
-    //   setDocNames([...new Set(docs)]);
-    // }
-  // };
   const specialityByNames = async (data: any) => {
     const specialists = [];
     if (data) {
       data?.map((item) => specialists.push(item?.speciality));
-
       setSpecialityNames([...new Set(specialists)]);
-
-      const result = [];
-
-      const specialityMap = {};
-
-      data?.forEach((item) => {
-        if (!specialityMap[item.speciality]) {
-          specialityMap[item.speciality] = [];
-        }
-        specialityMap[item.speciality].push(item.name);
-      });
-
-      for (const speciality in specialityMap) {
-        const obj = {};
-        obj[speciality] = specialityMap[speciality];
-        result.push(obj);
-      }
-      result ? setDocNames(result) : "";
-      setIdWiseDoc(data.reduce((acc, item) => ({ ...acc, [item.name]: item._id }), {}));
     }
   };
+  React.useEffect(() => {
+    setDocNames(getDocNames(doctors, selectedSpeciality));
+  }, [selectedSpeciality]);
+  const getDocNames = (data, search) =>
+    data.filter((d) => d.speciality === search).map((d) => d.name);
+  const getDocsID = (data) =>
+    Object.fromEntries(data.map(({ name, _id }) => [name, _id]).slice(0, 2));
+  // const result = [];
+
+  // const specialityMap = {};
+
+  // data?.forEach((item) => {
+  //   if (!specialityMap[item.speciality]) {
+  //     specialityMap[item.speciality] = [];
+  //   }
+  //   specialityMap[item.speciality].push(item.name);
+  // });
+
+  // for (const speciality in specialityMap) {
+  //   const obj = {};
+  //   obj[speciality] = specialityMap[speciality];
+  //   result.push(obj);
+  // }
+  // // console.log("RESULT :: ",result);
+  // result ? setDocNames(result) : setDocNames([]);
+  // setIdWiseDoc(
+  //   data.reduce((acc, item) => ({ ...acc, [item.name]: item._id }), {})
+  // );
+  // setSpecialistWiseDoc(data.reduce((acc, item) => ({ ...acc, [item.]: item._id }), {}));
+  //   }
+  // };
+  // console.log("DOC NAMES :: ", docsNames);
   return (
     <>
       <div
@@ -144,17 +147,13 @@ const Home = () => {
             }}
           >
             <AutoComplete
-              options={docsNames.map((item) =>
-                item?.[`${selectedSpeciality}`]
-                  ? item?.[`${selectedSpeciality}`]
-                  : ""
-              )}
+              options={docsNames}
               label={"Doctors"}
               value={selectedDoctor}
               placeHolder={"Search By Doctors"}
               setValue={(value) => {
                 setSelectedDoctor(value);
-                navigate(`/doctor/${idWiseDoc?.[value]}`);
+                navigate(`/doctor/${docsID[`${value}`]}`);
               }}
               style={{ marginBlock: { xs: ".5vh", md: "0vh" } }}
             />
@@ -162,7 +161,9 @@ const Home = () => {
               options={specialityNames}
               value={selectedSpeciality}
               label={"Speciality"}
-              setValue={setSelectedSpeciality}
+              setValue={(value) => {
+                setSelectedSpeciality(value);
+              }}
               style={{ marginTop: { xs: "2vh", md: "0vh" } }}
             />
           </Box>
@@ -202,6 +203,7 @@ const Home = () => {
                   image={e?.image_url}
                   title={e?.speciality}
                   price={e?.price}
+                  // onClick={() => }
                 />
               ))
             ) : (

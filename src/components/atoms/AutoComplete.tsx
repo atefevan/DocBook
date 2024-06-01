@@ -36,6 +36,7 @@ const AutoComplete = ({
   isDisabled,
 }: Props) => {
   const [inputValue, setInputValue] = React.useState("");
+  console.log("OPTIONS :: ",options);
   return (
     <Autocomplete
       disablePortal
@@ -89,6 +90,7 @@ const AutoComplete = ({
         },
         ...style,
       }}
+      // getOptionLabel={option => option.name}
       ListboxProps={{ style: { maxHeight: 150 } }}
       renderInput={(params) => (
         <TextField
