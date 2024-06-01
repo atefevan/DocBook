@@ -1,14 +1,11 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material";
 import TxtField from "../../components/atoms/TxtField";
-
 import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
-// import MenuList from "../../components/atoms/MenuList";
 import DoctorChip from "../../components/chips/DoctorChip";
 import { doctorsRead } from "../../apis/doctor";
 import { svg } from "../../assets";
 import { useNavigate, useSearchParams } from "react-router-dom";
-// import SwitcH from "../../components/atoms/Switch";
 import AutoComplete from "../../components/atoms/AutoComplete";
 
 const Doctor = () => {

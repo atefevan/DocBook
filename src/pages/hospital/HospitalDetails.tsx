@@ -1,28 +1,20 @@
-import { Box, Button, Icon, Typography } from "@mui/material";
+import { Box, Icon, Typography } from "@mui/material";
 import ApartmentSharpIcon from "@mui/icons-material/ApartmentSharp";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { hospitalRead } from "../../apis/hospitals";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import DoctorChip from "../../components/chips/DoctorChip";
-// import MapView from "../../components/MapView";
-import DatePickerValue from "../../components/atoms/DatePicker";
-import dayjs, { Dayjs } from "dayjs";
-import PickTime from "../../components/atoms/TimePicker";
-// import Alert from "../../components/atoms/Alert";
-import BookingModal from "../../components/modal/BookingModal";
-// import { doctors } from "../../mock/strings";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
   const { hospitalId } = useParams();
   const [selected, setSelected] = React.useState<string>("Info");
   const [details, setDetails] = React.useState({});
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-  // const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
+  const navigate = useNavigate();
   React.useEffect(() => {
     setLoading(true);
     hospitalRead({ id: hospitalId })
@@ -414,6 +406,10 @@ const HospitalDetails = ({}: Props) => {
                     exp={doctor?.experience}
                     address={doctor?.address}
                     availability={doctor?.availability}
+                    onTitleClick={() => navigate(`/doctor/${doctor?._id}`)}
+                    onClick={() => {
+                      navigate(`/doctor/${doctor?._id}`);
+                    }}
                   />
                 ))
               ) : (

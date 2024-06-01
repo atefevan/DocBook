@@ -33,6 +33,7 @@ const Login = () => {
       if (res?.token) {
         localStorage.setItem("DOCBOOK_ACCESS_TOKEN", res?.token);
         localStorage.setItem("DOCBOOK_USER_ID", res?.user_id);
+        localStorage.setItem("DOCBOOK_USER_EMAIL", res?.email);
       }
       navigate("/");
     } else {

@@ -5,25 +5,41 @@ import IconBtn from "../atoms/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import TxtField from "../atoms/TxtField";
 import AutoComplete from "../atoms/AutoComplete";
+import { appointmentAdd } from "../../apis/appoinment";
+import { enqueueSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 interface Props {
   data?: any;
   open?: boolean;
   setOpen?: (value?: any) => void;
 }
 const BookingModal = ({ data, open, setOpen }: Props) => {
-  const [formData, setFormData] = React.useState<any>({});
-  const [slot, setSlot] = React.useState<string>("");
-  const [paymentMethod, setPaymentMethod] = React.useState<string>("Bank");
+  const navigate = useNavigate();
+  const [selectedSlot, setSelectedSlot] = React.useState<string>("");
+  const [paymentMethod, setPaymentMethod] = React.useState<string>("Bkash");
   const [amount, setAmount] = React.useState<string>("");
-  const handleFormDataInput = (e: any) => {
-    e.preventDefault();
-    let obj: any = {};
-    const key: string = e.target.id ? e.target.id : e.target.name;
-    obj[key] = e.target.value;
-    setFormData({ ...formData, ...obj });
+  const handleSubmit = () => {
+    if (!data?.user?.id) {
+      // enqueueSnackbar("Login to Continue !", {
+      //   variant: "error",
+      // });
+      //
+    }
+    const slot = data?.slots?.find((slot) =>
+      slot?.slot === selectedSlot ? slot?._id : ""
+    );
+    appointmentAdd({
+      user_id: data?.user?.id,
+      doctor_id: data?.doctor?.id,
+      slot_id: slot?._id,
+    }).then((res) => {
+      setOpen(false);
+      navigate("/login");
+      return enqueueSnackbar(res?.message, {
+        variant: res?.status,
+      });
+    });
   };
-
-  const handleSubmit = () => {};
   return (
     <Alert
       open={open}
@@ -128,15 +144,15 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
               </div>
               <div style={{ display: "flex", flex: 1, marginInline: "2.2%" }}>
                 <AutoComplete
-                  options={data?.slots}
-                  value={slot}
+                  options={data?.rawSlots}
+                  value={selectedSlot}
                   id={"slot"}
                   fontColor="black"
                   focuseColor="black"
                   outlineColor="black"
                   focuseBorderColor="black"
                   label={"Slots"}
-                  setValue={setSlot}
+                  setValue={setSelectedSlot}
                   // style={{ marginLeft: "5vw" }}
                 />
               </div>
@@ -149,7 +165,7 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
                 }}
               >
                 <AutoComplete
-                  options={["Bank", "Bkash"]}
+                  options={["Bkash"]}
                   value={paymentMethod}
                   id={"slot"}
                   fontColor="black"
@@ -158,7 +174,6 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
                   focuseBorderColor="black"
                   label={"Payment Method"}
                   setValue={setPaymentMethod}
-                  // style={{ marginLeft: "5vw" }}
                 />
               </div>
               <div
@@ -175,11 +190,7 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
                   labelFontSize={"14px"}
                   key={"amount"}
                   fontSize={"12px"}
-                  placeHolder={
-                    paymentMethod === "Bank"
-                      ? "Bank Account No."
-                      : "Personal Bkash "
-                  }
+                  placeHolder={"Amount"}
                   fontColor={"black"}
                   value={amount}
                   focuseBorderColor={"black"}

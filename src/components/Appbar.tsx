@@ -9,10 +9,14 @@ import { pages } from "../mock/strings";
 import React from "react";
 
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router";
 
 const settings = ["Logout"];
 
 const ButtonAppBar = () => {
+  const navigate = useNavigate();
+  const uToken = localStorage.getItem("DOCBOOK_ACCESS_TOKEN");
+  const uEmail = localStorage.getItem("DOCBOOK_USER_EMAIL");
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -32,7 +36,11 @@ const ButtonAppBar = () => {
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    localStorage.removeItem("DOCBOOK_ACCESS_TOKEN");
+    localStorage.removeItem("DOCBOOK_USER_EMAIL");
+    localStorage.removeItem("DOCBOOK_USER_ID");
+    // ;
+    navigate("/login");
   };
 
   return (
@@ -126,15 +134,37 @@ const ButtonAppBar = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             {/* <Tooltip title="Open settings"> */}
-            <Button
-              variant="outlined"
-              sx={{ color: "black", fontSize: "12px" }}
-              onClick={() => {
-                window.location.href = `/login`;
-              }}
-            >
-              Login
-            </Button>
+
+            {!uToken ? (
+              <Button
+                variant="outlined"
+                sx={{ color: "black", fontSize: "12px" }}
+                onClick={() => {
+                  window.location.href = `/login`;
+                }}
+              >
+                Login
+              </Button>
+            ) : (
+              <Box
+                sx={{
+                  display: {
+                    xs: "none",
+                    md: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  },
+                }}
+              >
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar src="/broken-image.jpg" />
+                </IconButton>
+                <Typography sx={{ fontSize: "12px", color: "black" }}>
+                  {uEmail?.split("@")[0]}
+                </Typography>
+              </Box>
+            )}
+
             {/* </Tooltip> */}
             <Menu
               sx={{ mt: "45px" }}
@@ -150,7 +180,7 @@ const ButtonAppBar = () => {
                 horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              onClose={() => setAnchorElUser(null)}
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>

@@ -29,11 +29,17 @@ const DoctorDetails = ({}: Props) => {
       })
       .finally(() => setLoading(false));
   }, []);
-  const getSlots = (data: any) =>
-    data?.availability?.map(
-      (slot) => `${slot?.day} ${slot?.start} - ${slot?.end}`
-    );
+  // const getSlots = (data: any) =>
+  //   data?.availability?.map(
+  //     (slot) => `${slot?.day} ${slot?.start} - ${slot?.end}`
+  //   );
+  const getSlots = (data) =>
+    data?.availability?.map((slot) => ({
+      _id: slot._id,
+      slot: `${slot.day} ${slot.start} - ${slot.end}`,
+    }));
   const uid = localStorage.getItem("DOCBOOK_USER_ID");
+  const uemail = localStorage.getItem("DOCBOOK_USER_EMAIL");
   return (
     <Box
       sx={{
@@ -53,8 +59,9 @@ const DoctorDetails = ({}: Props) => {
       <BookingModal
         data={{
           slots: docSlots,
+          rawSlots:docSlots?.map((item: any) => item?.slot),
           doctor: { name: details?.name, id: details?._id },
-          user: { email: "zz@gmail.vom", id: uid },
+          user: { email: uemail, id: uid },
         }}
         setOpen={setOpenAppoinment}
         open={openAppoinment}
