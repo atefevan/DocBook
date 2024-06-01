@@ -369,7 +369,7 @@ const DoctorDetails = ({}: Props) => {
               }}
               component={"img"}
               src="https://apps.canva-apps.com/integrations/promo_cards/large/googlemaps_promo_card.jpg"
-              onClick={() => (window.location.href = `${details?.map_url}`)}
+              onClick={() => (window.location.href = `${chamberDetails?.map_url}`)}
             />
             <Typography sx={{ fontSize: "16px", paddingBlock: "1vh",textAlign:'start' }}>
               View on Google Map
