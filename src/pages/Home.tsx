@@ -187,8 +187,7 @@ const Home = () => {
                   title={e?.speciality}
                   price={e?.price}
                   onClick={() => {
-                    navigate(`/doctor`);
-                    // chipSpecialDocs[`${speciality}]
+                    navigate(`/doctor/?speciality=${e?.speciality}`);
                   }}
                 />
               ))
@@ -233,6 +232,9 @@ const Home = () => {
                   image={e?.image}
                   title={e?.title}
                   price={e?.price}
+                  onClick={() => {
+                    navigate("/hospital");
+                  }}
                 />
               ))
             ) : (

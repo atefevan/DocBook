@@ -7,7 +7,7 @@ import React from "react";
 import DoctorChip from "../../components/chips/DoctorChip";
 import { doctorsRead } from "../../apis/doctor";
 import { svg } from "../../assets";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 // import SwitcH from "../../components/atoms/Switch";
 import AutoComplete from "../../components/atoms/AutoComplete";
 
@@ -16,15 +16,18 @@ const Doctor = () => {
   const [formData, setFormData] = React.useState({});
   const [specialities, setSpecialities] = React.useState([]);
   const [tempDoctors, setTempDoctors] = React.useState<[]>([]);
-  const [selectedSpeciality, setSelectedSpeciality] = React.useState();
+  const [params] = useSearchParams();
+  const speciality = params.get("speciality");
+  const navigate = useNavigate();
+  const [selectedSpeciality, setSelectedSpeciality] =
+    React.useState(speciality);
   const [doctors, setDoctors] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const consultPhone = "02 981 4246";
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     setLoading(true);
-    doctorsRead()
+    doctorsRead({ speciality: speciality })
       .then((res) => {
         setDoctors(res?.data);
         setTempDoctors(res?.data);
@@ -129,7 +132,7 @@ const Doctor = () => {
             Search
           </Button>
         </Box>
-            
+
         <Box
           sx={{
             display: "flex",
