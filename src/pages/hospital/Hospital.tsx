@@ -252,6 +252,22 @@ const Hospital = () => {
               ))}
             </Box>
           )}
+          {tempHospitals.length <= 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "90vw",
+                height: "100%",
+              }}
+            >
+              <Typography sx={{ fontSize: { xs: "14px", md: "24px" } }}>
+                No Hospitals Available !
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
     </Box>

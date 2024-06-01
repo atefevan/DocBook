@@ -8,7 +8,7 @@ const Appoinment = ({}: Props) => {
         display: "flex",
         flex: 1,
         height: "100%",
-        backgroundColor: "#F2F2F2",
+        backgroundColor: "lightgreen",
         position: "absolute",
         padding: 0,
         margin: 0,
@@ -17,7 +17,9 @@ const Appoinment = ({}: Props) => {
         top: 0,
         bottom: 0,
       }}
-    ></Box>
+    >
+        <Box sx={{}}></Box>
+    </Box>
   );
 };
 
