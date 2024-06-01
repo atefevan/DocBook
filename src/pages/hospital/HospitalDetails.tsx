@@ -22,7 +22,7 @@ const HospitalDetails = ({}: Props) => {
   const [details, setDetails] = React.useState({});
   const [loading, setLoading] = React.useState<boolean>(false);
   const [value, setValue] = React.useState<Dayjs | null>(dayjs());
-  const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
+  // const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
   React.useEffect(() => {
     setLoading(true);
     hospitalRead({ id: hospitalId })
@@ -42,19 +42,6 @@ const HospitalDetails = ({}: Props) => {
         position: "relative",
       }}
     >
-      <BookingModal
-        data={{
-          slots: [
-            "SAT 09:30 - 10:30 PM",
-            "MON 09:30 - 10:30 PM",
-            "WED 09:30 - 10:30 PM",
-          ],
-          doctor: { name: "KISHAN", id: "wkajnsfikojq11" },
-          user: { email: "zz@gmail.vom", id: "asdfjklnai1" },
-        }}
-        setOpen={setOpenAppoinment}
-        open={openAppoinment}
-      />
       <Box sx={{ display: "flex", flex: 1, justifyContent: "center" }}>
         {!loading && (
           <Box
@@ -343,8 +330,8 @@ const HospitalDetails = ({}: Props) => {
               </Typography>
             </Box>
 
-            {details?.doctors?.length && (
-              <Box sx={{ backgroundColor: "white" }}>
+            {/* {details?.doctors?.length && (
+              <Box sx={{ backgroundColor: "orange" }}>
                 <Box
                   sx={{
                     display: "flex",
@@ -388,13 +375,13 @@ const HospitalDetails = ({}: Props) => {
                   <Button
                     variant="outlined"
                     // sx={{ alignSelf: { xs: "center", md: "end" }, margin: 1 }}
-                    onClick={() => setOpenAppoinment(true)}
+                    // onClick={() => setOpenAppoinment(true)}
                   >
                     Book Appoinment
                   </Button>
                 </Box>
               </Box>
-            )}
+            )} */}
           </Box>
         )}
         {selected === "Doctor" && (
@@ -443,7 +430,7 @@ const HospitalDetails = ({}: Props) => {
                 </Typography>
               )}
             </Box>
-            {details?.doctors?.length && (
+            {/* {details?.doctors?.length && (
               <Box sx={{ backgroundColor: "white" }}>
                 <Box
                   sx={{
@@ -488,7 +475,7 @@ const HospitalDetails = ({}: Props) => {
                   <Button variant="outlined">Book Appoinment</Button>
                 </Box>
               </Box>
-            )}
+            )} */}
           </Box>
         )}
       </Box>

@@ -10,6 +10,7 @@ import { jpeg } from "../../assets";
 import PickTime from "../../components/atoms/TimePicker";
 import DatePickerValue from "../../components/atoms/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
+import BookingModal from "../../components/modal/BookingModal";
 interface Props {}
 const DoctorDetails = ({}: Props) => {
   const { doctorId } = useParams();
@@ -17,14 +18,22 @@ const DoctorDetails = ({}: Props) => {
   const [date, setDate] = React.useState<Dayjs | null>(dayjs());
   const [time, setTime] = React.useState<Dayjs | null>(dayjs());
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
+  const [docSlots, setDocSlots] = React.useState<[]>([]);
   React.useEffect(() => {
     setLoading(true);
     doctorRead({ id: doctorId })
       .then((res) => {
         setDetails(res?.data);
+        setDocSlots(getSlots(res?.data));
       })
       .finally(() => setLoading(false));
   }, []);
+  const getSlots = (data: any) =>
+    data?.availability?.map(
+      (slot) => `${slot?.day} ${slot?.start} - ${slot?.end}`
+    );
+  const uid = localStorage.getItem("DOCBOOK_USER_ID");
   return (
     <Box
       sx={{
@@ -41,6 +50,15 @@ const DoctorDetails = ({}: Props) => {
         bottom: 0,
       }}
     >
+      <BookingModal
+        data={{
+          slots: docSlots,
+          doctor: { name: details?.name, id: details?._id },
+          user: { email: "zz@gmail.vom", id: uid },
+        }}
+        setOpen={setOpenAppoinment}
+        open={openAppoinment}
+      />
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Box
           sx={{
@@ -357,7 +375,11 @@ const DoctorDetails = ({}: Props) => {
             setValue={setDate}
             style={{ margin: 1 }}
           />
-          <Button variant="contained" sx={{ marginTop: 2, width: "90%" }}>
+          <Button
+            variant="contained"
+            sx={{ marginTop: 2, width: "90%" }}
+            onClick={() => setOpenAppoinment(true)}
+          >
             Book Appoinment
           </Button>
         </Box>

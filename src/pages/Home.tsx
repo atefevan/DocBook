@@ -1,10 +1,7 @@
 import { Box, Button, Skeleton, Typography } from "@mui/material";
-import { png, svg } from "../assets";
 import React from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import TxtField from "../components/atoms/TxtField";
 import AutoComplete from "../components/atoms/AutoComplete";
-import { areas, common_concerns } from "../mock/strings";
+import { common_concerns } from "../mock/strings";
 import SpecialistChip from "../components/chips/SpecialistChip";
 import HealthChip from "../components/chips/HealthChip";
 import InfoChip from "../components/chips/InfoChip";
@@ -36,7 +33,6 @@ const Home = () => {
     doctorsRead()
       .then((res) => {
         setDoctors(res?.data);
-        // docByNames(res?.data);
         specialityByNames(res?.data);
         setDocsId(getDocsID(res?.data));
       })
@@ -56,31 +52,6 @@ const Home = () => {
     data.filter((d) => d.speciality === search).map((d) => d.name);
   const getDocsID = (data) =>
     Object.fromEntries(data.map(({ name, _id }) => [name, _id]).slice(0, 2));
-  // const result = [];
-
-  // const specialityMap = {};
-
-  // data?.forEach((item) => {
-  //   if (!specialityMap[item.speciality]) {
-  //     specialityMap[item.speciality] = [];
-  //   }
-  //   specialityMap[item.speciality].push(item.name);
-  // });
-
-  // for (const speciality in specialityMap) {
-  //   const obj = {};
-  //   obj[speciality] = specialityMap[speciality];
-  //   result.push(obj);
-  // }
-  // // console.log("RESULT :: ",result);
-  // result ? setDocNames(result) : setDocNames([]);
-  // setIdWiseDoc(
-  //   data.reduce((acc, item) => ({ ...acc, [item.name]: item._id }), {})
-  // );
-  // setSpecialistWiseDoc(data.reduce((acc, item) => ({ ...acc, [item.]: item._id }), {}));
-  //   }
-  // };
-  // console.log("DOC NAMES :: ", docsNames);
   return (
     <>
       <div

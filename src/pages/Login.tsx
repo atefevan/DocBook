@@ -5,8 +5,10 @@ import { enqueueSnackbar } from "notistack";
 import TxtField from "../components/atoms/TxtField";
 import { signin, signup } from "../apis/user";
 import { emailValidator } from "../utils/validator";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = React.useState<any>({});
   const [hasAccount, setHasAccount] = React.useState<boolean>(true);
   const handleFormDataInput = (e: any) => {
@@ -30,10 +32,9 @@ const Login = () => {
       });
       if (res?.token) {
         localStorage.setItem("DOCBOOK_ACCESS_TOKEN", res?.token);
+        localStorage.setItem("DOCBOOK_USER_ID", res?.user_id);
       }
-      return enqueueSnackbar(res?.message, {
-        variant: res?.status,
-      });
+      navigate("/");
     } else {
       const res = await signup({
         email: formData.email,

@@ -14,7 +14,7 @@ interface Props {
   setValue?: (value?: any) => void;
   value?: any;
   style?: any;
-  isDisabled?:boolean;
+  isDisabled?: boolean;
   size?: string | number;
   placeHolder?: string;
 }
@@ -36,7 +36,6 @@ const AutoComplete = ({
   isDisabled,
 }: Props) => {
   const [inputValue, setInputValue] = React.useState("");
-  console.log("OPTIONS :: ",options);
   return (
     <Autocomplete
       disablePortal

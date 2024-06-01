@@ -13,7 +13,8 @@ interface Props {
 const BookingModal = ({ data, open, setOpen }: Props) => {
   const [formData, setFormData] = React.useState<any>({});
   const [slot, setSlot] = React.useState<string>("");
-  //   const [paymentMethod, setPaymentMethod] = React.useState<string>("Bank");
+  const [paymentMethod, setPaymentMethod] = React.useState<string>("Bank");
+  const [amount, setAmount] = React.useState<string>("");
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
     let obj: any = {};
@@ -27,7 +28,7 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
     <Alert
       open={open}
       width="45vw"
-      height="30vh"
+      height="37vh"
       setOpen={() => setOpen(true)}
       children={
         <>
@@ -49,7 +50,7 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
               <div style={{ width: "7%" }} />
               <Typography
                 sx={{
-                  fontSize: "12px",
+                  fontSize: "28px",
                   fontWeight: "bold",
                   color: "black",
                   marginTop: "1vh",
@@ -66,11 +67,10 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
             </div>
             <Typography
               sx={{
-                fontSize: "12px",
+                fontSize: "14px",
                 fontWeight: "bold",
                 color: "#ff6247",
-                marginTop: "1vh",
-                marginBottom: "2vh",
+                marginBottom: "1vh",
                 alignSelf: "center",
               }}
             >
@@ -83,7 +83,7 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
                   height: "60px",
                   alignItems: "center",
                   paddingInline: "10px",
-                  marginBottom: "2vh",
+                  marginBottom: "1vh",
                 }}
               >
                 <div style={{ display: "flex", flex: 1, marginInline: "1%" }}>
@@ -140,11 +140,57 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
                   // style={{ marginLeft: "5vw" }}
                 />
               </div>
+              <div
+                style={{
+                  display: "flex",
+                  flex: 1,
+                  marginInline: "2.2%",
+                  marginBlock: "2vh",
+                }}
+              >
+                <AutoComplete
+                  options={["Bank", "Bkash"]}
+                  value={paymentMethod}
+                  id={"slot"}
+                  fontColor="black"
+                  focuseColor="black"
+                  outlineColor="black"
+                  focuseBorderColor="black"
+                  label={"Payment Method"}
+                  setValue={setPaymentMethod}
+                  // style={{ marginLeft: "5vw" }}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flex: 1,
+                  marginInline: "2.2%",
+                }}
+              >
+                <TxtField
+                  id="amount"
+                  name="amount"
+                  label="Amount"
+                  labelFontSize={"14px"}
+                  key={"amount"}
+                  fontSize={"12px"}
+                  placeHolder={
+                    paymentMethod === "Bank"
+                      ? "Bank Account No."
+                      : "Personal Bkash "
+                  }
+                  fontColor={"black"}
+                  value={amount}
+                  focuseBorderColor={"black"}
+                  focuseColor={"black"}
+                  fieldOnChange={(event) => setAmount(event?.target.value)}
+                />
+              </div>
 
               <div
                 style={{
                   display: "flex",
-                  //   flex: 1,
                   justifyContent: "center",
                 }}
               >
@@ -153,7 +199,7 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
                   sx={{
                     backgroundColor: "#90D26D",
                     width: "10vw",
-                    marginBottom: "1vh",
+                    marginBlock: "1vh",
                     color: "black",
                   }}
                   onClick={handleSubmit}
