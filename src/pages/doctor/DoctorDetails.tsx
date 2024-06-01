@@ -20,19 +20,17 @@ const DoctorDetails = ({}: Props) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
   const [docSlots, setDocSlots] = React.useState<[]>([]);
+  const [chamberDetails, setChamberDetails] = React.useState({});
   React.useEffect(() => {
     setLoading(true);
     doctorRead({ id: doctorId })
       .then((res) => {
         setDetails(res?.data);
         setDocSlots(getSlots(res?.data));
+        setChamberDetails(res?.data?.chamber[0]);
       })
       .finally(() => setLoading(false));
   }, []);
-  // const getSlots = (data: any) =>
-  //   data?.availability?.map(
-  //     (slot) => `${slot?.day} ${slot?.start} - ${slot?.end}`
-  //   );
   const getSlots = (data) =>
     data?.availability?.map((slot) => ({
       _id: slot._id,
@@ -59,7 +57,7 @@ const DoctorDetails = ({}: Props) => {
       <BookingModal
         data={{
           slots: docSlots,
-          rawSlots:docSlots?.map((item: any) => item?.slot),
+          rawSlots: docSlots?.map((item: any) => item?.slot),
           doctor: { name: details?.name, id: details?._id },
           user: { email: uemail, id: uid },
         }}
@@ -319,8 +317,65 @@ const DoctorDetails = ({}: Props) => {
             borderRadius: 2,
             boxShadow: 1,
             marginLeft: "2vw",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
-        ></Box>
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              paddingLeft: "5vw",
+            }}
+          >
+            {/* {Object.keys(chamberDetails)?.map((item) => ( */}
+            <Typography sx={{ fontSize: "24px", paddingBlock: "1vh" }}>
+              Name : {chamberDetails?.name}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "14px",
+                paddingBlock: "1vh",
+                width: "37vw",
+                height: "10vh",
+                textAlign: "start",
+                overflow: "clip",
+              }}
+            >
+              Description : {chamberDetails?.description}
+            </Typography>
+            <Typography sx={{ fontSize: "16px", paddingBlock: "1vh" }}>
+              City : {chamberDetails?.city}
+            </Typography>
+            <Typography sx={{ fontSize: "16px", paddingBlock: "1vh" }}>
+              District : {chamberDetails?.district}
+            </Typography>
+            <Typography
+              sx={{ fontSize: "16px", paddingBlock: "1vh" }}
+            >{`Call Hospital : ${chamberDetails?.contact}`}</Typography>
+          </Box>
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                width: { xs: "13vw", md: "15vw" },
+                height: { xs: "10vh", md: "16vh" },
+                borderRadius: 2,
+                marginRight: "5vw",
+                justifyContent: "center",
+                alignItems: "center",
+                overflow: "clip",
+                cursor: "pointer",
+              }}
+              component={"img"}
+              src="https://apps.canva-apps.com/integrations/promo_cards/large/googlemaps_promo_card.jpg"
+              onClick={() => (window.location.href = `${details?.map_url}`)}
+            />
+            <Typography sx={{ fontSize: "16px", paddingBlock: "1vh",textAlign:'start' }}>
+              View on Google Map
+            </Typography>
+          </Box>
+        </Box>
       </Box>
       <Box
         sx={{

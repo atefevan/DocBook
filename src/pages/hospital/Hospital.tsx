@@ -12,7 +12,6 @@ import SwitcH from "../../components/atoms/Switch";
 
 const Hospital = () => {
   const [query, setQuery] = React.useState<any>();
-  const [formData, setFormData] = React.useState({});
   const [hospitals, setHospitals] = React.useState<[]>([]);
   const [tempHospitals, setTempHospitals] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -24,14 +23,6 @@ const Hospital = () => {
   const [selectedDistrict, setSelectedDistrict] = React.useState();
   const [searchByDoc, setSearchByDoc] = React.useState<boolean>(true);
   const navigate = useNavigate();
-
-  // const handleFormDataInput = (e: any) => {
-  //   e.preventDefault();
-  //   let obj: any = {};
-  //   const key: string = e.target.id ? e.target.id : e.target.name;
-  //   obj[key] = e.target.value;
-  //   setFormData({ ...formData, ...obj });
-  // };
   React.useEffect(() => {
     setLoading(true);
     hospitalsRead()
@@ -86,14 +77,11 @@ const Hospital = () => {
       speciality: selectedSpeciality,
     })
       .then((res) => {
-        // console.log("RES :: ", res?.data);
         setTempHospitals(res?.data);
-        // filterParams(res?.data);
       })
       .finally(() => {
         setLoading(false);
       });
-    // .finally(() => setLoading(false));
   };
   return (
     <Box sx={{ marginInline: "5vw" }}>
