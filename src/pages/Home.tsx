@@ -24,6 +24,7 @@ const Home = () => {
   const [docsNames, setDocNames] = React.useState<[]>([]);
   const [specialityNames, setSpecialityNames] = React.useState<[]>([]);
   const [docsID, setDocsId] = React.useState({});
+  const [chipSpecialDocs, setChipSpecialDocs] = React.useState<[]>([]);
   React.useEffect(() => {
     setLoading(true);
     specialitiesRead().then((res) => {
@@ -35,6 +36,7 @@ const Home = () => {
         setDoctors(res?.data);
         specialityByNames(res?.data);
         setDocsId(getDocsID(res?.data));
+        setChipSpecialDocs(getSpecialityWiseDoc(doctors));
       })
       .finally(() => setLoading(false));
   }, []);
@@ -48,10 +50,20 @@ const Home = () => {
   React.useEffect(() => {
     setDocNames(getDocNames(doctors, selectedSpeciality));
   }, [selectedSpeciality]);
+
+  React.useEffect(() => {});
   const getDocNames = (data, search) =>
     data.filter((d) => d.speciality === search).map((d) => d.name);
   const getDocsID = (data) =>
     Object.fromEntries(data.map(({ name, _id }) => [name, _id]).slice(0, 2));
+  const getSpecialityWiseDoc = (data) => {
+    return data.reduce((acc, doc) => {
+      const spec = doc.speciality.toLowerCase();
+      if (!acc[spec]) acc[spec] = [];
+      acc[spec].push(doc);
+      return acc;
+    }, {});
+  };
   return (
     <>
       <div
@@ -174,7 +186,10 @@ const Home = () => {
                   image={e?.image_url}
                   title={e?.speciality}
                   price={e?.price}
-                  // onClick={() => }
+                  onClick={() => {
+                    navigate(`/doctor`);
+                    // chipSpecialDocs[`${speciality}]
+                  }}
                 />
               ))
             ) : (

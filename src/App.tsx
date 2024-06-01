@@ -10,6 +10,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import DoctorDetails from "./pages/doctor/DoctorDetails";
 import AmbulanceDetails from "./pages/Ambulance/AmbulanceDetails";
 import Ambulance from "./pages/Ambulance/Ambulance";
+import Appoinment from "./pages/Appoinment/Appoinment";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Routes>
             <Route index element={<Home />} />
             <Route path="doctor" element={<Doctors />} />
+            <Route path="appointment" element={<Appoinment />} />
             <Route path="doctor/:doctorId" element={<DoctorDetails />} />
             <Route path="login" element={<Login />} />
             <Route path="hospital" element={<Hospital />} />
