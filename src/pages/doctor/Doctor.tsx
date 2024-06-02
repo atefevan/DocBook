@@ -248,6 +248,22 @@ const Doctor = () => {
               ))}
             </Box>
           )}
+          {tempDoctors.length <= 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "70vw",
+                height: "100%",
+              }}
+            >
+              <Typography sx={{ fontSize: { xs: "14px", md: "24px" } }}>
+                No Doctors Available !
+              </Typography>
+            </Box>
+          )}
         </Box>
         <Box
           sx={{
