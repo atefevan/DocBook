@@ -1,30 +1,16 @@
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import TxtField from "../atoms/TxtField";
 import { rmvNums } from "../../utils/parser";
+import dayjs from "dayjs";
 
 interface Prop {
   count?: string | number;
   value?: any;
   setValue?: (value?: any) => void;
   reviews?: any;
+  onClick?: (event?: any) => void;
 }
-const ReviewCard = ({
-  count = 0,
-  value,
-  reviews = [
-    {
-      email: "atefevan1020@gmail.com",
-      review:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-    {
-      email: "atefevan1020@gmail.com",
-      review:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    },
-  ],
-  setValue,
-}: Prop) => {
+const ReviewCard = ({ count = 0, value, reviews, setValue, onClick }: Prop) => {
   return (
     <Box
       sx={{
@@ -54,12 +40,20 @@ const ReviewCard = ({
         focuseBorderColor="black"
         focuseColor="black"
       />
-      <Button variant="contained" fullWidth style={{backgroundColor:"#006769"}}>Submit</Button>
+      <Button
+        variant="contained"
+        fullWidth
+        style={{ backgroundColor: "#006769" }}
+        onClick={onClick}
+      >
+        Submit
+      </Button>
       {reviews?.map((item: any) => (
         <Box
           sx={{
             display: "flex",
-            flex: 1,
+            // flex: 1,
+            width: "97%",
             flexDirection: "column",
             boxShadow: 1,
             marginBlock: 1,
@@ -74,14 +68,25 @@ const ReviewCard = ({
             }}
           >
             <Avatar />
-            <Typography sx={{ fontSize: "18px", paddingLeft: "10px" }}>
-              {rmvNums(`${item?.email}`.split("@")[0])}
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <Typography sx={{ fontSize: "18px", paddingLeft: "10px" }}>
+                {rmvNums(`${item?.email}`.split("@")[0])}
+              </Typography>
+              <Typography sx={{ fontSize: "14px", paddingLeft: "10px" }}>
+                {dayjs(item?.createdAt).format("DD-MMM-YYYY")}
+              </Typography>
+            </Box>
           </Box>
           <Box
             sx={{ display: "flex", width: "100%", flex: 1, paddingTop: "1vh" }}
           >
-            <Typography sx={{ fontSize: "14px" }}>{item?.review}</Typography>
+            <Typography sx={{ fontSize: "14px" }}>{item?.message}</Typography>
           </Box>
         </Box>
       ))}

@@ -13,6 +13,7 @@ import dayjs, { Dayjs } from "dayjs";
 import BookingModal from "../../components/modal/BookingModal";
 import { enqueueSnackbar } from "notistack";
 import ReviewCard from "../../components/cards/ReviewCard";
+import { reviewAdd, reviewRead } from "../../apis/review";
 interface Props {}
 const DoctorDetails = ({}: Props) => {
   const { doctorId } = useParams();
@@ -23,15 +24,19 @@ const DoctorDetails = ({}: Props) => {
   const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
   const [docSlots, setDocSlots] = React.useState<[]>([]);
   const [chamberDetails, setChamberDetails] = React.useState({});
-
+  const [reviews, setReviews] = React.useState<[]>([]);
+  const [query, setQuery] = React.useState();
+  const uid = localStorage.getItem("DOCBOOK_USER_ID");
+  const uemail = localStorage.getItem("DOCBOOK_USER_EMAIL");
   React.useEffect(() => {
     setLoading(true);
-    doctorRead({ id: doctorId })
-      .then((res) => {
-        setDetails(res?.data);
-        setDocSlots(getSlots(res?.data));
-        setChamberDetails(res?.data?.chamber[0]);
-      })
+    doctorRead({ id: doctorId }).then((res) => {
+      setDetails(res?.data);
+      setDocSlots(getSlots(res?.data));
+      setChamberDetails(res?.data?.chamber[0]);
+    });
+    reviewRead({ id: doctorId })
+      .then((res) => setReviews(res?.data))
       .finally(() => setLoading(false));
   }, []);
   const getSlots = (data) =>
@@ -39,8 +44,18 @@ const DoctorDetails = ({}: Props) => {
       _id: slot._id,
       slot: `${slot.day} ${slot.start} - ${slot.end}`,
     }));
-  const uid = localStorage.getItem("DOCBOOK_USER_ID");
-  const uemail = localStorage.getItem("DOCBOOK_USER_EMAIL");
+  const handleSubmitReview = (event?: any) => {
+    const payload = {
+      email: uemail,
+      item: doctorId,
+      message: query,
+    };
+    reviewAdd(payload).then((res) => {
+      return enqueueSnackbar(res?.message, {
+        variant: res?.status,
+      });
+    });
+  };
   return (
     <Box
       sx={{
@@ -350,7 +365,13 @@ const DoctorDetails = ({}: Props) => {
             </Box>
           </Box>
         </Box>
-        <ReviewCard />
+        <ReviewCard
+          count={reviews?.length}
+          reviews={reviews}
+          value={query}
+          setValue={(event) => setQuery(event.target.value)}
+          onClick={handleSubmitReview}
+        />
       </Box>
       <Box
         sx={{
