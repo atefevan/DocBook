@@ -10,6 +10,7 @@ import React from "react";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router";
+import { rmvNums } from "../utils/parser";
 
 const settings = ["Logout"];
 
@@ -159,7 +160,7 @@ const ButtonAppBar = () => {
                   <Avatar src="/broken-image.jpg" />
                 </IconButton>
                 <Typography sx={{ fontSize: "12px", color: "black" }}>
-                  {uEmail?.split("@")[0]}
+                  {rmvNums(uEmail?.split("@")[0])}
                 </Typography>
               </Box>
             )}
