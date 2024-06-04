@@ -39,7 +39,6 @@ const ButtonAppBar = () => {
     localStorage.removeItem("DOCBOOK_ACCESS_TOKEN");
     localStorage.removeItem("DOCBOOK_USER_EMAIL");
     localStorage.removeItem("DOCBOOK_USER_ID");
-    // ;
     navigate("/login");
   };
 

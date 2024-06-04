@@ -11,6 +11,8 @@ import PickTime from "../../components/atoms/TimePicker";
 import DatePickerValue from "../../components/atoms/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import BookingModal from "../../components/modal/BookingModal";
+import { enqueueSnackbar } from "notistack";
+import ReviewCard from "../../components/cards/ReviewCard";
 interface Props {}
 const DoctorDetails = ({}: Props) => {
   const { doctorId } = useParams();
@@ -21,6 +23,7 @@ const DoctorDetails = ({}: Props) => {
   const [openAppoinment, setOpenAppoinment] = React.useState<boolean>(false);
   const [docSlots, setDocSlots] = React.useState<[]>([]);
   const [chamberDetails, setChamberDetails] = React.useState({});
+
   React.useEffect(() => {
     setLoading(true);
     doctorRead({ id: doctorId })
@@ -69,12 +72,12 @@ const DoctorDetails = ({}: Props) => {
           sx={{
             display: "flex",
             height: "50vh",
-            width: {xs:"90vw",md:"70vw"},
+            width: { xs: "90vw", md: "70vw" },
             backgroundColor: "white",
             marginTop: "10vh",
             borderRadius: 2,
             boxShadow: 1,
-            marginLeft: {xs:"5vw",md:"2vw"},
+            marginLeft: { xs: "5vw", md: "2vw" },
             overflow: "clip",
           }}
         >
@@ -127,9 +130,9 @@ const DoctorDetails = ({}: Props) => {
                 >
                   <Typography
                     sx={{
-                      fontSize: {xs:"18px",md:"28px"},
+                      fontSize: { xs: "18px", md: "28px" },
                       marginInline: 1,
-                      marginTop: {xs:1,md:2},
+                      marginTop: { xs: 1, md: 2 },
                       width: "25vw",
                       color: "#007292",
                     }}
@@ -138,7 +141,7 @@ const DoctorDetails = ({}: Props) => {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: {xs:"14px",md:"18px"},
+                      fontSize: { xs: "14px", md: "18px" },
                       marginInline: 1,
                       width: "25vw",
                       color: "#007292",
@@ -148,7 +151,7 @@ const DoctorDetails = ({}: Props) => {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: {xs:"14px",md:"18px"},
+                      fontSize: { xs: "14px", md: "18px" },
                       marginInline: 1,
                       width: "25vw",
                       color: "#007292",
@@ -158,9 +161,9 @@ const DoctorDetails = ({}: Props) => {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: {xs:"14px",md:"18px"},
+                      fontSize: { xs: "14px", md: "18px" },
                       marginInline: 1,
-                      marginBlock:{ xs:1,md:2},
+                      marginBlock: { xs: 1, md: 2 },
                       width: "25vw",
                       color: "#007292",
                     }}
@@ -173,7 +176,7 @@ const DoctorDetails = ({}: Props) => {
                   </Typography>
                   <Typography
                     sx={{
-                      fontSize: {xs:"15px",md:"18px"},
+                      fontSize: { xs: "15px", md: "18px" },
                       marginInline: 1,
                       marginTop: 1,
                       width: "25vw",
@@ -233,7 +236,8 @@ const DoctorDetails = ({}: Props) => {
                             textAlign: { xs: "center", md: "left" },
                           }}
                         >
-                          {ch?.name}{ch?.city},{ch?.district}
+                          {ch?.name}
+                          {ch?.city},{ch?.district}
                         </Typography>
                       </Box>
                     ))
@@ -243,7 +247,13 @@ const DoctorDetails = ({}: Props) => {
                 </Box>
               </Box>
             </Box>
-            <Box sx={{ height: "100%", display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{
+                height: "100%",
+                display: { xs: "none", md: "flex" },
+                justifyContent: "space-between",
+              }}
+            >
               <Box
                 sx={{
                   display: "flex",
@@ -252,9 +262,9 @@ const DoctorDetails = ({}: Props) => {
                   marginLeft: "2vw",
                 }}
               >
-                <Icon sx={{ height: "40px", width: "40px" }}>
+                <Icon sx={{ height: "35px", width: "35px" }}>
                   <AccessTimeSharpIcon
-                    sx={{ height: "40px", width: "40px", color: "#007292" }}
+                    sx={{ height: "35px", width: "35px", color: "#007292" }}
                   />
                 </Icon>
                 <Box
@@ -303,96 +313,44 @@ const DoctorDetails = ({}: Props) => {
                   ))}
                 </Box>
               </Box>
+              <Box
+                sx={{
+                  marginTop: "5vh",
+                  marginRight: "5vw",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: { xs: "13vw", md: "15vw" },
+                    height: { xs: "10vh", md: "16vh" },
+                    borderRadius: 2,
+                    justifyContent: "center",
+                    textAlign: "center",
+                    alignItems: "center",
+                    overflow: "clip",
+                    cursor: "pointer",
+                  }}
+                  component={"img"}
+                  src="https://apps.canva-apps.com/integrations/promo_cards/large/googlemaps_promo_card.jpg"
+                  onClick={() =>
+                    (window.location.href = `${chamberDetails?.map_url}`)
+                  }
+                />
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    paddingBlock: "1vh",
+                    textAlign: "center",
+                  }}
+                >
+                  View on Google Map
+                </Typography>
+              </Box>
             </Box>
           </Box>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            height: "35vh",
-            width: {xs:"90vw",md:"70vw"},
-            backgroundColor: "white",
-            marginTop: "3vh",
-
-            borderRadius: 2,
-            boxShadow: 1,
-            marginLeft: {xs:"5vw",md:"2vw"},
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              paddingLeft: "5vw",
-            }}
-          >
-            {/* {Object.keys(chamberDetails)?.map((item) => ( */}
-            <Typography sx={{ fontSize: "24px", paddingBlock: "1vh" }}>
-              Name : {chamberDetails?.name || <Skeleton />}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: "14px",
-                paddingBlock: "1vh",
-                width: "37vw",
-                height: !loading ? "7vh" : "10vh",
-                textAlign: "start",
-                overflow: "clip",
-              }}
-            >
-              Description :
-              {!loading ? (
-                chamberDetails ? (
-                  chamberDetails.description
-                ) : (
-                  "No Description Available"
-                )
-              ) : (
-                <Skeleton />
-              )}
-            </Typography>
-            <Typography sx={{ fontSize: "16px", paddingBlock: "1vh" }}>
-              City : {chamberDetails?.city || <Skeleton width={"8vw"} />}
-            </Typography>
-            <Typography sx={{ fontSize: "16px", paddingBlock: "1vh" }}>
-              District :{chamberDetails?.district || <Skeleton width={"9vw"} />}
-            </Typography>
-            <Typography sx={{ fontSize: "16px", paddingBlock: "1vh" }}>
-              Call Hospital :
-              {
-                // chamberDetails?.contact || <Skeleton width={"7vw"} />
-                chamberDetails?.contact || <Skeleton width={"9vw"} />
-              }
-            </Typography>
-          </Box>
-          <Box>
-            <Box
-              sx={{
-                display: "flex",
-                width: { xs: "13vw", md: "15vw" },
-                height: { xs: "10vh", md: "16vh" },
-                borderRadius: 2,
-                marginRight: "5vw",
-                justifyContent: "center",
-                alignItems: "center",
-                overflow: "clip",
-                cursor: "pointer",
-              }}
-              component={"img"}
-              src="https://apps.canva-apps.com/integrations/promo_cards/large/googlemaps_promo_card.jpg"
-              onClick={() =>
-                (window.location.href = `${chamberDetails?.map_url}`)
-              }
-            />
-            <Typography
-              sx={{ fontSize: "16px", paddingBlock: "1vh", textAlign: "start" }}
-            >
-              View on Google Map
-            </Typography>
-          </Box>
-        </Box>
+        <ReviewCard />
       </Box>
       <Box
         sx={{
@@ -457,7 +415,14 @@ const DoctorDetails = ({}: Props) => {
           <Button
             variant="contained"
             sx={{ marginTop: 2, width: "90%" }}
-            onClick={() => setOpenAppoinment(true)}
+            onClick={() => {
+              if (uid) setOpenAppoinment(true);
+              else {
+                return enqueueSnackbar("Login First !", {
+                  variant: "error",
+                });
+              }
+            }}
           >
             Book Appoinment
           </Button>

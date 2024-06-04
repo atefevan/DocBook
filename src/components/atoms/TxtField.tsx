@@ -201,7 +201,6 @@ const TxtField = ({
           }}
           id={id}
           label={label}
-          
           value={value}
           type={showPassword ? type : "text"}
           placeholder={placeHolder}
