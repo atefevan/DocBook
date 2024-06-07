@@ -11,6 +11,7 @@ import { specialitiesRead } from "../apis/speciality";
 import { doctorsRead } from "../apis/doctor";
 import { useNavigate } from "react-router-dom";
 import { ambulancesRead } from "../apis/ambulance";
+import Footer from "./Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -377,7 +378,10 @@ const Home = () => {
               )}
             </Box>
           </Box>
+
         </Box>
+
+        <Footer />
       </div>
     </>
   );
