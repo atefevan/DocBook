@@ -1,6 +1,6 @@
 import React from "react";
 import Background from "../../components/Background";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Footer from "../Footer";
 import MedicineChip from "../../components/chips/MedicineChip";
 import { useNavigate } from "react-router-dom";
@@ -36,12 +36,14 @@ const Cart = ({}: Prop) => {
         </Box>
         <Button
           variant="contained"
+          sx={{ margin: 2 }}
           onClick={() => {
             navigate("/payment");
           }}
         >
           Make Payment
         </Button>
+        {/* <Typography>Complete your paymnent</Typography> */}
       </Box>
       <Footer />
     </Background>
