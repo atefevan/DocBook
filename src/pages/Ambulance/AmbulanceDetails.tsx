@@ -9,18 +9,39 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { areas } from "../../mock/strings";
 import AutoComplete from "../../components/atoms/AutoComplete";
+import { reviewAdd, reviewRead } from "../../apis/review";
+import { enqueueSnackbar } from "notistack";
+import ReviewCard from "../../components/cards/ReviewCard";
+import { Height } from "@mui/icons-material";
 interface Props {}
 const AmbulanceDetails = ({}: Props) => {
   const { ambulanceId } = useParams();
   const [loading, setLoading] = React.useState<boolean>(false);
   const [location, setLocation] = React.useState<string>(areas[0]);
   const [details, setDetails] = React.useState<[]>([]);
+  const [reviews, setReviews] = React.useState<[]>([]);
+  const [query, setQuery] = React.useState();
+  const uid = localStorage.getItem("DOCBOOK_USER_ID");
+  const uemail = localStorage.getItem("DOCBOOK_USER_EMAIL");
   React.useEffect(() => {
     setLoading(true);
-    ambulanceRead({ id: ambulanceId })
-      .then((res) => setDetails(res?.data))
+    ambulanceRead({ id: ambulanceId }).then((res) => setDetails(res?.data));
+    reviewRead({ id: ambulanceId })
+      .then((res) => setReviews(res?.data))
       .finally(() => setLoading(false));
   }, []);
+  const handleSubmitReview = (event?: any) => {
+    const payload = {
+      email: uemail,
+      item: ambulanceId,
+      message: query,
+    };
+    reviewAdd(payload).then((res) => {
+      return enqueueSnackbar(res?.message, {
+        variant: res?.status,
+      });
+    });
+  };
   return (
     <Box
       sx={{
@@ -247,33 +268,15 @@ const AmbulanceDetails = ({}: Props) => {
             </Box>
           </Box>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            height: "35vh",
-            width: "70vw",
-            backgroundColor: "white",
-            marginTop: "3vh",
-            borderRadius: 2,
-            boxShadow: 1,
-            marginLeft: "2vw",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography sx={{ margin: 3, fontFamily: "Arial", fontSize: "28px" }}>
-            Our Services
-          </Typography>
-          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
-            Get ambulance within 30 minutes*
-          </Typography>
-          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
-            24/7 affordable quality service
-          </Typography>
-          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
-            We are just a call away: 01405600700
-          </Typography>
-        </Box>
+        
+        <ReviewCard
+          count={reviews?.length}
+          reviews={reviews}
+          value={query}
+          setValue={(event) => setQuery(event.target.value)}
+          onClick={handleSubmitReview}
+          style={{Height:"30vh"}}
+        />
       </Box>
       <Box
         sx={{
@@ -340,6 +343,35 @@ const AmbulanceDetails = ({}: Props) => {
           >
             Call
           </Button>
+
+          <Box
+          sx={{
+            display: "flex",
+            // height: "60vh",
+            width: "25vw",
+            backgroundColor: "white",
+            marginTop: "17vh",
+            borderRadius: 2,
+            boxShadow: 1,
+            // marginLeft: "2vw",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography sx={{ margin: 3, fontFamily: "Arial", fontSize: "28px" }}>
+            Our Services
+          </Typography>
+          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
+            Get ambulance within 30 minutes*
+          </Typography>
+          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
+            24/7 affordable quality service
+          </Typography>
+          <Typography sx={{ margin: 2, fontFamily: "Arial", fontSize: "18px" }}>
+            We are just a call away: 01405600700
+          </Typography>
+          
+        </Box>
         </Box>
       </Box>
     </Box>

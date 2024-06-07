@@ -9,8 +9,16 @@ interface Prop {
   setValue?: (value?: any) => void;
   reviews?: any;
   onClick?: (event?: any) => void;
+  style?: any;
 }
-const ReviewCard = ({ count = 0, value, reviews, setValue, onClick }: Prop) => {
+const ReviewCard = ({
+  count = 0,
+  value,
+  reviews,
+  setValue,
+  onClick,
+  style,
+}: Prop) => {
   return (
     <Box
       sx={{
@@ -26,6 +34,8 @@ const ReviewCard = ({ count = 0, value, reviews, setValue, onClick }: Prop) => {
         flexDirection: "column",
         overflow: "scroll",
         padding: 5,
+        // flex:1,
+        ...style,
       }}
     >
       <Typography

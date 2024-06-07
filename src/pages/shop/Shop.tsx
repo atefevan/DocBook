@@ -42,9 +42,11 @@ const Shop = ({}: Prop) => {
         <Box
           sx={{
             width: "100%",
-            height: "40%",
+            height: "100%",
             padding: 2,
             display: "flex",
+            // backgroundColor:"blue",
+            overflow: "scroll",
           }}
         >
           {/* <Slider autoHideButton> */}
@@ -61,7 +63,7 @@ const Shop = ({}: Prop) => {
             ))
           ) : (
             <Box sx={{ display: "flex", width: "85vw" }}>
-             {new Array(5).fill(0).map((item, index) => (
+              {new Array(5).fill(0).map((item, index) => (
                 <Skeleton
                   variant="rectangular"
                   width={"30vw"}

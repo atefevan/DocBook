@@ -8,22 +8,41 @@ import { hospitalRead } from "../../apis/hospitals";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import DoctorChip from "../../components/chips/DoctorChip";
+import ReviewCard from "../../components/cards/ReviewCard";
+import { reviewAdd, reviewRead } from "../../apis/review";
+import { enqueueSnackbar } from "notistack";
 interface Props {}
 const HospitalDetails = ({}: Props) => {
   const { hospitalId } = useParams();
   const [selected, setSelected] = React.useState<string>("Info");
   const [details, setDetails] = React.useState({});
+  const [reviews, setReviews] = React.useState<[]>([]);
+  const [query, setQuery] = React.useState();
   const [loading, setLoading] = React.useState<boolean>(false);
   const navigate = useNavigate();
+  const uid = localStorage.getItem("DOCBOOK_USER_ID");
+  const uemail = localStorage.getItem("DOCBOOK_USER_EMAIL");
   React.useEffect(() => {
     setLoading(true);
-    hospitalRead({ id: hospitalId })
-      .then((res) => {
-        setDetails(res?.data);
-      })
+    hospitalRead({ id: hospitalId }).then((res) => {
+      setDetails(res?.data);
+    });
+    reviewRead({ id: hospitalId })
+      .then((res) => setReviews(res?.data))
       .finally(() => setLoading(false));
   }, []);
-
+  const handleSubmitReview = (event?: any) => {
+    const payload = {
+      email: uemail,
+      item: hospitalId,
+      message: query,
+    };
+    reviewAdd(payload).then((res) => {
+      return enqueueSnackbar(res?.message, {
+        variant: res?.status,
+      });
+    });
+  };
   return (
     <Box
       sx={{
@@ -475,6 +494,14 @@ const HospitalDetails = ({}: Props) => {
           </Box>
         )}
       </Box>
+      <ReviewCard
+        count={reviews?.length}
+        reviews={reviews}
+        value={query}
+        setValue={(event) => setQuery(event.target.value)}
+        onClick={handleSubmitReview}
+        style={{ marginLeft: "4.5vw" }}
+      />
     </Box>
   );
 };
