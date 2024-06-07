@@ -172,7 +172,7 @@ const Home = () => {
               Top Specialistis
             </Typography>
           </Box>
-          <Slider autoScroll autoHideButton>
+          <Slider autoHideButton>
             {/* {specialists?.map((e) => (
               <SpecialistChip
                 image={e?.image_url}

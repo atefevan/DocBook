@@ -7,6 +7,8 @@ import { signin, signup } from "../apis/user";
 import { emailValidator } from "../utils/validator";
 import { useNavigate } from "react-router-dom";
 
+/// FIREBASE 
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState<any>({});

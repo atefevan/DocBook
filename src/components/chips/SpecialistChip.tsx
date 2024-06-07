@@ -42,7 +42,7 @@ const SpecialistChip = ({ image, title, price, onClick }: Props) => {
         {title}
       </Typography>
       <Typography style={{ marginBlock: ".5vh", color: "#5AB2FF" }}>
-        {price}
+        {price} BDT
       </Typography>
       <Button
         variant="outlined"

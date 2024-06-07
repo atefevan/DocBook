@@ -1,5 +1,6 @@
 import { Box, Icon, Typography } from "@mui/material";
 import ElderlyIcon from "@mui/icons-material/Elderly";
+import dayjs from "dayjs";
 interface Prop {
   user_email?: string;
   doctor?: string;
@@ -78,12 +79,12 @@ const AppoinmentCard = ({
       <Typography
         sx={{ fontSize: "18px", marginInline: 1, paddingLeft: "2vw", padding: 1 }}
       >
-        Appoinment Slot : {slot}
+        Appoinment Slot : {slot?.replace(/^\w{3} /, "")}
       </Typography>
       <Typography
         sx={{ fontSize: "18px", marginInline: 1, paddingLeft: "2vw", padding: 1 }}
       >
-        Book Date: {new Date(date).toDateString()}
+        Book Date: {dayjs(date).format("DD-MMM-YYYY")}
       </Typography>
       <Typography
         sx={{ fontSize: "18px", marginInline: 1, paddingLeft: "2vw", padding: 1 }}

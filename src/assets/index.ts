@@ -5,6 +5,7 @@ import d4 from "../assets/png/d4.png";
 import d5 from "../assets/png/d5.png";
 import logo from "../assets/png/logo.png";
 import acne_pimple from "../assets/png/acne_pimple.png";
+import med_skeleton from "../assets/png/med_skeleton.png";
 import als_ambulance_front from "../assets/webp/als_ambulance_front.webp";
 import als_ambulance_inside from "../assets/webp/als_ambulance_inside.webp";
 import ambulance_front from "../assets/webp/ambulance_front.webp";
@@ -52,6 +53,7 @@ export const png = {
   logo,
   coughing,
   acne_pimple,
+  med_skeleton
 };
 export const svg = {
   city,

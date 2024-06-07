@@ -133,7 +133,7 @@ export const ambulances = [
   // {title:"Non Ac Ambulance Service",image:webp.non_ac_ambulance_left_side,point_1:""},
 ];
 
-export const pages = ["Doctor", "Hospital", "Ambulance", "Appointment"];
+export const pages = ["Doctor", "Hospital", "Ambulance", "Appointment" , "Shop"];
 
 export const doctors = [
   {

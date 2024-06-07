@@ -11,6 +11,7 @@ import DoctorDetails from "./pages/doctor/DoctorDetails";
 import AmbulanceDetails from "./pages/Ambulance/AmbulanceDetails";
 import Ambulance from "./pages/Ambulance/Ambulance";
 import Appoinment from "./pages/Appoinment/Appoinment";
+import Shop from "./pages/shop/Shop";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="login" element={<Login />} />
             <Route path="hospital" element={<Hospital />} />
             <Route path="ambulance" element={<Ambulance />} />
+            <Route path="shop" element={<Shop />} />
             <Route path="hospital/:hospitalId" element={<HospitalDetails />} />
             <Route
               path="ambulance/:ambulanceId"

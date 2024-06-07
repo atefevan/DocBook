@@ -125,6 +125,8 @@ const ButtonAppBar = () => {
                   display: "block",
                   color: "black",
                   marginInline: "10px",
+                  // border:".1px solid black"
+                  // boxShadow:1,
                 }}
               >
                 {page}
