@@ -215,7 +215,7 @@ const Payment = ({}: Props) => {
               variant="contained"
               onClick={handleSubmit}
               sx={{
-                backgroundColor: "#97BE5A",
+                backgroundColor: "#33cd32",
                 width: "20%",
                 color: "black",
                 marginTop: "2.5vh",
