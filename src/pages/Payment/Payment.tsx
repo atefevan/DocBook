@@ -5,12 +5,16 @@ import MenuList from "../../components/atoms/MenuList";
 import Footer from "../Footer";
 import TxtField from "../../components/atoms/TxtField";
 import { rmvNums } from "../../utils/parser";
+import { addOrder } from "../../apis/order";
+import { enqueueSnackbar } from "notistack";
+import { CartContext } from "../../context/CartContext";
 interface Props {}
 const Payment = ({}: Props) => {
+  const { cart }: any = React.useContext(CartContext);
   const price = localStorage.getItem("DOCBOOK_TOTAL_PAYMENT");
   const userEmail = localStorage.getItem("DOCBOOK_USER_EMAIL");
+  const userId = localStorage.getItem("DOCBOOK_USER_ID");
   const userName = rmvNums(userEmail?.split("@")[0]);
-
   const [formData, setFormData] = React.useState<any>({});
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
@@ -20,7 +24,41 @@ const Payment = ({}: Props) => {
     setFormData({ ...formData, ...obj });
   };
   const handleSubmit = () => {
-    console.log(formData);
+    console.log("F : ",formData)
+    if (!formData?.payment_method ) {
+      return enqueueSnackbar("Select Payment Method", {
+        variant: "error",
+      });
+    }
+    if (!formData?.phone) {
+      return enqueueSnackbar("Fill up phone number", {
+        variant: "error",
+      });
+    }
+
+    if (!formData?.account) {
+      return enqueueSnackbar("Fill up account number ", {
+        variant: "error",
+      });
+    }
+    /*
+  address?: String;
+  payment_mrthod?: String;*/
+    addOrder({
+      user_id: userId,
+      total_price: parseInt(price!),
+      products: cart,
+      name: userName,
+      email: userEmail!,
+      phone_no: formData?.phone,
+      transaction_id: formData?.account,
+      payment_method: formData?.payment_method,
+      address: formData?.address,
+    }).then((res) => {
+      return enqueueSnackbar(res?.message, {
+        variant: res?.status,
+      });
+    });
   };
   return (
     <Background>
@@ -150,11 +188,27 @@ const Payment = ({}: Props) => {
               focuseColor="black"
               focuseBorderColor="black"
             />
+            <TxtField
+              label="Address"
+              id="address"
+              name="address"
+              placeHolder="Enter your address"
+              value={Object.keys(formData).length ? formData?.address : ""}
+              fieldOnChange={handleFormDataInput}
+              style={{ width: "100%", marginTop: "5vh" }}
+              fontColor="black"
+              focuseColor="black"
+              focuseBorderColor="black"
+            />
             <Button
-
               variant="contained"
               onClick={handleSubmit}
-              sx={{ backgroundColor: "#97BE5A", width: "20%", color: "black",marginTop:"10vh" }}
+              sx={{
+                backgroundColor: "#97BE5A",
+                width: "20%",
+                color: "black",
+                marginTop: "3vh",
+              }}
             >
               Confirm
             </Button>

@@ -6,11 +6,11 @@ interface ORDER {
   name?: String;
   email?: String;
   address?: String;
-  payment_mrthod?: String;
+  payment_method?: String;
   transaction_id?: String;
   phone_no?: String;
 }
-export const addOrder = async (payload?: ORDER = {}) => {
+export const addOrder = async (payload?: ORDER) => {
   try {
     const { data } = await apiHandler.post("/api/order", payload);
     return data;
@@ -18,12 +18,3 @@ export const addOrder = async (payload?: ORDER = {}) => {
     throw new Error(error);
   }
 };
-
-// export const Read = async (payload: ) => {
-//   try {
-//     const { data } = await apiHandler.get(`/api/ambulance/${payload?.id}`);
-//     return data;
-//   } catch (error: any) {
-//     throw new Error(error);
-//   }
-// };
