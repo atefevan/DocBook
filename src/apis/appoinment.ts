@@ -1,8 +1,8 @@
 import apiHandler from ".";
 
-export const appointmentsRead = async () => {
+export const appointmentsRead = async (id?:any = {}) => {
   try {
-    const { data } = await apiHandler.get(`/api/appointments`);
+    const { data } = await apiHandler.get(`/api/appointments`,id);
     return data;
   } catch (error: any) {
     throw new Error(error);

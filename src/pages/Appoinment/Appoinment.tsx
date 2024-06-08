@@ -10,13 +10,17 @@ const Appoinment = ({}: Props) => {
   const [appoinments, setAppoinments] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
   const uToken = localStorage.getItem("DOCBOOK_ACCESS_TOKEN");
+  const uId = localStorage.getItem("DOCBOOK_USER_ID");
   const consultPhone = "02 981 4246";
   React.useEffect(() => {
     setLoading(true);
-    appointmentsRead()
+    appointmentsRead({ id: uId })
       .then((res) => setAppoinments(res?.data))
       .finally(() => setLoading(false));
   }, []);
+  const handleSubmit = () => {
+    // if(){}
+  }
   return (
     <>
       {uToken ? (

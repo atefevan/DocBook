@@ -18,23 +18,32 @@ const BookingModal = ({ data, open, setOpen }: Props) => {
   const [selectedSlot, setSelectedSlot] = React.useState<string>("");
   const [paymentMethod, setPaymentMethod] = React.useState<string>("Bkash");
   const [amount, setAmount] = React.useState<string>("");
+  const slot = data?.slots?.find((slot) =>
+    slot?.slot === selectedSlot ? slot?._id : ""
+  );
   const handleSubmit = () => {
-    if (!data?.user?.id) {
-      // enqueueSnackbar("Login to Continue !", {
-      //   variant: "error",
-      // });
-      //
+    if (!selectedSlot) {
+      return enqueueSnackbar("Select a Slot !", {
+        variant: "error",
+      });
     }
-    const slot = data?.slots?.find((slot) =>
-      slot?.slot === selectedSlot ? slot?._id : ""
-    );
+    if (!amount) {
+      return enqueueSnackbar("Select a amount !", {
+        variant: "error",
+      });
+    }
+    if (!paymentMethod) {
+      return enqueueSnackbar("Select a Payment Method !", {
+        variant: "error",
+      });
+    }
     appointmentAdd({
       user_id: data?.user?.id,
       doctor_id: data?.doctor?.id,
       slot_id: slot?._id,
     }).then((res) => {
       setOpen(false);
-      navigate("/login");
+
       return enqueueSnackbar(res?.message, {
         variant: res?.status,
       });
