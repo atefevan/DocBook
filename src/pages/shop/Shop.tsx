@@ -32,7 +32,7 @@ const Shop = ({}: Prop) => {
           display: "flex",
           flex: 1,
           flexDirection: "column",
-          height: "100%",
+          height: "95%",
         }}
       >
         <Typography variant="h6" sx={{ mt: 10, fontWeight: "bold", ml: 5 }}>
@@ -102,6 +102,7 @@ const Shop = ({}: Prop) => {
           </Fab>
         </Box>
       </Box>
+      <Footer />
     </Background>
   );
 };
