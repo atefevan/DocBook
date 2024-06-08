@@ -1,11 +1,10 @@
-import { Box, Fab, Grid, Skeleton, Typography } from "@mui/material";
+import { Box, Fab, Skeleton, Typography } from "@mui/material";
 import Background from "../../components/Background";
 import React from "react";
 import { medicinesRead } from "../../apis/medicine";
 import MedicineCard from "../../components/cards/MedicineCard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Footer from "../Footer";
-import Slider from "../../components/Slider";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { CartContext } from "../../context/CartContext";
@@ -18,7 +17,7 @@ const Shop = ({}: Prop) => {
   const [medicines, setMedicines] = React.useState<[]>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  // console.log("SHOPPING CART: ", cart, getItemCount(cart));
+  console.log("SHOPPING CART: ", cart);
 
   React.useEffect(() => {
     setLoading(true);
@@ -35,6 +34,9 @@ const Shop = ({}: Prop) => {
       price: data.price,
       name: data.name,
       iamge_url: data.image_url,
+    });
+    return enqueueSnackbar("Item Added Successfully", {
+      variant: "success",
     });
   };
 
@@ -63,32 +65,30 @@ const Shop = ({}: Prop) => {
           }}
         >
           {/* <Slider autoHideButton> */}
-          {medicines.length > 0
-            ? (
-              medicines?.map((item, index) => (
-                <MedicineCard
-                  title={item?.name}
-                  unit={item?.unit}
-                  img={item?.image_url}
-                  price={item?.price}
-                  key={index}
-                  remedy={item?.remedy}
-                  onClick={() => handleAddToCart(item)}
+          {medicines.length > 0 ? (
+            medicines?.map((item, index) => (
+              <MedicineCard
+                title={item?.name}
+                unit={item?.unit}
+                img={item?.image_url}
+                price={item?.price}
+                key={index}
+                remedy={item?.remedy}
+                onClick={() => handleAddToCart(item)}
+              />
+            ))
+          ) : (
+            <Box sx={{ display: "flex", width: "85vw" }}>
+              {new Array(5).fill(0).map((item, index) => (
+                <Skeleton
+                  variant="rectangular"
+                  width={"30vw"}
+                  height={"20vh"}
+                  sx={{ margin: 3, borderRadius: 5 }}
                 />
-              ))
-            )
-            : (
-              <Box sx={{ display: "flex", width: "85vw" }}>
-                {new Array(5).fill(0).map((item, index) => (
-                  <Skeleton
-                    variant="rectangular"
-                    width={"30vw"}
-                    height={"20vh"}
-                    sx={{ margin: 3, borderRadius: 5 }}
-                  />
-                ))}
-              </Box>
-            )}
+              ))}
+            </Box>
+          )}
           {/* </Slider> */}
         </Box>
         {/* </center> */}
@@ -109,12 +109,12 @@ const Shop = ({}: Prop) => {
               uToken
                 ? navigate("/cart")
                 : enqueueSnackbar("Login To Continue !", {
-                  variant: "error",
-                });
+                    variant: "error",
+                  });
             }}
           >
             <ShoppingCartIcon sx={{ mr: 1 }} />
-            Checkout
+            {`Checkout (${getItemCount(cart)})`}
           </Fab>
         </Box>
       </Box>

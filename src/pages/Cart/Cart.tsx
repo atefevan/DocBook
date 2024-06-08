@@ -1,20 +1,37 @@
 import React from "react";
 import Background from "../../components/Background";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Footer from "../Footer";
 import MedicineChip from "../../components/chips/MedicineChip";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
 interface Prop {}
 const Cart = ({}: Prop) => {
   const navigate = useNavigate();
+  const { cart, addItem, removeItem }: any = React.useContext(CartContext);
+  const [itemLen, setItemLen] = React.useState<number>(0);
+  const [totalPrice, setTotalPrice] = React.useState<number>(0);
+  React.useEffect(() => {
+    setItemLen(Object.entries(cart).length);
+    setTotalPrice(
+      Object.values(cart).reduce(
+        (sum, { price, quantity }) => sum + price * quantity,
+        0
+      )
+    );
+  }, [cart, addItem, removeItem]);
+
+  React.useEffect(() => {
+    localStorage.setItem("DOCBOOK_TOTAL_PAYMENT", `${totalPrice}`);
+  }, [totalPrice]);
+
   return (
-    <Background>
+    <Background bgColor={itemLen ? "#F2F2F2" : "white"}>
       <Box
         sx={{
           display: "flex",
           flex: 1,
-          //   backgroundColor: "blue",
-          justifyContent: "center",
+          justifyContent: "space-between",
           flexDirection: "column",
           alignItems: "center",
           height: "95%",
@@ -26,24 +43,46 @@ const Cart = ({}: Prop) => {
             flexDirection: "column",
             width: "60%",
             // backgroundColor: "orange",
-            marginTop: "10vh",
-            overflow: "scroll",
+            marginTop: "7vh",
+            overflow: itemLen ? "scroll" : "hidden",
           }}
         >
-          {new Array(10).fill(0).map((item, index) => (
-            <MedicineChip />
-          ))}
+          {itemLen ? (
+            Object.keys(cart)?.map((key, index) => (
+              <MedicineChip
+                key={index}
+                name={cart[key]?.name}
+                img={cart[key]?.iamge_url}
+                quantity={cart[key]?.quantity}
+                price={cart[key]?.price}
+                addMed={() => addItem(cart[key])}
+                deleteMed={() => removeItem(cart[key])}
+              />
+            ))
+          ) : (
+            <Box
+              component={"img"}
+              width={"100%"}
+              alignSelf={"center"}
+              src="https://cdn.dribbble.com/users/1231865/screenshots/11157048/media/bc9427646c632ded563ee076fdc5dfda.jpg?resize=1600x1200&vertical=center"
+            />
+          )}
         </Box>
-        <Button
-          variant="contained"
-          sx={{ margin: 2 }}
-          onClick={() => {
-            navigate("/payment");
-          }}
-        >
-          Make Payment
-        </Button>
-        {/* <Typography>Complete your paymnent</Typography> */}
+        <Box>
+          <Button
+            variant="contained"
+            sx={{
+              margin: 2,
+            }}
+            onClick={() => {
+              itemLen ? navigate("/payment") : navigate("/shop");
+            }}
+          >
+            {itemLen ? "Make Payment" : "Back to Shop"}
+          </Button>
+
+          {/* <Typography>Total Medicine Added : {getItemCount(cart)}</Typography> */}
+        </Box>
       </Box>
       <Footer />
     </Background>
