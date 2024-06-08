@@ -13,20 +13,21 @@ const CartContext = React.createContext({});
 const CartProvider = ({ children }: any) => {
   const store = localStorage.getItem("CART");
   const [cart, setCart] = React.useState<any>(store ? JSON.parse(store) : {});
-  React.useEffect(() => {
-    updateStore();
-  }, [cart]);
 
-  const updateStore = () => {
+  React.useEffect(() => {
     localStorage.setItem("CART", JSON.stringify(cart));
-  };
+  }, []);
 
   const addItem = (data: Item) => {
+    let updated_cart = {};
+
     if (cart?.[data.medicine_id]) {
       const item: Item = cart[data.medicine_id];
 
       const quantity = item.quantity + 1;
-      const price = item.price * quantity;
+      const unit_price = item.price / item.quantity;
+
+      const price = unit_price * quantity;
 
       const updated_item: Item = {
         ...item,
@@ -34,40 +35,48 @@ const CartProvider = ({ children }: any) => {
         price,
       };
 
-      setCart({ ...cart, [data.medicine_id]: updated_item });
+      updated_cart = { ...cart, [data.medicine_id]: updated_item };
     } else {
-      setCart({ ...cart, [data.medicine_id]: { ...data, quantity: 1 } });
+      updated_cart = { ...cart, [data.medicine_id]: { ...data, quantity: 1 } };
     }
 
-    updateStore();
+    setCart(updated_cart);
+    localStorage.setItem("CART", JSON.stringify(updated_cart));
   };
 
   const removeItem = (data: Item) => {
-    const existing = cart[data.medicine_id];
+    let updated_cart = {};
 
+    const existing = cart[data.medicine_id];
     const quantity = existing.quantity - 1;
 
     if (quantity === 0) {
       const mutable_cart = cart;
       delete mutable_cart[data.medicine_id];
 
-      setCart(mutable_cart);
+      updated_cart = mutable_cart;
+      setCart(updated_cart);
+      localStorage.setItem("CART", JSON.stringify(updated_cart));
+
+      window.location.reload();
     } else {
-      const price = quantity * data.price;
+      const unit_price = existing.price / existing.quantity;
+
+      const price = quantity * unit_price;
       const updated_item: Item = {
         ...existing,
         quantity,
         price,
       };
 
-      setCart({ ...cart, [data.medicine_id]: updated_item });
+      updated_cart = { ...cart, [data.medicine_id]: updated_item };
+      setCart(updated_cart);
+      localStorage.setItem("CART", JSON.stringify(updated_cart));
     }
-
-    updateStore();
   };
 
   const getTotalPrice = (data: {}) => {
-    const total = !data
+    const total = !getItemCount(data)
       ? 0
       : Object.keys(data).map((key) => cart[key].price).reduce((
         a,
@@ -77,7 +86,11 @@ const CartProvider = ({ children }: any) => {
   };
 
   const getItemCount = (data: {}) => {
-    return !data ? 0 : Object.keys(data).length;
+    return Object.keys(data).length;
+  };
+
+  const clearCart = () => {
+    localStorage.setItem("CART", JSON.stringify({}));
   };
 
   return (
@@ -88,6 +101,7 @@ const CartProvider = ({ children }: any) => {
         removeItem,
         getTotalPrice,
         getItemCount,
+        clearCart,
       }}
     >
       {children}
