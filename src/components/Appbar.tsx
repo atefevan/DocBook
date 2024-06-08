@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router";
 import { rmvNums } from "../utils/parser";
 
-const settings = ["Logout"];
+const settings = ["Orders", "Logout"];
 
 const ButtonAppBar = () => {
   const navigate = useNavigate();
@@ -36,11 +36,18 @@ const ButtonAppBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    localStorage.removeItem("DOCBOOK_ACCESS_TOKEN");
-    localStorage.removeItem("DOCBOOK_USER_EMAIL");
-    localStorage.removeItem("DOCBOOK_USER_ID");
-    navigate("/login");
+  const handleCloseUserMenu = (value?: any) => {
+    if (value === "Logout") {
+      localStorage.removeItem("DOCBOOK_ACCESS_TOKEN");
+      localStorage.removeItem("DOCBOOK_USER_EMAIL");
+      localStorage.removeItem("DOCBOOK_USER_ID");
+
+      setAnchorElNav(null);
+      navigate("/login");
+    } else {
+      setAnchorElNav(null);
+      navigate("/orders");
+    }
   };
 
   return (
@@ -158,13 +165,14 @@ const ButtonAppBar = () => {
                   },
                 }}
               >
-                 <Typography sx={{ fontSize: "18px", color: "black",marginRight:"1vw" }}>
+                <Typography
+                  sx={{ fontSize: "18px", color: "black", marginRight: "1vw" }}
+                >
                   {rmvNums(uEmail?.split("@")[0])}
                 </Typography>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar src="/broken-image.jpg" />
                 </IconButton>
-               
               </Box>
             )}
 
@@ -186,7 +194,10 @@ const ButtonAppBar = () => {
               onClose={() => setAnchorElUser(null)}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

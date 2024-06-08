@@ -40,17 +40,29 @@ const MedicineChip = ({
           src={img ? img : png.med_skeleton}
           width={"100px"}
           height={"80px"}
-          sx={{ scale: 1.15, margin: "20px", borderRadius: 4,border:".3px solid black" }}
+          sx={{
+            scale: 1.15,
+            margin: "20px",
+            borderRadius: 4,
+            border: ".3px solid black",
+          }}
           draggable={false}
         />
         <Tooltip title={name ? name : "MED NAME"}>
-          <Typography sx={{ ml: ".5vw", fontSize: "24px", fontWeight: "bold" }}>
+          <Typography
+            sx={{
+              ml: ".5vw",
+              fontSize: "18px",
+              fontWeight: "bold",
+              minWidth: "1vw",
+            }}
+          >
             {name ? name.split(" ").slice(0, 3).join(" ") : "ITEM NAME"}
           </Typography>
         </Tooltip>
       </Box>
       <Box sx={{ display: "flex", height: "100px", alignItems: "center" }}>
-      <Button
+        <Button
           variant="contained"
           color="error"
           sx={{ width: "40px" }}
@@ -64,7 +76,6 @@ const MedicineChip = ({
         <Button variant="contained" sx={{ width: "40px" }} onClick={addMed}>
           <Typography sx={{ fontSize: "20px" }}>+ </Typography>
         </Button>
-        
 
         <Typography
           sx={{

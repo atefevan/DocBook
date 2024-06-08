@@ -149,28 +149,36 @@ const Appoinment = ({}: Props) => {
           </Background>
         </Box>
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flex: 1,
-            height: "100%",
-            backgroundColor: "#F2F2F2",
-            position: "absolute",
-            padding: 0,
-            margin: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography sx={{ fontSize: { xs: "24px", md: "38px" } }}>
-            No Appoinment Available !
-          </Typography>
-          <Footer />
-        </Box>
+        <Background>
+          <Box
+            sx={{
+              display: "flex",
+              flex: 1,
+              width: "100%",
+              height: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <div />
+            <Typography sx={{ fontSize: { xs: "24px", md: "38px" } }}>
+              No Appoinment Available !
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                height: "5%",
+                backgroundColor: "black",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Footer />
+            </Box>
+          </Box>
+        </Background>
       )}
     </>
   );

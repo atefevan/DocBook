@@ -8,7 +8,6 @@ import Footer from "../Footer";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { CartContext } from "../../context/CartContext";
-import Slider from "../../components/Slider";
 
 interface Prop {}
 const Shop = ({}: Prop) => {
@@ -30,6 +29,11 @@ const Shop = ({}: Prop) => {
   }, []);
 
   const handleAddToCart = (data: any) => {
+    if (!uToken) {
+      return enqueueSnackbar("Login to order !", {
+        variant: "error",
+      });
+    }
     addItem({
       medicine_id: data._id,
       price: data.price,
@@ -66,32 +70,30 @@ const Shop = ({}: Prop) => {
           }}
         >
           {/* <Slider autoHideButton> */}
-          {medicines.length > 0
-            ? (
-              medicines?.map((item, index) => (
-                <MedicineCard
-                  title={item?.name}
-                  unit={item?.unit}
-                  img={item?.image_url}
-                  price={item?.price}
-                  key={index}
-                  remedy={item?.remedy}
-                  onClick={() => handleAddToCart(item)}
+          {!loading ? (
+            medicines?.map((item, index) => (
+              <MedicineCard
+                title={item?.name}
+                unit={item?.unit}
+                img={item?.image_url}
+                price={item?.price}
+                key={index}
+                remedy={item?.remedy}
+                onClick={() => handleAddToCart(item)}
+              />
+            ))
+          ) : (
+            <Box sx={{ display: "flex", width: "85vw" }}>
+              {new Array(5).fill(0).map((item, index) => (
+                <Skeleton
+                  variant="rectangular"
+                  width={"30vw"}
+                  height={"20vh"}
+                  sx={{ margin: 3, borderRadius: 5 }}
                 />
-              ))
-            )
-            : (
-              <Box sx={{ display: "flex", width: "85vw" }}>
-                {new Array(5).fill(0).map((item, index) => (
-                  <Skeleton
-                    variant="rectangular"
-                    width={"30vw"}
-                    height={"20vh"}
-                    sx={{ margin: 3, borderRadius: 5 }}
-                  />
-                ))}
-              </Box>
-            )}
+              ))}
+            </Box>
+          )}
           {/* </Slider> */}
         </Box>
         {/* </center> */}
@@ -112,8 +114,8 @@ const Shop = ({}: Prop) => {
               uToken
                 ? navigate("/cart")
                 : enqueueSnackbar("Login To Continue !", {
-                  variant: "error",
-                });
+                    variant: "error",
+                  });
             }}
           >
             <ShoppingCartIcon sx={{ mr: 1 }} />

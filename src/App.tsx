@@ -15,6 +15,7 @@ import Appoinment from "./pages/Appoinment/Appoinment";
 import Shop from "./pages/shop/Shop";
 import Cart from "./pages/Cart/Cart";
 import Payment from "./pages/Payment/Payment";
+import OrderList from "./pages/Payment/OrderList";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
               <Route path="ambulance" element={<Ambulance />} />
               <Route path="shop" element={<Shop />} />
               <Route path="cart" element={<Cart />} />
+              <Route path="orders" element={<OrderList />} />
               <Route path="payment" element={<Payment />} />
               <Route
                 path="hospital/:hospitalId"

@@ -1,58 +1,57 @@
-import { Box, Button, Skeleton, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import React from "react";
 import { svg } from "../../assets";
-import { useNavigate } from "react-router-dom";
-import { ambulancesRead } from "../../apis/ambulance";
-import AmbulanceCard from "../../components/cards/AmbulanceCard";
 import Footer from "../Footer";
 import Background from "../../components/Background";
+import { orderList } from "../../apis/order";
+import OrdersCard from "../../components/cards/OrderCard";
 
 interface Props {}
-const Ambulance = ({}: Props) => {
-  const [ambulances, setAmbulances] = React.useState<[]>([]);
+const OrderList = ({}: Props) => {
+  const [orders, setOrders] = React.useState<[]>([]);
+  const userId = localStorage.getItem("DOCBOOK_USER_ID");
   const [loading, setLoading] = React.useState<boolean>(false);
   const consultPhone = "02 981 4246";
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     setLoading(true);
-    ambulancesRead()
-      .then((res) => setAmbulances(res?.data))
+    orderList(userId)
+      .then((res) => {
+        setOrders(res?.data);
+      })
       .finally(() => setLoading(false));
   }, []);
+  console.log(orders);
   return (
     <Background>
       <Box sx={{ marginInline: "5vw" }}>
-        <Typography sx={{ fontSize: "16px", marginTop: "10vh" }}>
-          On emergency call as you need
+        <Typography sx={{ fontSize: "16px", marginTop: "10vh",marginLeft:"1vw" }}>
+          All orders in one place
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box
             sx={{
               display: "flex",
               width: { xs: "100%", sm: "100%", md: "70%" },
-              backgroundColor: "white",
+              // backgroundColor: "white",
               flexDirection: "column",
               overflow: "scroll",
               height: "85vh",
             }}
           >
             {!loading ? (
-              ambulances?.map((ambulance) => (
-                <AmbulanceCard
-                  image={ambulance?.image_url}
-                  title={ambulance?.title}
-                  desciption={ambulance?.description}
-                  phone={ambulance?.contact}
-                  onTitleClick={() => navigate(`/ambulance/${ambulance?._id}`)}
-                  onClick={() => {
-                    navigate(`/ambulance/${ambulance?._id}`);
-                  }}
+              orders?.map((order) => (
+                <OrdersCard
+                  item={order}
+                  // image={ambulance?.image_url}
+                  // title={ambulance?.title}
+                  // desciption={ambulance?.description}
+                  // phone={ambulance?.contact}
                 />
               ))
             ) : (
               <Box>
-                {[1, 2, 3, 4, 5].map(() => (
+                {[1, 2, 3, 4].map(() => (
                   <Skeleton
                     sx={{
                       width: { xs: "45vw", sm: "320px", md: "61vw" },
@@ -119,4 +118,4 @@ const Ambulance = ({}: Props) => {
   );
 };
 
-export default Ambulance;
+export default OrderList;
