@@ -31,7 +31,7 @@ const Ambulance = ({}: Props) => {
             sx={{
               display: "flex",
               width: { xs: "100%", sm: "100%", md: "70%" },
-              backgroundColor: "white",
+              // backgroundColor: "white",
               flexDirection: "column",
               overflow: "scroll",
               height: "85vh",
