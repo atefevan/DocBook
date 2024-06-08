@@ -8,14 +8,17 @@ import { rmvNums } from "../../utils/parser";
 import { addOrder } from "../../apis/order";
 import { enqueueSnackbar } from "notistack";
 import { CartContext } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 interface Props {}
 const Payment = ({}: Props) => {
-  const { cart }: any = React.useContext(CartContext);
-  const price = localStorage.getItem("DOCBOOK_TOTAL_PAYMENT");
+  const navigate = useNavigate();
+  const { cart, getTotalPrice }: any = React.useContext(CartContext);
+  const price = getTotalPrice(cart);
   const userEmail = localStorage.getItem("DOCBOOK_USER_EMAIL");
   const userId = localStorage.getItem("DOCBOOK_USER_ID");
   const userName = rmvNums(userEmail?.split("@")[0]);
   const [formData, setFormData] = React.useState<any>({});
+
   const handleFormDataInput = (e: any) => {
     e.preventDefault();
     let obj: any = {};
@@ -24,8 +27,8 @@ const Payment = ({}: Props) => {
     setFormData({ ...formData, ...obj });
   };
   const handleSubmit = () => {
-    console.log("F : ",formData)
-    if (!formData?.payment_method ) {
+    console.log("F : ", formData);
+    if (!formData?.payment_method) {
       return enqueueSnackbar("Select Payment Method", {
         variant: "error",
       });
@@ -41,9 +44,6 @@ const Payment = ({}: Props) => {
         variant: "error",
       });
     }
-    /*
-  address?: String;
-  payment_mrthod?: String;*/
     addOrder({
       user_id: userId,
       total_price: parseInt(price!),
@@ -55,6 +55,7 @@ const Payment = ({}: Props) => {
       payment_method: formData?.payment_method,
       address: formData?.address,
     }).then((res) => {
+      navigate("/shop");
       return enqueueSnackbar(res?.message, {
         variant: res?.status,
       });
@@ -98,7 +99,7 @@ const Payment = ({}: Props) => {
             sx={{
               display: "flex",
               width: "100%",
-              height: "3vh",
+              height: "2vh",
               justifyContent: "center",
               alignItems: "center",
             }}
@@ -109,10 +110,10 @@ const Payment = ({}: Props) => {
                 fontFamily: "Arial",
                 fontWeight: "bold",
                 color: "#ff6247",
+                marginBottom: "2vh",
               }}
             >
-              Pay {price}৳ through bKash, nagad or rocket to confirm this
-              purchase
+              Pay {price}৳ through bKash, nagad or rocket to confirm purchase
             </Typography>
           </Box>
           <Box
@@ -151,7 +152,7 @@ const Payment = ({}: Props) => {
               placeHolder="Enter your phone number"
               value={Object.keys(formData).length ? formData?.phone : ""}
               fieldOnChange={handleFormDataInput}
-              style={{ width: "100%", marginTop: "5vh" }}
+              style={{ width: "100%", marginTop: "3vh" }}
               fontColor="black"
               focuseColor="black"
               focuseBorderColor="black"
@@ -161,7 +162,7 @@ const Payment = ({}: Props) => {
               id="username"
               name="username"
               value={userName}
-              style={{ width: "100%", marginTop: "5vh" }}
+              style={{ width: "100%", marginTop: "3vh" }}
               fontColor="black"
               focuseColor="black"
               focuseBorderColor="black"
@@ -171,19 +172,27 @@ const Payment = ({}: Props) => {
               id="email"
               name="email"
               value={userEmail}
-              style={{ width: "100%", marginTop: "5vh" }}
+              style={{ width: "100%", marginTop: "3vh" }}
               fontColor="black"
               focuseColor="black"
               focuseBorderColor="black"
             />
             <TxtField
-              label="Account"
+              label={
+                formData?.payment_method === "Bank"
+                  ? "Bank Account No"
+                  : "Account"
+              }
               id="account"
               name="account"
-              placeHolder="Enter your account number"
+              placeHolder={
+                formData?.payment_method === "Bank"
+                  ? "Enter your bank account number"
+                  : "Enter your account number"
+              }
               value={Object.keys(formData).length ? formData?.account : ""}
               fieldOnChange={handleFormDataInput}
-              style={{ width: "100%", marginTop: "5vh" }}
+              style={{ width: "100%", marginTop: "3vh" }}
               fontColor="black"
               focuseColor="black"
               focuseBorderColor="black"
@@ -195,7 +204,9 @@ const Payment = ({}: Props) => {
               placeHolder="Enter your address"
               value={Object.keys(formData).length ? formData?.address : ""}
               fieldOnChange={handleFormDataInput}
-              style={{ width: "100%", marginTop: "5vh" }}
+              isMultiline
+              textRows={5}
+              style={{ width: "100%", marginTop: "2vh" }}
               fontColor="black"
               focuseColor="black"
               focuseBorderColor="black"
@@ -207,7 +218,7 @@ const Payment = ({}: Props) => {
                 backgroundColor: "#97BE5A",
                 width: "20%",
                 color: "black",
-                marginTop: "3vh",
+                marginTop: "2.5vh",
               }}
             >
               Confirm

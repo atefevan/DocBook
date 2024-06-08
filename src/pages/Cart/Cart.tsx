@@ -8,22 +8,16 @@ import { CartContext } from "../../context/CartContext";
 interface Prop {}
 const Cart = ({}: Prop) => {
   const navigate = useNavigate();
-  const { cart, addItem, removeItem }: any = React.useContext(CartContext);
+  const { cart, addItem, removeItem,getTotalPrice }: any = React.useContext(CartContext);
   const [itemLen, setItemLen] = React.useState<number>(0);
-  const [totalPrice, setTotalPrice] = React.useState<number>(0);
-  React.useEffect(() => {
-    setItemLen(Object.entries(cart).length);
-    setTotalPrice(
-      Object.values(cart).reduce(
-        (sum, { price, quantity }) => sum + price * quantity,
-        0
-      )
-    );
-  }, [cart, addItem, removeItem]);
 
   React.useEffect(() => {
-    localStorage.setItem("DOCBOOK_TOTAL_PAYMENT", `${totalPrice}`);
-  }, [totalPrice]);
+    setItemLen(Object.entries(cart).length);
+  }, [cart, addItem, removeItem]);
+
+  // React.useEffect(() => {
+  //   localStorage.setItem("DOCBOOK_TOTAL_PAYMENT", `${totalPrice}`);
+  // }, [totalPrice]);
 
   return (
     <Background bgColor={itemLen ? "#F2F2F2" : "white"}>

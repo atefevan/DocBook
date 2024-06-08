@@ -12,7 +12,7 @@ const Footer = () => {
       }}
     >
       <Typography sx={{ color: "white", fontSize: "14px" }}>
-        copyright © 2023 All rights reserved to DocBook E.Corp
+        copyright © 2024 All rights reserved to DocBook E.Corp
       </Typography>
     </Box>
   );

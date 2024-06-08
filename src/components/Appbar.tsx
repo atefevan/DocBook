@@ -154,16 +154,17 @@ const ButtonAppBar = () => {
                     xs: "none",
                     md: "flex",
                     alignItems: "center",
-                    flexDirection: "column",
+                    // flexDirection: "column",
                   },
                 }}
               >
+                 <Typography sx={{ fontSize: "18px", color: "black",marginRight:"1vw" }}>
+                  {rmvNums(uEmail?.split("@")[0])}
+                </Typography>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar src="/broken-image.jpg" />
                 </IconButton>
-                <Typography sx={{ fontSize: "12px", color: "black" }}>
-                  {rmvNums(uEmail?.split("@")[0])}
-                </Typography>
+               
               </Box>
             )}
 

@@ -2,7 +2,7 @@ import { Box, Button, Tooltip, Typography } from "@mui/material";
 import { png } from "../../assets";
 interface Prop {
   // item?: any;
-  key?:number;
+  key?: number;
   img?: any;
   name?: string;
   price?: number;
@@ -21,7 +21,7 @@ const MedicineChip = ({
 }: Prop) => {
   return (
     <Box
-    key={key}
+      key={key}
       sx={{
         display: "flex",
         // width: "100%",
@@ -38,24 +38,19 @@ const MedicineChip = ({
         <Box
           component={"img"}
           src={img ? img : png.med_skeleton}
-          height={"80%"}
-          sx={{ scale: 1.15, ml: "2vw", borderRadius: 5 }}
+          width={"100px"}
+          height={"80px"}
+          sx={{ scale: 1.15, margin: "20px", borderRadius: 4,border:".3px solid black" }}
           draggable={false}
         />
         <Tooltip title={name ? name : "MED NAME"}>
-          <Typography sx={{ ml: "2vw", fontSize: "24px", fontWeight: "bold" }}>
+          <Typography sx={{ ml: ".5vw", fontSize: "24px", fontWeight: "bold" }}>
             {name ? name.split(" ").slice(0, 3).join(" ") : "ITEM NAME"}
           </Typography>
         </Tooltip>
       </Box>
       <Box sx={{ display: "flex", height: "100px", alignItems: "center" }}>
-        <Button variant="contained" sx={{ width: "40px" }} onClick={addMed}>
-          <Typography sx={{ fontSize: "20px" }}>+ </Typography>
-        </Button>
-        <Typography sx={{ marginInline: "1vw", fontSize: "24px" }}>
-          {quantity ? quantity : 0}
-        </Typography>
-        <Button
+      <Button
           variant="contained"
           color="error"
           sx={{ width: "40px" }}
@@ -63,6 +58,13 @@ const MedicineChip = ({
         >
           <Typography sx={{ fontSize: "20px" }}>-</Typography>
         </Button>
+        <Typography sx={{ marginInline: "1vw", fontSize: "24px" }}>
+          {quantity ? quantity : 0}
+        </Typography>
+        <Button variant="contained" sx={{ width: "40px" }} onClick={addMed}>
+          <Typography sx={{ fontSize: "20px" }}>+ </Typography>
+        </Button>
+        
 
         <Typography
           sx={{

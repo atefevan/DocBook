@@ -8,6 +8,7 @@ import Footer from "../Footer";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { CartContext } from "../../context/CartContext";
+import Slider from "../../components/Slider";
 
 interface Prop {}
 const Shop = ({}: Prop) => {
@@ -58,7 +59,7 @@ const Shop = ({}: Prop) => {
           sx={{
             width: "100%",
             height: "100%",
-            padding: 2,
+            padding: 3,
             display: "flex",
             // backgroundColor:"blue",
             overflow: "scroll",
