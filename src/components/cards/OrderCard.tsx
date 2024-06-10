@@ -32,7 +32,7 @@ const OrdersCard = ({ item }: Prop) => {
             fontStyle: "italic",
             fontWeight: "bold",
             m: 1,
-            color: item?.status === "Processing" ? "#DC5F00" : "#97BE5A",
+            color: item?.status === "Processing" ? "#3572EF" : item?.status === "Delivering"? "#AF47D2" :item?.status === "Completed" ? "#97BE5A" : "#FF0000",
           }}
         >
           {item?.status}

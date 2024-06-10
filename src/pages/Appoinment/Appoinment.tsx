@@ -16,7 +16,7 @@ const Appoinment = ({}: Props) => {
   const consultPhone = "02 981 4246";
   React.useEffect(() => {
     setLoading(true);
-    appointmentsRead({ id: uId })
+    appointmentsRead({ user_id: uId })
       .then((res) => setAppoinments(res?.data))
       .finally(() => setLoading(false));
   }, []);
@@ -74,6 +74,7 @@ const Appoinment = ({}: Props) => {
                         date={appointment?.created_at}
                         fee={appointment?.fees}
                         slot={appointment?.slot}
+                        status={appointment?.status}
                         // onTitleClick={() => navigate(`/ambulance/${ambulance?._id}`)}
                         // onClick={() => {
                         //   navigate(`/ambulance/${ambulance?._id}`);

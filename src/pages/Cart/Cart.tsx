@@ -1,6 +1,6 @@
 import React from "react";
 import Background from "../../components/Background";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import Footer from "../Footer";
 import MedicineChip from "../../components/chips/MedicineChip";
 import { useNavigate } from "react-router-dom";
@@ -8,18 +8,13 @@ import { CartContext } from "../../context/CartContext";
 interface Prop {}
 const Cart = ({}: Prop) => {
   const navigate = useNavigate();
-  const { cart, addItem, removeItem, getTotalPrice }: any = React.useContext(
-    CartContext,
-  );
+  const { cart, addItem, removeItem, getTotalPrice }: any =
+    React.useContext(CartContext);
   const [itemLen, setItemLen] = React.useState<number>(0);
 
   React.useEffect(() => {
     setItemLen(Object.entries(cart).length);
   }, [cart, addItem, removeItem]);
-
-  // React.useEffect(() => {
-  //   localStorage.setItem("DOCBOOK_TOTAL_PAYMENT", `${totalPrice}`);
-  // }, [totalPrice]);
 
   return (
     <Background bgColor={itemLen ? "#F2F2F2" : "white"}>
@@ -43,30 +38,29 @@ const Cart = ({}: Prop) => {
             overflow: itemLen ? "scroll" : "hidden",
           }}
         >
-          {itemLen
-            ? (
-              Object.keys(cart)?.map((key, index) => (
-                <MedicineChip
-                  key={index}
-                  name={cart[key]?.name}
-                  img={cart[key]?.iamge_url}
-                  quantity={cart[key]?.quantity}
-                  price={cart[key]?.price}
-                  addMed={() => addItem(cart[key])}
-                  deleteMed={() => removeItem(cart[key])}
-                />
-              ))
-            )
-            : (
-              <Box
-                component={"img"}
-                width={"100%"}
-                alignSelf={"center"}
-                src="https://cdn.dribbble.com/users/1231865/screenshots/11157048/media/bc9427646c632ded563ee076fdc5dfda.jpg?resize=1600x1200&vertical=center"
+          {itemLen ? (
+            Object.keys(cart)?.map((key, index) => (
+              <MedicineChip
+                key={index}
+                name={cart[key]?.name}
+                img={cart[key]?.iamge_url}
+                quantity={cart[key]?.quantity}
+                price={cart[key]?.price}
+                addMed={() => addItem(cart[key])}
+                deleteMed={() => removeItem(cart[key])}
               />
-            )}
+            ))
+          ) : (
+            <Box
+              component={"img"}
+              width={"100%"}
+              alignSelf={"center"}
+              draggable={false}
+              src="https://cdn.dribbble.com/users/1231865/screenshots/11157048/media/bc9427646c632ded563ee076fdc5dfda.jpg?resize=1600x1200&vertical=center"
+            />
+          )}
         </Box>
-        <Box>
+        <Box sx={{ textAlign: "center" }}>
           <Button
             variant="contained"
             sx={{
@@ -79,7 +73,11 @@ const Cart = ({}: Prop) => {
             {itemLen ? "Make Payment" : "Back to Shop"}
           </Button>
 
-          {/* <Typography>Total Medicine Added : {getItemCount(cart)}</Typography> */}
+          {itemLen >= 1 && (
+            <Typography sx={{ fontSize: "22px" }}>
+              Total Price : {getTotalPrice(cart)} BDT
+            </Typography>
+          )}
         </Box>
       </Box>
       <Footer />

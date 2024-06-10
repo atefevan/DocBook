@@ -1,6 +1,6 @@
-import { Box, Icon, Typography } from "@mui/material";
-import ElderlyIcon from "@mui/icons-material/Elderly";
+import { Box, Typography } from "@mui/material";
 import dayjs from "dayjs";
+import { rmvNums } from "../../utils/parser";
 interface Prop {
   user_email?: string;
   doctor?: string;
@@ -8,6 +8,7 @@ interface Prop {
   fee?: string;
   slot?: string;
   date?: string | any;
+  status?: string;
 }
 const AppoinmentCard = ({
   user_email,
@@ -16,6 +17,7 @@ const AppoinmentCard = ({
   speciality,
   date,
   fee,
+  status,
 }: Prop) => {
   return (
     <Box
@@ -42,9 +44,14 @@ const AppoinmentCard = ({
         }}
       >
         <Typography
-          sx={{ fontSize: "18px", margin: 1, paddingLeft: "2vw", padding: 1 }}
+          sx={{
+            fontSize: "18px",
+            marginInline: 1,
+            paddingLeft: "2vw",
+            padding: 1,
+          }}
         >
-          Patient : {user_email?.split("@")[0]}
+          Patient : {rmvNums(user_email?.split("@")[0])}
         </Typography>
         <Typography
           sx={{
@@ -67,30 +74,75 @@ const AppoinmentCard = ({
         </Typography>
       </Box>
       <Typography
-        sx={{ fontSize: "18px", margin: 1, paddingLeft: "2vw", padding: 1 }}
+        sx={{
+          fontSize: "18px",
+          marginInline: 1,
+          paddingLeft: "2vw",
+          padding: 1,
+        }}
       >
         Doctor : {doctor}
       </Typography>
       <Typography
-        sx={{ fontSize: "18px", margin: 1, paddingLeft: "2vw", padding: 1 }}
+        sx={{
+          fontSize: "18px",
+          marginInline: 1,
+          paddingLeft: "2vw",
+          padding: 1,
+        }}
       >
         Speciality : {speciality}
       </Typography>
       <Typography
-        sx={{ fontSize: "18px", marginInline: 1, paddingLeft: "2vw", padding: 1 }}
+        sx={{
+          fontSize: "18px",
+          marginInline: 1,
+          paddingLeft: "2vw",
+          padding: 1,
+        }}
       >
         Appoinment Slot : {slot?.replace(/^\w{3} /, "")}
       </Typography>
       <Typography
-        sx={{ fontSize: "18px", marginInline: 1, paddingLeft: "2vw", padding: 1 }}
+        sx={{
+          fontSize: "18px",
+          marginInline: 1,
+          paddingLeft: "2vw",
+          padding: 1,
+        }}
       >
         Book Date: {dayjs(date).format("DD-MMM-YYYY")}
       </Typography>
-      <Typography
-        sx={{ fontSize: "18px", marginInline: 1, paddingLeft: "2vw", padding: 1 }}
+      <Box
+        sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
       >
-        Appoinment Fee : {fee} BDT
-      </Typography>
+        <Typography
+          sx={{
+            fontSize: "18px",
+            marginInline: 1,
+            paddingLeft: "2vw",
+            padding: 1,
+          }}
+        >
+          Appoinment Fee : {fee} BDT
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "24px",
+            marginInline: 1,
+            paddingLeft: "2vw",
+            padding: 1,
+            color:
+              status === "Approved"
+                ? "#06D001"
+                : status === "Canceled"
+                ? "#FF0000"
+                : "#03AED2",
+          }}
+        >
+          {status}
+        </Typography>
+      </Box>
     </Box>
   );
 };
