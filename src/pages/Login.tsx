@@ -7,7 +7,7 @@ import { signin, signup } from "../apis/user";
 import { emailValidator } from "../utils/validator";
 import { useNavigate } from "react-router-dom";
 
-/// FIREBASE 
+/// FIREBASE
 
 const Login = () => {
   const navigate = useNavigate();
@@ -28,23 +28,30 @@ const Login = () => {
     }
 
     if (hasAccount) {
-      const res = await signin({
+      await signin({
         email: formData.email,
         password: formData.password,
+      }).then((res) => {
+        if (res?.token) {
+          localStorage.setItem("DOCBOOK_ACCESS_TOKEN", res?.token);
+          localStorage.setItem("DOCBOOK_USER_ID", res?.user_id);
+          localStorage.setItem("DOCBOOK_USER_EMAIL", res?.email);
+          navigate("/");
+        } else {
+          return enqueueSnackbar(res?.message, {
+            variant: res?.status,
+          });
+        }
       });
-      if (res?.token) {
-        localStorage.setItem("DOCBOOK_ACCESS_TOKEN", res?.token);
-        localStorage.setItem("DOCBOOK_USER_ID", res?.user_id);
-        localStorage.setItem("DOCBOOK_USER_EMAIL", res?.email);
-      }
-      navigate("/");
     } else {
-      const res = await signup({
+      await signup({
         email: formData.email,
         password: formData.password,
-      });
-      return enqueueSnackbar(res?.message, {
-        variant: res?.status,
+      }).then((res) => {
+        enqueueSnackbar(res?.message, {
+          variant: res?.status,
+        });
+        setHasAccount(true);
       });
     }
   };
